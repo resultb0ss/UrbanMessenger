@@ -23,4 +23,14 @@
     <string name="nav_graph_about_fragment_label_text">О приложении</string>
     <string name="nav_graph_profile_fragment_label_text">Профиль</string>
     <string name="nav_graph_chats_fragment_label_text">Чаты</string>
+    <string name="profile_fragment_save_button_text">Сохранить</string>
+    <string name="profile_fragment_name_text">Egor</string>
+    <string name="profile_fragment_email_text">*****32@gmail.com</string>
+    <string name="profile_fragment_method_entry_text">Способ входа Email</string>
+    <string name="profile_fragment_verification_text">Не верифицирован</string>
+    <string name="profile_fragment_first_name_field_hint">Имя</string>
+    <string name="profile_fragment_last_name_field_hint">Фамилия</string>
+    <string name="profile_fragment_profession_field_hint">Род занятий</string>
+    <string name="profile_fragment_adress_field_hint">Адрес</string>
+    <string name="profile_fragment_age_field_hint">Возраст</string>
 </resources>
