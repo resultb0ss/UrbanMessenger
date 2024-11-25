@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".auth.LoginFragment">
+
+
+    <ImageView
+        android:id="@+id/loginFragmentImageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.15"
+        android:src="@drawable/login_fragment_image"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/loginFragmentEmailField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/login_fragment_email_field_hint"
+        app:layout_constraintTop_toBottomOf="@id/loginFragmentImageView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.10"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/loginFragmentPasswordField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/login_fragment_password_field_hint"
+        app:layout_constraintTop_toBottomOf="@id/loginFragmentEmailField"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.10"/>
+
+    <TextView
+        android:id="@+id/loginFragmentRecoverPasswordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_fragment_recover_text_link"
+        android:textSize="@dimen/smallText"
+        android:textStyle="bold"
+        android:textColor="@color/main_color_day_light"
+        app:layout_constraintTop_toBottomOf="@id/loginFragmentPasswordField"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.9"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginFragmentLoginButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_fragment_login_button_text"
+        app:icon="@drawable/ic_enter_white"
+        app:layout_constraintTop_toBottomOf="@id/loginFragmentRecoverPasswordText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0"/>
+
+    <TextView
+        android:id="@+id/loginFragmentNoAccountText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_fragment_no_account_text"
+        app:layout_constraintTop_toBottomOf="@id/loginFragmentLoginButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0"/>
+
+    <TextView
+        android:id="@+id/loginFragmentRegistrationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_fragment_registration_link_text"
+        android:textSize="@dimen/normalText"
+        android:textStyle="bold"
+        android:textColor="@color/main_color_day_light"
+        app:layout_constraintTop_toBottomOf="@id/loginFragmentNoAccountText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.05"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/ic_action_menu"
+        android:title=""
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/profileFragment"
+                android:icon="@drawable/options_menu_item_profile_icon"
+                android:title="@string/options_menu_item_profile_text"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/aboutFragment"
+                android:icon="@drawable/options_menu_item_about_icon"
+                android:title="@string/options_menu_item_about_text"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/menuItemExit"
+                android:icon="@drawable/options_menu_item_exit_icon"
+                android:title="@string/options_menu_item_exit_text"
+                app:showAsAction="never" />
+
+        </menu>
+
+    </item>
+
+
+</menu>

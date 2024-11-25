@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">UrbanMessenger</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="start_fragment_start_button_text">Войти с помощью email</string>
+    <string name="login_fragment_email_field_hint">Email</string>
+    <string name="login_fragment_password_field_hint">Password</string>
+    <string name="login_fragment_recover_text_link">Забыли пароль?</string>
+    <string name="login_fragment_login_button_text">Войти</string>
+    <string name="login_fragment_no_account_text">Нет аккаунта?</string>
+    <string name="login_fragment_registration_link_text">Зарегистрироваться?</string>
+    <string name="recover_fragment_subtitle_text">Введите адрес электронной почты, чтобы получить инструкции по восстановлению пароля</string>
+    <string name="recover_fragment_title_text">Забыл(a) пароль</string>
+    <string name="recover_fragment_send_button_text">Отправить</string>
+    <string name="recover_fragment_email_field_hint">Введите email</string>
+
+    <!-- Option Menu Item Names -->
+    <string name="options_menu_item_profile_text">Профиль</string>
+    <string name="options_menu_item_about_text">О приложении</string>
+    <string name="options_menu_item_exit_text">Выйти</string>
+
+    <!-- NavGraphMain Fragments Labels -->
+    <string name="nav_graph_about_fragment_label_text">О приложении</string>
+    <string name="nav_graph_profile_fragment_label_text">Профиль</string>
+    <string name="nav_graph_chats_fragment_label_text">Чаты</string>
+</resources>

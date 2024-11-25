@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Text Sizes-->
+    <dimen name="smallText">14sp</dimen>
+    <dimen name="normalText">16sp</dimen>
+
+    <!--Margins-->
+    <dimen name="horizontalMargin">16dp</dimen>
+    <dimen name="verticalMargin">10dp</dimen>
+    <dimen name="settingsRippleEffectCornerRadius">4dp</dimen>
+
+
+</resources>
