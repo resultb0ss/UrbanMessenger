@@ -84,6 +84,8 @@
             android:id="@+id/profileFragmentChangeFirstNameTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
+            android:autofillHints="name"
             android:layout_marginHorizontal="@dimen/horizontalMargin"
             android:layout_marginVertical="@dimen/verticalMargin"
             android:hint="@string/profile_fragment_first_name_field_hint"/>
@@ -92,6 +94,8 @@
             android:id="@+id/profileFragmentChangeLastNameTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
+            android:autofillHints="name"
             android:layout_marginHorizontal="@dimen/horizontalMargin"
             android:layout_marginVertical="@dimen/verticalMargin"
             android:hint="@string/profile_fragment_last_name_field_hint"/>
@@ -100,6 +104,8 @@
             android:id="@+id/profileFragmentChangeProfessionTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
+            android:autofillHints="name"
             android:layout_marginHorizontal="@dimen/horizontalMargin"
             android:layout_marginVertical="@dimen/verticalMargin"
             android:hint="@string/profile_fragment_profession_field_hint"/>
@@ -108,6 +114,8 @@
             android:id="@+id/profileFragmentChangeAdressTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
+            android:autofillHints="name"
             android:layout_marginHorizontal="@dimen/horizontalMargin"
             android:layout_marginVertical="@dimen/verticalMargin"
             android:hint="@string/profile_fragment_adress_field_hint"/>
@@ -116,6 +124,8 @@
             android:id="@+id/profileFragmentChangeAgeTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:autofillHints="name"
             android:layout_marginHorizontal="@dimen/horizontalMargin"
             android:layout_marginVertical="@dimen/verticalMargin"
             android:hint="@string/profile_fragment_age_field_hint"/>

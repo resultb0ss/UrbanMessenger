@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,6 +11,7 @@
         android:id="@+id/changePhotoFragmentImage"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:contentDescription="@string/change_photo_fragment_default_image_description"
         android:src="@drawable/change_photo_fragment_default_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +24,7 @@
         android:id="@+id/changePhotoFragmentChoosePhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Выбрать изображение"
+        android:text="@string/change_photo_fragment_choose_photo_button_text"
         app:icon="@drawable/change_photo_fragment_choose_button_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +37,7 @@
         android:id="@+id/changePhotoFragmentSavePhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Применить изображение"
+        android:text="@string/change_photo_fragment_save_photo_button_text"
         app:icon="@drawable/change_photo_fragment_save_button_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
