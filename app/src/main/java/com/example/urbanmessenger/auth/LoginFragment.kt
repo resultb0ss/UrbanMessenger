@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.urbanmessenger.AUTHFIREBASE
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.chats.MainActivity
 import com.example.urbanmessenger.databinding.FragmentLoginBinding
+import com.example.urbanmessenger.myToast
 
 
 class LoginFragment : Fragment() {
@@ -30,16 +32,35 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.loginFragmentLoginButton.setOnClickListener{
-            startActivity(Intent(requireActivity(), MainActivity::class.java))
+        binding.loginFragmentLoginButton.setOnClickListener {
+            login()
         }
 
-        binding.loginFragmentRegistrationTextView.setOnClickListener{
+        binding.loginFragmentRegistrationTextView.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
-        binding.loginFragmentRecoverPasswordText.setOnClickListener{
+        binding.loginFragmentRecoverPasswordText.setOnClickListener {
             findNavController().navigate(R.id.recoverPasswordFragment)
+        }
+    }
+
+    private fun login() {
+        val email = binding.loginFragmentEmailField.text.toString()
+        val password = binding.loginFragmentPasswordField.text.toString()
+
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            AUTHFIREBASE.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) {
+                    if (it.isSuccessful) {
+                        myToast("Успешный вход в систему", requireContext())
+                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+                    } else {
+                        myToast("Не удалось войти в систему", requireContext())
+                    }
+                }
+        } else {
+            myToast("Заполните необходимые поля", requireContext())
         }
     }
 

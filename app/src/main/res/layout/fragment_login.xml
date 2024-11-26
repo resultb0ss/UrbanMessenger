@@ -34,6 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_fragment_password_field_hint"
+        android:inputType="textPassword"
+        android:autofillHints="password"
         app:layout_constraintTop_toBottomOf="@id/loginFragmentEmailField"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

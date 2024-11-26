@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         val builder = AppBarConfiguration.Builder(navController.graph)
         val appBarConfiguration = builder.build()
         binding.mainActivityToolbar.setupWithNavController(navController, appBarConfiguration)
-
 
     }
 

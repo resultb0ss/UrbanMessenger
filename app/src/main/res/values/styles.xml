@@ -9,4 +9,14 @@
         <item name="android:textSize">@dimen/normalText</item>
         <item name="android:gravity">center_horizontal</item>
     </style>
+
+    <style name="MyCustomTabLayoutStyle" parent="Widget.Design.TabLayout">
+
+        <item name="tabGravity">fill</item>
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+    </style>
+
 </resources>

@@ -40,8 +40,19 @@
     <string name="profile_fragment_adress_field_hint">Адрес</string>
     <string name="profile_fragment_age_field_hint">Возраст</string>
 
+
+    <!-- Registration Fragment strings -->
+    <string name="registration_fragment_email_edit_text_hint">Email</string>
+    <string name="registration_fragment_password_edit_text_hint">Password</string>
+    <string name="registration_fragment_confirm_password_edit_text_hint">Confirm password</string>
+    <string name="registration_fragment_sign_in_button_name_text">Sign In</string>
+    <string name="registration_fragment_text_already_have_an_account_login">Already have an account? Login</string>
+
+
     <!-- Change photo fragment strings -->
     <string name="change_photo_fragment_choose_photo_button_text">Выбрать изображение</string>
     <string name="change_photo_fragment_save_photo_button_text">Применить изображение</string>
     <string name="change_photo_fragment_default_image_description">DefaultImage</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

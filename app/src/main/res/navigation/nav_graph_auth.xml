@@ -47,5 +47,13 @@
         android:id="@+id/registrationFragment"
         android:name="com.example.urbanmessenger.auth.RegistrationFragment"
         android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" />
+        tools:layout="@layout/fragment_registration" >
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_let"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
 </navigation>
