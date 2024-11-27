@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.urbanmessenger.databinding.ItemUsersListBinding
+import com.example.urbanmessenger.models.UserData
 
 class CustomAdapterUsersList(var users: MutableList<UserData>) :
     RecyclerView.Adapter<CustomAdapterUsersList.UserViewHolder>() {
@@ -31,9 +32,8 @@ class CustomAdapterUsersList(var users: MutableList<UserData>) :
         position: Int
     ) {
         val user = users[position]
-        holder.binding.itemUsersContactNameTV.text = user.name
-        holder.binding.itemUsersContactEmailTV.text = user.mail
-        holder.binding.itemUsersContactImageIV.setImageResource(user.userImage)
+        holder.binding.itemUsersContactNameTV.text = USER.username
+        holder.binding.itemUsersContactEmailTV.text = USER.email
         holder.itemView.setOnClickListener{
             if (onUserClickListener != null){
                 onUserClickListener!!.onUserClick(user, position)

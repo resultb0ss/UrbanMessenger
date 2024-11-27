@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.urbanmessenger.AUTHFIREBASE
 import com.example.urbanmessenger.chats.MainActivity
 import com.example.urbanmessenger.databinding.ActivityAuthBinding
+import com.example.urbanmessenger.initFirebase
 import com.google.firebase.auth.FirebaseAuth
 
 class AuthActivity : AppCompatActivity() {
@@ -19,7 +20,7 @@ class AuthActivity : AppCompatActivity() {
         _binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        AUTHFIREBASE = FirebaseAuth.getInstance()
+        initFirebase()
 
         if (AUTHFIREBASE.currentUser != null) {
             startActivity(Intent(this, MainActivity::class.java))

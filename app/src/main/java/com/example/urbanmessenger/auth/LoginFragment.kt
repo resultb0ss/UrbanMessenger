@@ -8,10 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.AUTHFIREBASE
+import com.example.urbanmessenger.CHILD_ID
+import com.example.urbanmessenger.CHILD_MAIL
+import com.example.urbanmessenger.CHILD_USERNAME
+import com.example.urbanmessenger.DATA_BASE_ROOT
+import com.example.urbanmessenger.NODE_USERS
 import com.example.urbanmessenger.R
+import com.example.urbanmessenger.UID
 import com.example.urbanmessenger.chats.MainActivity
 import com.example.urbanmessenger.databinding.FragmentLoginBinding
-import com.example.urbanmessenger.myToast
+import com.example.urbanmessenger.utils.myToast
 
 
 class LoginFragment : Fragment() {
@@ -55,6 +61,7 @@ class LoginFragment : Fragment() {
                     if (it.isSuccessful) {
                         myToast("Успешный вход в систему", requireContext())
                         startActivity(Intent(requireActivity(), MainActivity::class.java))
+
                     } else {
                         myToast("Не удалось войти в систему", requireContext())
                     }
