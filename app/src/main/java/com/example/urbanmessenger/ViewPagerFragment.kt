@@ -16,13 +16,14 @@ class ViewPagerFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewPagerItem = arguments?.getSerializable("page") as Page
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewPagerItem = arguments?.getSerializable("page") as Page
         _binding = FragmentViewPagerBinding.inflate(inflater, container, false)
 
         return binding.root

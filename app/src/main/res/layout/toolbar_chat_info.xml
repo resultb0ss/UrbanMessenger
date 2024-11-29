@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/main_color_day_light"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/toolbarUserImage"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="@dimen/horizontalMargin"
+        android:src="@drawable/baseline_account_circle_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/toolbarUserFullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ruslan Ivanov"
+        android:textColor="@color/white"
+        android:textSize="@dimen/normalText"
+        android:layout_marginStart="10dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/toolbarUserImage"
+        app:layout_constraintTop_toTopOf="@+id/toolbarUserImage" />
+
+    <TextView
+        android:id="@+id/toolbarUserStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="в сети"
+        android:textColor="@color/hintColorWhite"
+        android:textSize="@dimen/smallText"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarUserImage"
+        app:layout_constraintStart_toEndOf="@id/toolbarUserImage"
+        app:layout_constraintTop_toBottomOf="@id/toolbarUserFullName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

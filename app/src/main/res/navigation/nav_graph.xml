@@ -20,4 +20,9 @@
         android:name="com.example.urbanmessenger.chats.ProfileFragment"
         android:label="@string/nav_graph_profile_fragment_label_text"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/chatsListFragment"
+        android:name="com.example.urbanmessenger.ChatsListFragment"
+        android:label="fragment_chats_list"
+        tools:layout="@layout/fragment_chats_list" />
 </navigation>
