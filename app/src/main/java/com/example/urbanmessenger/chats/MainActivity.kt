@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -37,7 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         initFirebase()
 
@@ -71,7 +68,6 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuItemExit -> {
@@ -90,9 +86,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initUser(){
+    private fun initUser() {
         DATA_BASE_ROOT.child(NODE_USERS).child(UID).addListenerForSingleValueEvent(
-            AppValueEventListener{
+            AppValueEventListener {
                 USER = it.getValue(UserData::class.java) ?: UserData()
             }
         )
@@ -104,7 +100,7 @@ class MainActivity : AppCompatActivity() {
         _binding = null
     }
 
-    fun updateToolbarTitle(newTitle: String){
+    fun updateToolbarTitle(newTitle: String) {
         binding.mainActivityToolbar.setTitle(newTitle)
     }
 

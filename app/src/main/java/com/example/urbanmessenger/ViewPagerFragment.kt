@@ -1,7 +1,6 @@
 package com.example.urbanmessenger
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ class ViewPagerFragment : Fragment() {
 
     private var _binding: FragmentViewPagerBinding? = null
     private val binding get() = _binding!!
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

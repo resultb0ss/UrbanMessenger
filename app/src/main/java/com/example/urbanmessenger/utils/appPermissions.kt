@@ -2,7 +2,6 @@ package com.example.urbanmessenger.utils
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.urbanmessenger.APP_ACTIVITY

@@ -37,7 +37,7 @@ class ChatsFragment : Fragment() {
             binding.chatsFragmentViewPager
         ) { tab, position ->
 
-            val tabNames = listOf("Чаты","Пользователи")
+            val tabNames = listOf("Чаты", "Пользователи")
             tab.text = tabNames[position]
         }.attach()
     }

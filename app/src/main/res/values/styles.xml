@@ -19,4 +19,22 @@
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
 
+    <style name="profile_fragment_edit_text_fields_input_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">text</item>
+        <item name="android:autofillHints">name</item>
+        <item name="android:layout_marginHorizontal">@dimen/horizontalMargin</item>
+        <item name="android:layout_marginVertical">@dimen/verticalMargin</item>
+    </style>
+
+    <style name="profile_fragment_edit_text_fields_input_number">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginHorizontal">@dimen/horizontalMargin</item>
+        <item name="android:layout_marginVertical">@dimen/verticalMargin</item>
+        <item name="android:autofillHints">name</item>
+        <item name="android:inputType">number</item>
+    </style>
+
 </resources>

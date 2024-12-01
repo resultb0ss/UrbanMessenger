@@ -1,9 +1,6 @@
 package com.example.urbanmessenger
 
-import android.content.Context
-import android.widget.Toast
 import com.example.urbanmessenger.models.UserData
-import com.example.urbanmessenger.utils.myToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference

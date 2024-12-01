@@ -14,13 +14,13 @@ enum class AppStates(val state: String) {
     TYPING("печатает");
 
     companion object {
-        fun updateState(appStates: AppStates, context:Context) {
+        fun updateState(appStates: AppStates, context: Context) {
 
-            if (AUTHFIREBASE.currentUser!= null){
+            if (AUTHFIREBASE.currentUser != null) {
                 DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_STATE)
                     .setValue(appStates.state)
-                    .addOnSuccessListener{ USER.state = appStates.state }
-                    .addOnFailureListener{myToast("Не удалось обновить статус", context)}
+                    .addOnSuccessListener { USER.state = appStates.state }
+                    .addOnFailureListener { myToast("Не удалось обновить статус", context) }
             }
 
         }

@@ -3,7 +3,6 @@ package com.example.urbanmessenger
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,6 @@ import com.google.firebase.database.DatabaseReference
 
 
 class UsersListFragment : Fragment() {
-
 
     private var _binding: FragmentUsersListBinding? = null
     private val binding get() = _binding!!
@@ -39,7 +37,6 @@ class UsersListFragment : Fragment() {
         _binding = FragmentUsersListBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onPause() {
         super.onPause()
@@ -110,13 +107,11 @@ class UsersListFragment : Fragment() {
 
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
 
     }
-
 
 
 }

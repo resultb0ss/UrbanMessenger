@@ -3,17 +3,12 @@ package com.example.urbanmessenger
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.transaction
-import androidx.navigation.fragment.findNavController
-import com.example.urbanmessenger.chats.MainActivity
 import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.utils.updateToolbar
-
 
 class ChatsListFragment : Fragment() {
 
@@ -51,20 +46,12 @@ class ChatsListFragment : Fragment() {
                 override fun onChatClick(chat: ChatData, position: Int) {
 
                     val intent = Intent(requireActivity(), SingleChatActivity::class.java)
-                    intent.putExtra("name",chat.nameUser)
+                    intent.putExtra("name", chat.nameUser)
                     startActivity(intent)
 
                 }
             }
         )
-
-        Log.d("@@@", "OnViewCreated")
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("@@@", "OnViewPause")
     }
 
     override fun onResume() {
@@ -74,14 +61,8 @@ class ChatsListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("@@@", "OnDestroyView")
         _binding = null
 
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("@@@", "OnDestroy")
     }
 
 

@@ -79,7 +79,6 @@ class RegistrationFragment : Fragment() {
                             } else {
                                 myToast(it.exception?.message.toString(), requireContext())
                             }
-
                         }
 
                 } else {

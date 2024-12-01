@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".chats.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,145 +13,157 @@
         android:background="@color/main_color_day_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <FrameLayout
         android:id="@+id/userImageBlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/profileFragmentHeader"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/profileFragmentHeader"
         android:clickable="true"
         android:focusable="true"
-        >
+        app:layout_constraintBottom_toBottomOf="@id/profileFragmentHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileFragmentHeader">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileFragmentUserImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="10dp"
-            android:src="@drawable/profile_fragment_user_default_image"
-            />
+            android:src="@drawable/profile_fragment_user_default_image" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/settingsFragmentChangePhotoButtonBTN"
             android:layout_width="55dp"
             android:layout_height="55dp"
+            android:layout_gravity="bottom|end"
+            android:padding="10dp"
             android:src="@drawable/baseline_photo_camera_24"
             app:civ_border_color="@color/hintColorGray"
             app:civ_border_width="0.5dp"
-            app:civ_circle_background_color="@color/white"
-            android:padding="10dp"
-            android:layout_gravity="bottom|end"/>
+            app:civ_circle_background_color="@color/white" />
 
     </FrameLayout>
+
     <LinearLayout
         android:id="@+id/mainInfo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/userImageBlock"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/userImageBlock">
 
         <TextView
             android:id="@+id/profileFragmentUserNameTextView"
-            android:text="@string/profile_fragment_name_text"
-            style="@style/profile_main_info" />
+            style="@style/profile_main_info"
+            android:text="@string/profile_fragment_name_text" />
 
         <TextView
             android:id="@+id/profileFragmentUserMailTextView"
-            android:text="@string/profile_fragment_email_text"
-            style="@style/profile_main_info" />
+            style="@style/profile_main_info"
+            android:text="@string/profile_fragment_email_text" />
 
         <TextView
             android:id="@+id/profileFragmentUserEntryMethod"
-            android:text="@string/profile_fragment_method_entry_text"
             style="@style/profile_main_info"
-            />
+            android:text="@string/profile_fragment_method_entry_text" />
 
         <TextView
             android:id="@+id/profileFragmentUserVerification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/profile_fragment_verification_text"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:text="@string/profile_fragment_verification_text" />
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/profileFragmentChangeFirstNameTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:autofillHints="name"
-            android:layout_marginHorizontal="@dimen/horizontalMargin"
-            android:layout_marginVertical="@dimen/verticalMargin"
-            android:hint="@string/profile_fragment_first_name_field_hint"/>
+            style="@style/profile_fragment_edit_text_fields_input_text"
+            android:hint="@string/profile_fragment_first_name_field_hint"
+            app:endIconMode="clear_text">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/profileFragmentChangeLastNameTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:autofillHints="name"
-            android:layout_marginHorizontal="@dimen/horizontalMargin"
-            android:layout_marginVertical="@dimen/verticalMargin"
-            android:hint="@string/profile_fragment_last_name_field_hint"/>
+            style="@style/profile_fragment_edit_text_fields_input_text"
+            android:hint="@string/profile_fragment_last_name_field_hint"
+            app:endIconMode="clear_text">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/profileFragmentChangeProfessionTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:autofillHints="name"
-            android:layout_marginHorizontal="@dimen/horizontalMargin"
-            android:layout_marginVertical="@dimen/verticalMargin"
-            android:hint="@string/profile_fragment_profession_field_hint"/>
+            style="@style/profile_fragment_edit_text_fields_input_text"
+            android:hint="@string/profile_fragment_profession_field_hint"
+            app:endIconMode="clear_text">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/profileFragmentChangeAdressTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:autofillHints="name"
-            android:layout_marginHorizontal="@dimen/horizontalMargin"
-            android:layout_marginVertical="@dimen/verticalMargin"
-            android:hint="@string/profile_fragment_adress_field_hint"/>
+            style="@style/profile_fragment_edit_text_fields_input_text"
+            android:hint="@string/profile_fragment_adress_field_hint"
+            app:endIconMode="clear_text">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/profileFragmentChangeAgeTextField"
+            android:hint="@string/profile_fragment_age_field_hint"
+            style="@style/profile_fragment_edit_text_fields_input_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:autofillHints="name"
-            android:layout_marginHorizontal="@dimen/horizontalMargin"
-            android:layout_marginVertical="@dimen/verticalMargin"
-            android:hint="@string/profile_fragment_age_field_hint"/>
+            android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/profileFragmentCallUserButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:gravity="center|center_horizontal"
-            app:icon="@drawable/profile_fragment_phone_button_icon"
-            android:background="@drawable/circlebutton"
-            android:layout_marginHorizontal="@dimen/horizontalMargin"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/profileFragmentSaveInfoButton"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/horizontalMargin"
+                android:text="@string/profile_fragment_save_button_text" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/profileFragmentSaveInfoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="@dimen/horizontalMargin"
-            android:text="@string/profile_fragment_save_button_text"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/profileFragmentAddPhoneNumberButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                app:icon="@drawable/profile_fragment_phone_button_icon"
+                android:layout_marginHorizontal="@dimen/horizontalMargin"
+                android:text="Добавить номер" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

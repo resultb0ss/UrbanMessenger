@@ -2,20 +2,13 @@ package com.example.urbanmessenger.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.AUTHFIREBASE
-import com.example.urbanmessenger.CHILD_ID
-import com.example.urbanmessenger.CHILD_MAIL
-import com.example.urbanmessenger.CHILD_USERNAME
-import com.example.urbanmessenger.DATA_BASE_ROOT
-import com.example.urbanmessenger.NODE_USERS
 import com.example.urbanmessenger.R
-import com.example.urbanmessenger.UID
 import com.example.urbanmessenger.chats.MainActivity
 import com.example.urbanmessenger.databinding.FragmentLoginBinding
 import com.example.urbanmessenger.utils.myToast
@@ -55,7 +48,6 @@ class LoginFragment : Fragment() {
     private fun login() {
         val email = binding.loginFragmentEmailField.editText?.text.toString()
         val password = binding.loginFragmentPasswordField.editText?.text.toString()
-        Log.d("@@@", password)
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
             AUTHFIREBASE.signInWithEmailAndPassword(email, password)

@@ -2,19 +2,11 @@ package com.example.urbanmessenger
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
-import androidx.navigation.ui.setupWithNavController
-import androidx.room.Database
-import com.example.urbanmessenger.auth.AuthActivity
 import com.example.urbanmessenger.chats.MainActivity
 import com.example.urbanmessenger.databinding.ActivitySingleChatBinding
 import com.example.urbanmessenger.models.UserData
@@ -44,7 +36,7 @@ class SingleChatActivity : AppCompatActivity() {
         setSupportActionBar(binding.singleChatActivityToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        binding.toolbarArrowBackIcon.setOnClickListener{
+        binding.toolbarArrowBackIcon.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
@@ -55,7 +47,7 @@ class SingleChatActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mListenerInfoToolbar = AppValueEventListener{
+        mListenerInfoToolbar = AppValueEventListener {
             mReceivingUser = it.getUserDataModel()
             initInfoToolbar()
         }
@@ -76,8 +68,10 @@ class SingleChatActivity : AppCompatActivity() {
                 startActivity(Intent(this, MainActivity::class.java))
                 return true
             }
+
             else -> {
-                val navController = findNavController(R.id.nav_host_fragment_container_single_chat_activity)
+                val navController =
+                    findNavController(R.id.nav_host_fragment_container_single_chat_activity)
                 return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(
                     item
                 )
@@ -104,12 +98,13 @@ class SingleChatActivity : AppCompatActivity() {
         _binding = null
     }
 
-    private fun initInfoToolbar(){
+    private fun initInfoToolbar() {
 
-        if (mReceivingUser.firstname.isEmpty() && mReceivingUser.lastname.isEmpty()){
+        if (mReceivingUser.firstname.isEmpty() && mReceivingUser.lastname.isEmpty()) {
             binding.toolbarUserFullName.text = mReceivingUser.email
         } else {
-            binding.toolbarUserFullName.text = "${mReceivingUser.firstname} ${mReceivingUser.lastname}"
+            binding.toolbarUserFullName.text =
+                "${mReceivingUser.firstname} ${mReceivingUser.lastname}"
         }
         binding.toolbarUserStatus.text = mReceivingUser.state
     }

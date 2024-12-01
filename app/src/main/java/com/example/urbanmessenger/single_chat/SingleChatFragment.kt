@@ -30,8 +30,6 @@ class SingleChatFragment : Fragment() {
     private lateinit var mMessagesListener: AppValueEventListener
     private var mListMessages = emptyList<UserData>()
 
-
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,16 +50,15 @@ class SingleChatFragment : Fragment() {
 
         initRecyclerView()
 
-        binding.singleChatFragmentSendMessageIcon.setOnClickListener{
+        binding.singleChatFragmentSendMessageIcon.setOnClickListener {
             val message = binding.messageInputField.text.toString()
 
-            if (message.isEmpty()){
+            if (message.isEmpty()) {
                 Toast.makeText(requireContext(), "Введите сообщение", Toast.LENGTH_SHORT).show()
             } else sendMessage(message, CONTACT.id, TYPE_TEXT) {
                 binding.messageInputField.text.clear()
             }
         }
-
 
     }
 
@@ -69,7 +66,7 @@ class SingleChatFragment : Fragment() {
         mAdapter = SingleChatAdapter()
         mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(CONTACT.id)
         binding.singleChatFragmentRecyclerView.adapter = mAdapter
-        mMessagesListener = AppValueEventListener{ dataSnapshot ->
+        mMessagesListener = AppValueEventListener { dataSnapshot ->
             mListMessages = dataSnapshot.children.map { it.getUserDataModel() }
             mAdapter.setList(mListMessages)
             binding.singleChatFragmentRecyclerView.smoothScrollToPosition(mAdapter.itemCount)

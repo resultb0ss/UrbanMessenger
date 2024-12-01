@@ -7,7 +7,6 @@ import com.example.urbanmessenger.AUTHFIREBASE
 import com.example.urbanmessenger.chats.MainActivity
 import com.example.urbanmessenger.databinding.ActivityAuthBinding
 import com.example.urbanmessenger.initFirebase
-import com.google.firebase.auth.FirebaseAuth
 
 class AuthActivity : AppCompatActivity() {
 
@@ -26,9 +25,7 @@ class AuthActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
-
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

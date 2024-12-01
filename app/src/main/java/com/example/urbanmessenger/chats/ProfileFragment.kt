@@ -39,21 +39,24 @@ class ProfileFragment : Fragment() {
 
         binding.profileFragmentSaveInfoButton.setOnClickListener {
 
-            val newFirstName = binding.profileFragmentChangeFirstNameTextField.text.toString()
-            val newLastName = binding.profileFragmentChangeLastNameTextField.text.toString()
-            val newProfession = binding.profileFragmentChangeProfessionTextField.text.toString()
-            val newAddress = binding.profileFragmentChangeAdressTextField.text.toString()
-            val newAge = binding.profileFragmentChangeAgeTextField.text.toString()
+            val newFirstName = binding.profileFragmentChangeFirstNameTextField.editText?.text.toString()
+            val newLastName = binding.profileFragmentChangeLastNameTextField.editText?.text.toString()
+            val newProfession = binding.profileFragmentChangeProfessionTextField.editText?.text.toString()
+            val newAddress = binding.profileFragmentChangeAdressTextField.editText?.text.toString()
+            val newAge = binding.profileFragmentChangeAgeTextField.editText?.text.toString()
 
             updateFirstName(newFirstName)
             updateLastName(newLastName)
             updateAge(newAge)
             updateAddress(newAddress)
             updateProfession(newProfession)
+
+            myToast("Данные успешно обновлены", requireContext())
         }
     }
 
-    private fun updateProfession(newProfession: String) {
+
+    private fun updateProfession(newProfession: String){
         DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_PROFESSION).setValue(newProfession)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
@@ -116,11 +119,11 @@ class ProfileFragment : Fragment() {
     private fun initFields() {
         binding.profileFragmentUserNameTextView.text = USER.username
         binding.profileFragmentUserMailTextView.text = USER.email
-        binding.profileFragmentChangeFirstNameTextField.setText(USER.firstname)
-        binding.profileFragmentChangeLastNameTextField.setText(USER.lastname)
-        binding.profileFragmentChangeAgeTextField.setText(USER.age)
-        binding.profileFragmentChangeAdressTextField.setText(USER.address)
-        binding.profileFragmentChangeProfessionTextField.setText(USER.profession)
+        binding.profileFragmentChangeFirstNameTextField.editText?.setText(USER.firstname)
+        binding.profileFragmentChangeLastNameTextField.editText?.setText(USER.lastname)
+        binding.profileFragmentChangeAgeTextField.editText?.setText(USER.age)
+        binding.profileFragmentChangeAdressTextField.editText?.setText(USER.address)
+        binding.profileFragmentChangeProfessionTextField.editText?.setText(USER.profession)
 
     }
 

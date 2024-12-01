@@ -13,6 +13,7 @@ data class UserData(
     var profession: String = "",
     var state: String = "",
 
+    //Messages property
     var text: String = "",
     var type: String = "",
     var from: String = "",

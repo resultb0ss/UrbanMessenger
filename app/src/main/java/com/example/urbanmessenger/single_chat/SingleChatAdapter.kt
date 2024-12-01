@@ -9,9 +9,6 @@ import com.example.urbanmessenger.UID
 import com.example.urbanmessenger.databinding.ItemSingleMessageBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.asTime
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
@@ -46,7 +43,6 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
     }
 
     override fun getItemCount() = mListMessagesCache.size
-
 
     class SingleChatHolder(val binding: ItemSingleMessageBinding) :
         RecyclerView.ViewHolder(binding.root) {
