@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -21,11 +23,16 @@ class SingleChatActivity : AppCompatActivity() {
     private var _binding: ActivitySingleChatBinding? = null
     private val binding get() = _binding!!
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         _binding = ActivitySingleChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+        SINGLE_CHAT_ACTIVITY = this
 
 
         setSupportActionBar(binding.singleChatActivityToolbar)
@@ -35,6 +42,8 @@ class SingleChatActivity : AppCompatActivity() {
         val builder = AppBarConfiguration.Builder(navController.graph)
         val appBarConfiguration = builder.build()
         binding.singleChatActivityToolbar.setupWithNavController(navController, appBarConfiguration)
+
+
 
         initFirebase()
         initUser()

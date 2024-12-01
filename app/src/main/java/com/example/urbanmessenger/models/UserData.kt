@@ -11,6 +11,7 @@ data class UserData(
     var age: String = "",
     var address: String = "",
     var profession: String = "",
+    var state: String = "",
 
 
 )

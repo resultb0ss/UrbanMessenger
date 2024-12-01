@@ -18,29 +18,46 @@
         app:layout_constraintVertical_bias="0.15"
         android:src="@drawable/login_fragment_image"/>
 
-    <com.google.android.material.textfield.TextInputEditText
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginFragmentEmailField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_fragment_email_field_hint"
+        app:endIconMode="clear_text"
+        android:layout_marginHorizontal="@dimen/horizontalMargin"
         app:layout_constraintTop_toBottomOf="@id/loginFragmentImageView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.10"/>
+        app:layout_constraintVertical_bias="0.10">
 
-    <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/loginFragmentPasswordField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_fragment_password_field_hint"
-        android:inputType="textPassword"
+        app:endIconMode="password_toggle"
         android:autofillHints="password"
+        android:layout_marginHorizontal="@dimen/horizontalMargin"
         app:layout_constraintTop_toBottomOf="@id/loginFragmentEmailField"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.10"/>
+        app:layout_constraintVertical_bias="0.10">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/loginFragmentRecoverPasswordText"

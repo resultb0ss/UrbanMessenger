@@ -15,8 +15,8 @@
         android:layout_height="?attr/actionBarSize"
         style="@style/Widget.MaterialComponents.Toolbar.Primary">
 
-    </com.google.android.material.appbar.MaterialToolbar>
 
+    </com.google.android.material.appbar.MaterialToolbar>
 
 
     <androidx.fragment.app.FragmentContainerView

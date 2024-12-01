@@ -14,7 +14,7 @@ class SingleChatFragment : Fragment() {
 
     private var _binding: FragmentSingleChatBinding? = null
     private val binding get() = _binding!!
-//    private lateinit var chatName: String
+
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
@@ -29,18 +29,14 @@ class SingleChatFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-//        chatName = SingleChatFragmentArgs.Companion.fromBundle(requireArguments()).chatName
     }
     override fun onResume() {
         super.onResume()
-//        APP_ACTIVITY.updateToolbarTitle(chatName)
-
 
     }
 
     override fun onPause() {
         super.onPause()
-
     }
 
     override fun onDestroyView() {

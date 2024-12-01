@@ -15,7 +15,6 @@ class ChatsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var adapter: PageAdapter
-    val fragments = Page.pages
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +29,7 @@ class ChatsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = PageAdapter(this, fragments)
+        adapter = PageAdapter(this)
         binding.chatsFragmentViewPager.adapter = adapter
 
         TabLayoutMediator(
@@ -38,7 +37,8 @@ class ChatsFragment : Fragment() {
             binding.chatsFragmentViewPager
         ) { tab, position ->
 
-            tab.text = fragments[position].label
+            val tabNames = listOf("Чаты","Пользователи")
+            tab.text = tabNames[position]
         }.attach()
     }
 

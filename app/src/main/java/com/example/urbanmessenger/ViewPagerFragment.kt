@@ -1,6 +1,7 @@
 package com.example.urbanmessenger
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,6 @@ class ViewPagerFragment : Fragment() {
     private var _binding: FragmentViewPagerBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewPagerItem: Page
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class ViewPagerFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewPagerItem = arguments?.getSerializable("page") as Page
+
         _binding = FragmentViewPagerBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -31,12 +31,6 @@ class ViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        childFragmentManager.beginTransaction().replace(
-            R.id.viewPagerFragmentContainer,
-            viewPagerItem.fragment
-        ).commit()
-
 
     }
 

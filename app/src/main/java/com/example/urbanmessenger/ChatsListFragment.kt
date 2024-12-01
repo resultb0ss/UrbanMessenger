@@ -50,7 +50,9 @@ class ChatsListFragment : Fragment() {
             object : CustomAdapterChatsList.OnChatClickListener {
                 override fun onChatClick(chat: ChatData, position: Int) {
 
-                    startActivity(Intent((requireActivity() as MainActivity), SingleChatActivity::class.java))
+                    val intent = Intent(requireActivity(), SingleChatActivity::class.java)
+                    intent.putExtra("name",chat.nameUser)
+                    startActivity(intent)
 
                 }
             }

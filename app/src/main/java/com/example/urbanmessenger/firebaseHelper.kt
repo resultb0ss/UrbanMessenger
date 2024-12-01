@@ -2,6 +2,7 @@ package com.example.urbanmessenger
 
 import com.example.urbanmessenger.models.UserData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
@@ -24,6 +25,7 @@ const val CHILD_MAIL = "email"
 const val CHILD_AGE = "age"
 const val CHILD_ADDRESS = "address"
 const val CHILD_PROFESSION = "profession"
+const val CHILD_STATE = "state"
 
 fun initFirebase(){
     AUTHFIREBASE = FirebaseAuth.getInstance()
@@ -31,4 +33,7 @@ fun initFirebase(){
     USER = UserData()
     UID = AUTHFIREBASE.currentUser?.uid.toString()
 }
+
+fun DataSnapshot.getUserDataModel(): UserData =
+    this.getValue(UserData::class.java) ?: UserData()
 

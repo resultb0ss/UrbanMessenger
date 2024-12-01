@@ -8,11 +8,15 @@
     <fragment
         android:id="@+id/singleChatFragment"
         android:name="com.example.urbanmessenger.SingleChatFragment"
-        android:label="fragment_single_chat"
-        tools:layout="@layout/fragment_single_chat" />
+        android:label="Чат"
+        tools:layout="@layout/fragment_single_chat" >
+        <action
+            android:id="@+id/action_singleChatFragment_to_aboutUserFragment"
+            app:destination="@id/aboutUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/aboutUserFragment"
         android:name="com.example.urbanmessenger.AboutUserFragment"
-        android:label="fragment_about_user"
+        android:label="О пользователе"
         tools:layout="@layout/fragment_about_user" />
 </navigation>

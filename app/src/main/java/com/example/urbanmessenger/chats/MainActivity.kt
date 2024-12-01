@@ -23,6 +23,7 @@ import com.example.urbanmessenger.auth.AuthActivity
 import com.example.urbanmessenger.databinding.ActivityMainBinding
 import com.example.urbanmessenger.initFirebase
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.utils.AppStates
 import com.example.urbanmessenger.utils.AppValueEventListener
 
 class MainActivity : AppCompatActivity() {
@@ -56,6 +57,13 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         APP_ACTIVITY = this
+        AppStates.updateState(AppStates.ONLINE, this)
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        AppStates.updateState(AppStates.OFFLINE, this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
