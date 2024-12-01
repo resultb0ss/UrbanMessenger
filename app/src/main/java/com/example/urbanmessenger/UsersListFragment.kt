@@ -1,6 +1,7 @@
 package com.example.urbanmessenger
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,10 +44,9 @@ class UsersListFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         mAdapter.stopListening()
-        mapListeners.forEach{
+        mapListeners.forEach {
             it.key.removeEventListener(it.value)
         }
-        Log.d("@@@", "OnViewPause")
     }
 
     override fun onResume() {
@@ -70,15 +70,22 @@ class UsersListFragment : Fragment() {
                 position: Int,
                 model: UserData
             ) {
-
                 mRefContact = DATA_BASE_ROOT.child(NODE_USERS).child(model.id)
 
-                mRefContactsListener  = AppValueEventListener {
+                mRefContactsListener = AppValueEventListener {
                     val user = it.getValue(UserData::class.java) ?: UserData()
-                    holder.binding.itemUsersContactNameTV.text = user.id
+                    if (user.firstname.isEmpty() && user.lastname.isEmpty()) {
+                        holder.binding.itemUsersContactNameTV.text = user.email
+                    } else {
+                        holder.binding.itemUsersContactNameTV.text =
+                            "${user.firstname} ${user.lastname}"
+                    }
                     holder.binding.itemUsersContactEmailTV.text = user.email
+                    holder.itemView.setOnClickListener {
+                        CONTACT = user
+                        startActivity(Intent(requireActivity(), SingleChatActivity::class.java))
+                    }
                 }
-
                 mRefContact.addValueEventListener(mRefContactsListener)
                 mapListeners[mRefContact] = mRefContactsListener
             }
@@ -93,9 +100,7 @@ class UsersListFragment : Fragment() {
 
                 return ContactsHolder(binding)
             }
-
         }
-
         binding.usersListRecyclerView.adapter = mAdapter
         mAdapter.startListening()
     }
@@ -108,15 +113,10 @@ class UsersListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("@@@", "OnDestroyView")
         _binding = null
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("@@@", "OnDestroy")
-    }
 
 
 }

@@ -8,4 +8,6 @@
     <color name="main_color_night_light">#545456</color>
     <color name="hintColorWhite">#B4FFFFFF</color>
     <color name="hintColorGray">#B8707070</color>
+    <color name="messageColorGreen">#C292F896</color>
+    <color name="mainSingleChatColor">#C265E1EF</color>
 </resources>

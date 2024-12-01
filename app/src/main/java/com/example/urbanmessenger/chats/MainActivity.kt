@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menuItemExit -> {
+                AppStates.updateState(AppStates.OFFLINE, this)
                 AUTHFIREBASE.signOut()
                 startActivity(Intent(this, AuthActivity::class.java))
                 return true

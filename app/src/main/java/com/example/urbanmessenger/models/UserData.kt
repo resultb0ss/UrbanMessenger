@@ -13,6 +13,10 @@ data class UserData(
     var profession: String = "",
     var state: String = "",
 
-
+    var text: String = "",
+    var type: String = "",
+    var from: String = "",
+    var timestamp: Any = ""
 )
+
 
