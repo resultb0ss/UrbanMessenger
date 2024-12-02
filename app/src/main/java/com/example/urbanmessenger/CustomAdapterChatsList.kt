@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.urbanmessenger.databinding.ItemChatsListBinding
+import com.example.urbanmessenger.models.ChatData
 
 class CustomAdapterChatsList(var chatList: MutableList<ChatData>) :
     RecyclerView.Adapter<CustomAdapterChatsList.ChatsViewHolder>() {

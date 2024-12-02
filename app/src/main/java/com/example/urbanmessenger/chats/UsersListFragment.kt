@@ -1,4 +1,4 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.chats
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.urbanmessenger.CONTACT
+import com.example.urbanmessenger.DATA_BASE_ROOT
+import com.example.urbanmessenger.NODE_USERS
 import com.example.urbanmessenger.databinding.FragmentUsersListBinding
 import com.example.urbanmessenger.databinding.ItemUsersListBinding
 import com.example.urbanmessenger.models.UserData

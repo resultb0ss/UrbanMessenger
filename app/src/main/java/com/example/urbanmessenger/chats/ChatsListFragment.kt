@@ -1,4 +1,4 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.chats
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.urbanmessenger.models.ChatData
+import com.example.urbanmessenger.CustomAdapterChatsList
+import com.example.urbanmessenger.R
 import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.utils.updateToolbar
 

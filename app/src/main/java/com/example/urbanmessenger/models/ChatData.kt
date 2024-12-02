@@ -1,4 +1,4 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.models
 
 import java.io.Serializable
 

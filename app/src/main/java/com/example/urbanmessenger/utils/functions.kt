@@ -3,7 +3,7 @@ package com.example.urbanmessenger.utils
 import android.app.Activity
 import android.content.Context
 import android.widget.Toast
-import com.example.urbanmessenger.chats.MainActivity
+import com.example.urbanmessenger.MainActivity
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

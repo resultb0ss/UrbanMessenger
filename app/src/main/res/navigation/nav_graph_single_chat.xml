@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutUserFragment"
-        android:name="com.example.urbanmessenger.AboutUserFragment"
+        android:name="com.example.urbanmessenger.menu_fragments.AboutUserFragment"
         android:label="О пользователе"
         tools:layout="@layout/fragment_about_user" />
 </navigation>

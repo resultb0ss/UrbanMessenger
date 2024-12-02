@@ -1,4 +1,4 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.chats
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,8 +7,17 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.onNavDestinationSelected
-import com.example.urbanmessenger.chats.MainActivity
+import com.example.urbanmessenger.CONTACT
+import com.example.urbanmessenger.DATA_BASE_ROOT
+import com.example.urbanmessenger.MainActivity
+import com.example.urbanmessenger.NODE_USERS
+import com.example.urbanmessenger.R
+import com.example.urbanmessenger.SINGLE_CHAT_ACTIVITY
+import com.example.urbanmessenger.UID
+import com.example.urbanmessenger.USER
 import com.example.urbanmessenger.databinding.ActivitySingleChatBinding
+import com.example.urbanmessenger.getUserDataModel
+import com.example.urbanmessenger.initFirebase
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
 import com.google.firebase.database.DatabaseReference

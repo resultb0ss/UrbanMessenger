@@ -1,25 +1,16 @@
-package com.example.urbanmessenger.chats
+package com.example.urbanmessenger
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
-import com.example.urbanmessenger.APP_ACTIVITY
-import com.example.urbanmessenger.AUTHFIREBASE
-import com.example.urbanmessenger.DATA_BASE_ROOT
-import com.example.urbanmessenger.NODE_USERS
-import com.example.urbanmessenger.R
-import com.example.urbanmessenger.UID
-import com.example.urbanmessenger.USER
-import com.example.urbanmessenger.auth.AuthActivity
 import com.example.urbanmessenger.databinding.ActivityMainBinding
-import com.example.urbanmessenger.initFirebase
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppStates
 import com.example.urbanmessenger.utils.AppValueEventListener
@@ -29,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +33,14 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.mainActivityToolbar)
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
+
+        if (AUTHFIREBASE.currentUser != null) {
+            navController.navigate(R.id.chatsFragment)
+        } else {
+            navController.navigate(R.id.startFragment)
+        }
+
         val builder = AppBarConfiguration.Builder(navController.graph)
         val appBarConfiguration = builder.build()
         binding.mainActivityToolbar.setupWithNavController(navController, appBarConfiguration)
@@ -73,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menuItemExit -> {
                 AppStates.updateState(AppStates.OFFLINE, this)
                 AUTHFIREBASE.signOut()
-                startActivity(Intent(this, AuthActivity::class.java))
+                navController.navigate(R.id.loginFragment)
                 return true
             }
 
@@ -93,7 +92,6 @@ class MainActivity : AppCompatActivity() {
             }
         )
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
