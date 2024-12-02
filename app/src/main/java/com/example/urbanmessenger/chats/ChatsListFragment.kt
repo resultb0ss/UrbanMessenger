@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.urbanmessenger.models.ChatData
+import com.example.urbanmessenger.APP_ACTIVITY
 import com.example.urbanmessenger.CustomAdapterChatsList
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.databinding.FragmentChatsListBinding
-import com.example.urbanmessenger.utils.updateToolbar
+import com.example.urbanmessenger.models.ChatData
 
 class ChatsListFragment : Fragment() {
 
@@ -59,7 +59,7 @@ class ChatsListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateToolbar("Чаты", requireActivity())
+        APP_ACTIVITY.updateToolbarTitle("Чаты")
     }
 
     override fun onDestroyView() {

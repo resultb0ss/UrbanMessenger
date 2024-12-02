@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.urbanmessenger.DiffUtilCallback
 import com.example.urbanmessenger.UID
 import com.example.urbanmessenger.databinding.ItemSingleMessageBinding
 import com.example.urbanmessenger.models.UserData
@@ -13,6 +15,7 @@ import com.example.urbanmessenger.utils.asTime
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
     private var mListMessagesCache = emptyList<UserData>()
+    private lateinit var mDiffResult: DiffUtil.DiffResult
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -49,10 +52,14 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
 
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setList(list: List<UserData>) {
-        mListMessagesCache = list
-        notifyDataSetChanged()
+    fun addItem(item: UserData){
+        val newList = mutableListOf<UserData>()
+        newList.addAll(mListMessagesCache)
+        if(!newList.contains(item))  newList.add(item)
+        newList.sortBy { it.timestamp.toString() }
+        mDiffResult = DiffUtil.calculateDiff(DiffUtilCallback(mListMessagesCache, newList))
+        mDiffResult.dispatchUpdatesTo(this)
+        mListMessagesCache = newList
     }
 }
 

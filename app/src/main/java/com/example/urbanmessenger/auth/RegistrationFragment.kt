@@ -53,11 +53,11 @@ class RegistrationFragment : Fragment() {
         val confirmPassword = binding.confirmPasswordSignUpEditText.text.toString()
 
         if (email.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
-            myToast("Заполните все необходимые поля", requireContext())
+            myToast("Заполните все необходимые поля")
             return
         }
         if (password != confirmPassword) {
-            myToast("Ваши пароли не совпадают", requireContext())
+            myToast("Ваши пароли не совпадают")
             return
         }
 
@@ -74,21 +74,20 @@ class RegistrationFragment : Fragment() {
                     DATA_BASE_ROOT.child(NODE_USERS).child(uid).updateChildren(dataMap)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                myToast("Регистрация прошла успешно", requireContext())
+                                myToast("Регистрация прошла успешно")
                                 findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
                             } else {
-                                myToast(it.exception?.message.toString(), requireContext())
+                                myToast(it.exception?.message.toString())
                             }
                         }
 
                 } else {
                     if (AUTHFIREBASE.currentUser != null) {
-                        myToast("Пользователь с такой почтой уже существует", requireContext())
+                        myToast("Пользователь с такой почтой уже существует")
                         findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
                     }
                     myToast(
-                        "Не удалось зарегистрироваться ${it.exception?.message.toString()}",
-                        requireContext()
+                        "Не удалось зарегистрироваться ${it.exception?.message.toString()}"
                     )
                 }
             }

@@ -13,11 +13,10 @@ import com.example.urbanmessenger.MainActivity
 import com.example.urbanmessenger.NODE_USERS
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.SINGLE_CHAT_ACTIVITY
-import com.example.urbanmessenger.UID
-import com.example.urbanmessenger.USER
 import com.example.urbanmessenger.databinding.ActivitySingleChatBinding
 import com.example.urbanmessenger.getUserDataModel
 import com.example.urbanmessenger.initFirebase
+import com.example.urbanmessenger.initUser
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
 import com.google.firebase.database.DatabaseReference
@@ -88,13 +87,6 @@ class SingleChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun initUser() {
-        DATA_BASE_ROOT.child(NODE_USERS).child(UID).addListenerForSingleValueEvent(
-            AppValueEventListener {
-                USER = it.getValue(UserData::class.java) ?: UserData()
-            }
-        )
-    }
 
     override fun onPause() {
         super.onPause()

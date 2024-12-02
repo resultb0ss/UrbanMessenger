@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.urbanmessenger.APP_ACTIVITY
 import com.example.urbanmessenger.CONTACT
 import com.example.urbanmessenger.DATA_BASE_ROOT
 import com.example.urbanmessenger.NODE_USERS
@@ -15,7 +16,6 @@ import com.example.urbanmessenger.databinding.FragmentUsersListBinding
 import com.example.urbanmessenger.databinding.ItemUsersListBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
-import com.example.urbanmessenger.utils.updateToolbar
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
@@ -51,7 +51,7 @@ class UsersListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        updateToolbar("Пользователи", requireActivity())
+        APP_ACTIVITY.updateToolbarTitle("Пользователи")
         initRecyclerView()
     }
 

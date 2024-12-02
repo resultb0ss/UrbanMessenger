@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.urbanmessenger.APP_ACTIVITY
 import com.example.urbanmessenger.AUTHFIREBASE
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.databinding.FragmentLoginBinding
@@ -54,15 +53,15 @@ class LoginFragment : Fragment() {
             AUTHFIREBASE.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) {
                     if (it.isSuccessful) {
-                        myToast("Успешный вход в систему", requireContext())
+                        myToast("Успешный вход в систему")
                         findNavController().navigate(R.id.action_loginFragment_to_chatsFragment)
 
                     } else {
-                        myToast("Не удалось войти в систему", requireContext())
+                        myToast("Не удалось войти в систему")
                     }
                 }
         } else {
-            myToast("Заполните необходимые поля", requireContext())
+            myToast("Заполните необходимые поля")
         }
     }
 

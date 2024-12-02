@@ -1,6 +1,8 @@
 package com.example.urbanmessenger
 
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.utils.AppValueEventListener
+import com.example.urbanmessenger.utils.myToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
@@ -71,6 +73,54 @@ fun sendMessage(
         .addOnSuccessListener { function() }
 
 
+}
+
+fun updateProfession(newProfession: String) {
+    DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_PROFESSION).setValue(newProfession)
+        .addOnSuccessListener {
+            USER.profession = newProfession
+        }
+        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+}
+
+fun updateAddress(newAddress: String) {
+    DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_ADDRESS).setValue(newAddress)
+        .addOnSuccessListener {
+            USER.address = newAddress
+        }
+        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+}
+
+fun updateAge(newAge: String) {
+    DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_AGE).setValue(newAge)
+        .addOnSuccessListener {
+            USER.age = newAge
+        }
+        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+}
+
+fun updateLastName(newLastName: String) {
+    DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_LASTNAME).setValue(newLastName)
+        .addOnSuccessListener {
+            USER.lastname = newLastName
+        }
+        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+}
+
+fun updateFirstName(newFirstName: String) {
+    DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_FIRSTNAME).setValue(newFirstName)
+        .addOnSuccessListener {
+            USER.firstname = newFirstName
+        }
+        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+}
+
+fun initUser() {
+    DATA_BASE_ROOT.child(NODE_USERS).child(UID).addListenerForSingleValueEvent(
+        AppValueEventListener {
+            USER = it.getValue(UserData::class.java) ?: UserData()
+        }
+    )
 }
 
 

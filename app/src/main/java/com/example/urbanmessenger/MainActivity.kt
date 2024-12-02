@@ -11,9 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.urbanmessenger.databinding.ActivityMainBinding
-import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppStates
-import com.example.urbanmessenger.utils.AppValueEventListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -57,6 +55,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     override fun onStop() {
         super.onStop()
         AppStates.updateState(AppStates.OFFLINE, this)
@@ -83,14 +86,6 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
-    }
-
-    private fun initUser() {
-        DATA_BASE_ROOT.child(NODE_USERS).child(UID).addListenerForSingleValueEvent(
-            AppValueEventListener {
-                USER = it.getValue(UserData::class.java) ?: UserData()
-            }
-        )
     }
 
     override fun onDestroy() {
