@@ -55,4 +55,15 @@
     <string name="change_photo_fragment_default_image_description">DefaultImage</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-</resources>
+    <string name="default_notification_channel_id">default_notification_channel_id</string>
+
+    <string name="drawer_menu_item_my_profile">Мой профиль</string>
+    <string name="drawer_menu_item_new_groups">Создать группу</string>
+    <string name="drawer_menu_item_contacts">Контакты</string>
+    <string name="drawer_menu_item_saved_messages">Избранное</string>
+    <string name="drawer_menu_item_help">Поддержка</string>
+    <string name="drawer_menu_item_settings">Настройки</string>
+    <string name="drawer_menu_item_chats">Чаты</string>
+
+    <string name="drawer_menu_first_divider">Группы и контакты</string>
+    <string name="drawer_menu_second_divider">Поддержка и настройки</string></resources>

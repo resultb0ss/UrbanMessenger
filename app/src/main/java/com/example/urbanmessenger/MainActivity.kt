@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.example.urbanmessenger.database.initFirebase
@@ -34,16 +35,17 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
-
         if (com.example.urbanmessenger.database.AUTHFIREBASE.currentUser != null) {
-            navController.navigate(R.id.chatsFragment)
+            navController.navigate(R.id.chatsListFragment)
         } else {
             navController.navigate(R.id.startFragment)
         }
 
         val builder = AppBarConfiguration.Builder(navController.graph)
+        builder.setOpenableLayout(binding.drawerLayout)
         val appBarConfiguration = builder.build()
         binding.mainActivityToolbar.setupWithNavController(navController, appBarConfiguration)
+        NavigationUI.setupWithNavController(binding.navView, navController)
 
         initUser()
 

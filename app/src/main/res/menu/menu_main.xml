@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/myProfileFragment"
+            android:icon="@drawable/baseline_person_24"
+            android:title="@string/drawer_menu_item_my_profile">
+
+        </item>
+
+    </group>
+
+    <item android:title="@string/drawer_menu_first_divider">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/newGroupsFragment"
+                    android:icon="@drawable/baseline_people_24"
+                    android:title="@string/drawer_menu_item_new_groups">
+
+                </item>
+
+                <item
+                    android:id="@+id/contactsFragment"
+                    android:icon="@drawable/ic_contacts"
+                    android:title="@string/drawer_menu_item_contacts">
+
+                </item>
+
+                <item
+                    android:id="@+id/savedMessagesFragment"
+                    android:icon="@drawable/baseline_save_24"
+                    android:title="@string/drawer_menu_item_saved_messages">
+
+                </item>
+
+
+            </group>
+        </menu>
+
+    </item>
+
+    <item android:title="@string/drawer_menu_second_divider">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/helpFragment"
+                    android:icon="@drawable/baseline_help_24"
+                    android:title="@string/drawer_menu_item_help">
+
+                </item>
+
+                <item
+                    android:id="@+id/settingsFragment"
+                    android:icon="@drawable/baseline_settings_24"
+                    android:title="@string/drawer_menu_item_settings">
+
+                </item>
+            </group>
+        </menu>
+
+    </item>
+
+</menu>

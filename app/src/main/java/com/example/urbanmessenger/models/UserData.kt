@@ -1,5 +1,7 @@
 package com.example.urbanmessenger.models
 
+import java.io.Serializable
+
 data class UserData(
     val id: String = "",
     var username: String = "",
@@ -21,11 +23,12 @@ data class UserData(
 
     var lastMessage: String = ""
 
-)
-{
+) : Serializable {
     override fun equals(other: Any?): Boolean {
         return (other as UserData).id == id
     }
+
+
 }
 
 

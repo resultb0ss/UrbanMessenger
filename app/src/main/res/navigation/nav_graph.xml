@@ -67,4 +67,18 @@
             android:id="@+id/action_startFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/usersListFragment"
+        android:name="com.example.urbanmessenger.chats.UsersListFragment"
+        android:label="fragment_users_list"
+        tools:layout="@layout/fragment_users_list" />
+    <fragment
+        android:id="@+id/singleChatFragment"
+        android:name="com.example.urbanmessenger.single_chat.SingleChatFragment"
+        android:label="fragment_single_chat"
+        tools:layout="@layout/fragment_single_chat" >
+        <argument
+            android:name="user"
+            app:argType="com.example.urbanmessenger.models.UserData" />
+    </fragment>
 </navigation>

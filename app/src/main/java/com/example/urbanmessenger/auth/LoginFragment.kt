@@ -54,7 +54,7 @@ class LoginFragment : Fragment() {
                 .addOnCompleteListener(requireActivity()) {
                     if (it.isSuccessful) {
                         myToast("Успешный вход в систему")
-                        findNavController().navigate(R.id.action_loginFragment_to_chatsFragment)
+                        findNavController().navigate(R.id.action_loginFragment_to_chatsListFragment)
 
                     } else {
                         myToast("Не удалось войти в систему")

@@ -1,12 +1,17 @@
 package com.example.urbanmessenger.chats
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.APP_ACTIVITY
+import com.example.urbanmessenger.CONTACT
+import com.example.urbanmessenger.SINGLE_CHAT_ACTIVITY
 import com.example.urbanmessenger.database.DATA_BASE_ROOT
 import com.example.urbanmessenger.database.NODE_MAIN_LIST
 import com.example.urbanmessenger.database.NODE_MESSAGES
@@ -16,6 +21,7 @@ import com.example.urbanmessenger.database.getUserDataModel
 import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
+import kotlinx.coroutines.launch
 
 class ChatsListFragment : Fragment() {
 
@@ -52,27 +58,34 @@ class ChatsListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = ChatsListAdapter()
-        mRefMainList.addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot ->
-            mListItems = dataSnapshot.children.map { it.getUserDataModel() }
-            mListItems.forEach { model ->
+        mAdapter = ChatsListAdapter { user -> navigateToSingleChatActivity(user)}
 
-                mRefUser.child(model.id)
-                    .addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot1 ->
-                        val newModel = dataSnapshot1.getUserDataModel()
+        lifecycleScope.launch{
+            mRefMainList.addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot ->
+                mListItems = dataSnapshot.children.map { it.getUserDataModel() }
+                mListItems.forEach { model ->
 
-                        mRefMessages.child(model.id).limitToLast(1).addListenerForSingleValueEvent(
-                            AppValueEventListener { dataSnapshot2 ->
-                                val tempList = dataSnapshot2.children.map { it.getUserDataModel() }
-                                newModel.lastMessage = tempList[0].text
-                                mAdapter.updateListItems(newModel)
-                            })
-                    })
-            }
-        })
+                    mRefUser.child(model.id)
+                        .addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot1 ->
+                            val newModel = dataSnapshot1.getUserDataModel()
+
+                            mRefMessages.child(model.id).limitToLast(1).addListenerForSingleValueEvent(
+                                AppValueEventListener { dataSnapshot2 ->
+                                    val tempList = dataSnapshot2.children.map { it.getUserDataModel() }
+                                    newModel.lastMessage = tempList[0].text
+                                    mAdapter.updateListItems(newModel)
+                                })
+                        })
+                }
+            })
+        }
 
         binding.chatsListRecyclerView.adapter = mAdapter
+    }
 
+    private fun navigateToSingleChatActivity(user: UserData){
+        CONTACT = user
+        startActivity(Intent(requireActivity(), SingleChatActivity::class.java))
     }
 
     override fun onDestroyView() {

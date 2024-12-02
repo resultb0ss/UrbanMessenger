@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.hilt.android.v244)
     implementation(libs.firebase.database)
     implementation(libs.androidx.activity)
+    implementation(libs.firebase.messaging)
     ksp(libs.hilt.android.compiler)
 
     // Retrofit
@@ -114,4 +115,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx:21.0.0")
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation ("com.firebaseui:firebase-ui-database:8.0.2")
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-storage")
 }

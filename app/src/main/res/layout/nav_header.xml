@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/main_color_day_light"
+    android:padding="8dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/man"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="72dp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="4dp">
+
+        <TextView
+            android:id="@+id/firstAndLastNameProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Руслан Иванов"
+            android:textColor="@color/white"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:paddingTop="4dp"/>
+
+        <TextView
+            android:id="@+id/numberPhoneProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+7 (916) 932 92 23"
+            android:textColor="#8FFFFFFF"
+            android:textSize="13dp"
+            android:textStyle="normal"
+            android:paddingTop="4dp"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
