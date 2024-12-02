@@ -1,20 +1,18 @@
 package com.example.urbanmessenger.single_chat
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.urbanmessenger.DiffUtilCallback
-import com.example.urbanmessenger.UID
+import com.example.urbanmessenger.database.UID
 import com.example.urbanmessenger.databinding.ItemSingleMessageBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.asTime
 
 class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
-    private var mListMessagesCache = emptyList<UserData>()
+    private var mListMessagesCache = mutableListOf<UserData>()
     private lateinit var mDiffResult: DiffUtil.DiffResult
 
     override fun onCreateViewHolder(
@@ -52,15 +50,23 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
 
     }
 
-    fun addItem(item: UserData){
-        val newList = mutableListOf<UserData>()
-        newList.addAll(mListMessagesCache)
-        if(!newList.contains(item))  newList.add(item)
-        newList.sortBy { it.timestamp.toString() }
-        mDiffResult = DiffUtil.calculateDiff(DiffUtilCallback(mListMessagesCache, newList))
-        mDiffResult.dispatchUpdatesTo(this)
-        mListMessagesCache = newList
+    fun addItemToBottom(item: UserData, onSuccess: () -> Unit) {
+        if (!mListMessagesCache.contains(item)){
+            mListMessagesCache.add(item)
+            notifyItemInserted(mListMessagesCache.size)
+        }
+        onSuccess()
     }
+
+    fun addItemToTop(item: UserData, onSuccess: () -> Unit) {
+        if (!mListMessagesCache.contains(item)){
+            mListMessagesCache.add(item)
+            mListMessagesCache.sortBy { it.timestamp.toString() }
+            notifyItemInserted(0)
+        }
+        onSuccess()
+    }
+
 }
 
 

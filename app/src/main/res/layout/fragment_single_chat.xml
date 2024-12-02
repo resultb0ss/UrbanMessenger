@@ -6,53 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".single_chat.SingleChatFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/singleChatFragmentRecyclerView"
-        android:layout_width="match_parent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/singleChatFragmentSwipeRefresh"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="@color/mainSingleChatColor"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@id/messageInputField"
+        app:layout_constraintBottom_toTopOf="@id/messageInputField"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:listitem="@layout/item_single_message" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/singleChatFragmentClipIcon"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:padding="10dp"
-        android:src="@drawable/ic_clip_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/messageInputField"
-        android:background="@color/white"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/singleChatFragmentRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/mainSingleChatColor"
+            tools:listitem="@layout/item_single_message" />
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
 
     <EditText
         android:id="@+id/messageInputField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:hint="Cooбщение"
+        android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/hintColorGray"
-        android:background="@color/white"
-        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/singleChatFragmentSendMessageIcon"
-        app:layout_constraintStart_toEndOf="@id/singleChatFragmentClipIcon" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/singleChatFragmentSendMessageIcon"
         android:layout_width="50dp"
         android:layout_height="0dp"
+        android:background="@color/white"
         android:padding="10dp"
         android:src="@drawable/ic_send_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/messageInputField" />
+
+    <ImageView
+        android:id="@+id/singleChatFragmentClipIcon"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
         android:background="@color/white"
+        android:padding="10dp"
+        android:src="@drawable/ic_clip_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/messageInputField" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

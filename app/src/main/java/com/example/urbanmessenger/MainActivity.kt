@@ -10,6 +10,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
+import com.example.urbanmessenger.database.initFirebase
+import com.example.urbanmessenger.database.initUser
 import com.example.urbanmessenger.databinding.ActivityMainBinding
 import com.example.urbanmessenger.utils.AppStates
 
@@ -33,7 +35,7 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
         navController = navHostFragment.navController
 
-        if (AUTHFIREBASE.currentUser != null) {
+        if (com.example.urbanmessenger.database.AUTHFIREBASE.currentUser != null) {
             navController.navigate(R.id.chatsFragment)
         } else {
             navController.navigate(R.id.startFragment)
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menuItemExit -> {
                 AppStates.updateState(AppStates.OFFLINE, this)
-                AUTHFIREBASE.signOut()
+                com.example.urbanmessenger.database.AUTHFIREBASE.signOut()
                 navController.navigate(R.id.loginFragment)
                 return true
             }
@@ -87,6 +89,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

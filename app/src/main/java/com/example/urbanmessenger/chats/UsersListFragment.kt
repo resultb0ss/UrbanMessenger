@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.urbanmessenger.APP_ACTIVITY
 import com.example.urbanmessenger.CONTACT
-import com.example.urbanmessenger.DATA_BASE_ROOT
-import com.example.urbanmessenger.NODE_USERS
+import com.example.urbanmessenger.database.DATA_BASE_ROOT
+import com.example.urbanmessenger.database.NODE_USERS
 import com.example.urbanmessenger.databinding.FragmentUsersListBinding
 import com.example.urbanmessenger.databinding.ItemUsersListBinding
 import com.example.urbanmessenger.models.UserData

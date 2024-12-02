@@ -1,41 +1,12 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.database
 
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
 import com.example.urbanmessenger.utils.myToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
-
-lateinit var AUTHFIREBASE: FirebaseAuth
-lateinit var DATA_BASE_ROOT: DatabaseReference
-lateinit var USER: UserData
-lateinit var UID: String
-
-//Nodes
-const val NODE_USERS = "users"
-const val NODE_USERNAMES = "usernames"
-const val NODE_MESSAGES = "messages"
-
-const val TYPE_TEXT = "text"
-
-const val CHILD_ID = "id"
-const val CHILD_PHONE = "phone"
-const val CHILD_USERNAME = "username"
-const val CHILD_IMAGE_URI = "userPhotoUri"
-const val CHILD_FIRSTNAME = "firstname"
-const val CHILD_LASTNAME = "lastname"
-const val CHILD_MAIL = "email"
-const val CHILD_AGE = "age"
-const val CHILD_ADDRESS = "address"
-const val CHILD_PROFESSION = "profession"
-const val CHILD_STATE = "state"
-const val CHILD_TEXT = "text"
-const val CHILD_TYPE = "type"
-const val CHILD_FROM = "from"
-const val CHILD_TIMESTAMP = "timestamp"
 
 fun initFirebase() {
     AUTHFIREBASE = FirebaseAuth.getInstance()
@@ -62,6 +33,7 @@ fun sendMessage(
     mapMessage[CHILD_FROM] = UID
     mapMessage[CHILD_TYPE] = typeText
     mapMessage[CHILD_TEXT] = message
+    mapMessage[CHILD_ID] = messageKey.toString()
     mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
 
     val mapDialog = hashMapOf<String, Any>()
@@ -75,7 +47,46 @@ fun sendMessage(
 
 }
 
-fun updateProfession(newProfession: String) {
+fun saveToMainList(id: String, type: String) {
+    var refUser = "$NODE_MAIN_LIST/$UID/$id"
+    var refReceived = "$NODE_MAIN_LIST/$id/$UID"
+
+    val mapUser = hashMapOf<String, Any>()
+    val mapReceived = hashMapOf<String, Any>()
+
+    mapUser[CHILD_ID] = id
+    mapUser[CHILD_TYPE] = type
+
+    mapReceived[CHILD_ID] = UID
+    mapReceived[CHILD_TYPE] = type
+
+    val commonMap = hashMapOf<String, Any>()
+
+    commonMap[refUser] = mapUser
+    commonMap[refReceived] = mapReceived
+
+    DATA_BASE_ROOT.updateChildren(commonMap).addOnFailureListener { myToast(it.message.toString()) }
+}
+
+fun updateProfileInfo(
+    newFirstName: String,
+    newLastName: String,
+    newProfession: String,
+    newAge: String,
+    newAddress: String,
+    onSuccess: () -> Unit
+) {
+
+    updateFirstName(newFirstName)
+    updateLastName(newLastName)
+    updateAge(newAge)
+    updateAddress(newAddress)
+    updateProfession(newProfession)
+
+    onSuccess()
+}
+
+private fun updateProfession(newProfession: String) {
     DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_PROFESSION).setValue(newProfession)
         .addOnSuccessListener {
             USER.profession = newProfession
@@ -83,7 +94,7 @@ fun updateProfession(newProfession: String) {
         .addOnFailureListener { myToast(it.message?.toString().toString()) }
 }
 
-fun updateAddress(newAddress: String) {
+private fun updateAddress(newAddress: String) {
     DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_ADDRESS).setValue(newAddress)
         .addOnSuccessListener {
             USER.address = newAddress
@@ -91,7 +102,7 @@ fun updateAddress(newAddress: String) {
         .addOnFailureListener { myToast(it.message?.toString().toString()) }
 }
 
-fun updateAge(newAge: String) {
+private fun updateAge(newAge: String) {
     DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_AGE).setValue(newAge)
         .addOnSuccessListener {
             USER.age = newAge
@@ -99,7 +110,7 @@ fun updateAge(newAge: String) {
         .addOnFailureListener { myToast(it.message?.toString().toString()) }
 }
 
-fun updateLastName(newLastName: String) {
+private fun updateLastName(newLastName: String) {
     DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_LASTNAME).setValue(newLastName)
         .addOnSuccessListener {
             USER.lastname = newLastName
@@ -107,7 +118,7 @@ fun updateLastName(newLastName: String) {
         .addOnFailureListener { myToast(it.message?.toString().toString()) }
 }
 
-fun updateFirstName(newFirstName: String) {
+private fun updateFirstName(newFirstName: String) {
     DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_FIRSTNAME).setValue(newFirstName)
         .addOnSuccessListener {
             USER.firstname = newFirstName

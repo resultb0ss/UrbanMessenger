@@ -5,14 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.urbanmessenger.USER
+import com.example.urbanmessenger.database.USER
 import com.example.urbanmessenger.databinding.FragmentProfileBinding
-import com.example.urbanmessenger.initUser
-import com.example.urbanmessenger.updateAddress
-import com.example.urbanmessenger.updateAge
-import com.example.urbanmessenger.updateFirstName
-import com.example.urbanmessenger.updateLastName
-import com.example.urbanmessenger.updateProfession
+import com.example.urbanmessenger.database.initUser
+import com.example.urbanmessenger.database.updateProfileInfo
 import com.example.urbanmessenger.utils.myToast
 
 
@@ -44,13 +40,10 @@ class ProfileFragment : Fragment() {
             val newAddress = binding.profileFragmentChangeAdressTextField.editText?.text.toString()
             val newAge = binding.profileFragmentChangeAgeTextField.editText?.text.toString()
 
-            updateFirstName(newFirstName)
-            updateLastName(newLastName)
-            updateAge(newAge)
-            updateAddress(newAddress)
-            updateProfession(newProfession)
+            updateProfileInfo(newFirstName, newLastName, newProfession, newAge, newAddress) {
+                myToast("Данные успешно обновлены")
+            }
 
-            myToast("Данные успешно обновлены")
         }
     }
 
@@ -77,5 +70,6 @@ class ProfileFragment : Fragment() {
         _binding = null
     }
 
-
 }
+
+

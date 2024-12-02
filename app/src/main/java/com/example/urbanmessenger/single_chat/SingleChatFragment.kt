@@ -9,17 +9,20 @@ import android.widget.AbsListView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.urbanmessenger.CONTACT
-import com.example.urbanmessenger.DATA_BASE_ROOT
-import com.example.urbanmessenger.NODE_MESSAGES
-import com.example.urbanmessenger.TYPE_TEXT
-import com.example.urbanmessenger.UID
+import com.example.urbanmessenger.database.DATA_BASE_ROOT
+import com.example.urbanmessenger.database.NODE_MESSAGES
+import com.example.urbanmessenger.TYPE_CHAT
+import com.example.urbanmessenger.database.TYPE_TEXT
+import com.example.urbanmessenger.database.UID
 import com.example.urbanmessenger.databinding.FragmentSingleChatBinding
-import com.example.urbanmessenger.getUserDataModel
-import com.example.urbanmessenger.sendMessage
+import com.example.urbanmessenger.database.getUserDataModel
+import com.example.urbanmessenger.database.saveToMainList
+import com.example.urbanmessenger.database.sendMessage
 import com.example.urbanmessenger.utils.AppChildEventListener
-import com.google.firebase.database.ChildEventListener
+import com.example.urbanmessenger.utils.AppTextWatcher
 import com.google.firebase.database.DatabaseReference
 
 class SingleChatFragment : Fragment() {
@@ -30,10 +33,10 @@ class SingleChatFragment : Fragment() {
     private lateinit var mRefMessages: DatabaseReference
     private lateinit var mAdapter: SingleChatAdapter
     private lateinit var mMessagesListener: AppChildEventListener
-    private var mCountMessages = 10
+    private var mCountMessages = 15
     private var mIsScrolling = false
     private var mSmoothScrollToPosition = true
-    private var mListListeners = mutableListOf<AppChildEventListener>()
+    private lateinit var mLayoutManager: LinearLayoutManager
 
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -54,7 +57,25 @@ class SingleChatFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        initFields()
         initRecyclerView()
+
+
+    }
+
+    private fun initFields() {
+        mLayoutManager = LinearLayoutManager(this.context)
+
+        binding.messageInputField.addTextChangedListener(AppTextWatcher{
+            val string = binding.messageInputField.text.toString()
+            if (string.isEmpty()){
+                binding.singleChatFragmentSendMessageIcon.visibility = View.GONE
+                binding.singleChatFragmentClipIcon.visibility = View.VISIBLE
+            } else {
+                binding.singleChatFragmentSendMessageIcon.visibility = View.VISIBLE
+                binding.singleChatFragmentClipIcon.visibility = View.GONE
+            }
+        })
 
         binding.singleChatFragmentSendMessageIcon.setOnClickListener {
             mSmoothScrollToPosition = true
@@ -64,44 +85,52 @@ class SingleChatFragment : Fragment() {
             if (message.isEmpty()) {
                 Toast.makeText(requireContext(), "Введите сообщение", Toast.LENGTH_SHORT).show()
             } else sendMessage(message, CONTACT.id, TYPE_TEXT) {
+
+                saveToMainList(CONTACT.id, TYPE_CHAT)
                 binding.messageInputField.text.clear()
             }
         }
 
+        binding.singleChatFragmentClipIcon.setOnClickListener{ attachFile() }
+
     }
+
 
     private fun initRecyclerView() {
         mAdapter = SingleChatAdapter()
         mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(CONTACT.id)
         binding.singleChatFragmentRecyclerView.adapter = mAdapter
+        binding.singleChatFragmentRecyclerView.setHasFixedSize(true)
+        binding.singleChatFragmentRecyclerView.isNestedScrollingEnabled = false
+        binding.singleChatFragmentRecyclerView.layoutManager = mLayoutManager
 
         mMessagesListener = AppChildEventListener {
-            mAdapter.addItem(it.getUserDataModel())
-            if (mSmoothScrollToPosition) {
-                binding.singleChatFragmentRecyclerView.smoothScrollToPosition(mAdapter.itemCount)
+            val message = it.getUserDataModel()
+
+            if (mSmoothScrollToPosition){
+                mAdapter.addItemToBottom(message){
+                    binding.singleChatFragmentRecyclerView.smoothScrollToPosition(mAdapter.itemCount)
+                }
+            } else {
+                mAdapter.addItemToTop(message){
+                    binding.singleChatFragmentSwipeRefresh.isRefreshing = false
+                }
             }
 
         }
 
 
         mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
-        mListListeners.add(mMessagesListener)
+
 
         binding.singleChatFragmentRecyclerView.addOnScrollListener(object :
             RecyclerView.OnScrollListener() {
+
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (mIsScrolling && dy < 0) {
+                if (mIsScrolling && dy < 0 && mLayoutManager.findFirstVisibleItemPosition() <= 3) {
                     updateData()
                 }
-            }
-
-            private fun updateData() {
-                mSmoothScrollToPosition = false
-                mIsScrolling = false
-                mCountMessages += 10
-                mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
-                mListListeners.add(mMessagesListener)
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -111,14 +140,28 @@ class SingleChatFragment : Fragment() {
                 }
             }
         })
+
+        binding.singleChatFragmentSwipeRefresh.setOnRefreshListener{
+            updateData()
+        }
     }
 
+    private fun attachFile(){
+
+    }
+
+    private fun updateData() {
+        mSmoothScrollToPosition = false
+        mIsScrolling = false
+        mCountMessages += 10
+        mRefMessages.removeEventListener(mMessagesListener)
+        mRefMessages.limitToLast(mCountMessages).addChildEventListener(mMessagesListener)
+
+    }
 
     override fun onPause() {
         super.onPause()
-        mListListeners.forEach {
-            mRefMessages.removeEventListener(it)
-        }
+        mRefMessages.removeEventListener(mMessagesListener)
 
     }
 

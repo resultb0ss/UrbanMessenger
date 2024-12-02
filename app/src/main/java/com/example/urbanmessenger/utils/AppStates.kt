@@ -1,12 +1,12 @@
 package com.example.urbanmessenger.utils
 
 import android.content.Context
-import com.example.urbanmessenger.AUTHFIREBASE
-import com.example.urbanmessenger.CHILD_STATE
-import com.example.urbanmessenger.DATA_BASE_ROOT
-import com.example.urbanmessenger.NODE_USERS
-import com.example.urbanmessenger.UID
-import com.example.urbanmessenger.USER
+import com.example.urbanmessenger.database.AUTHFIREBASE
+import com.example.urbanmessenger.database.CHILD_STATE
+import com.example.urbanmessenger.database.DATA_BASE_ROOT
+import com.example.urbanmessenger.database.NODE_USERS
+import com.example.urbanmessenger.database.UID
+import com.example.urbanmessenger.database.USER
 
 enum class AppStates(val state: String) {
     ONLINE("в сети"),
