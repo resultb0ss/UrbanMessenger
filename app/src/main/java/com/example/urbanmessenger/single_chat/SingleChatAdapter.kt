@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.urbanmessenger.database.UID
+import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.databinding.ItemSingleMessageBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.asTime
 
-class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
+class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
+    RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
     private var mListMessagesCache = mutableListOf<UserData>()
     private lateinit var mDiffResult: DiffUtil.DiffResult
@@ -41,6 +42,7 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
             holder.binding.chatReceiverMessage.text = message.text
             holder.binding.chatReceivedMessageTime.text = message.timestamp.toString().asTime()
         }
+        holder.itemView.setOnClickListener { onClick(message) }
     }
 
     override fun getItemCount() = mListMessagesCache.size
@@ -51,7 +53,7 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
     }
 
     fun addItemToBottom(item: UserData, onSuccess: () -> Unit) {
-        if (!mListMessagesCache.contains(item)){
+        if (!mListMessagesCache.contains(item)) {
             mListMessagesCache.add(item)
             notifyItemInserted(mListMessagesCache.size)
         }
@@ -59,7 +61,7 @@ class SingleChatAdapter : RecyclerView.Adapter<SingleChatAdapter.SingleChatHolde
     }
 
     fun addItemToTop(item: UserData, onSuccess: () -> Unit) {
-        if (!mListMessagesCache.contains(item)){
+        if (!mListMessagesCache.contains(item)) {
             mListMessagesCache.add(item)
             mListMessagesCache.sortBy { it.timestamp.toString() }
             notifyItemInserted(0)

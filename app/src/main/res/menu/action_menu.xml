@@ -3,22 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/aboutUserFragment"
         android:icon="@drawable/options_menu_item_profile_icon"
-        android:title="@string/options_menu_item_profile_text"
-        app:showAsAction="never" />
+        android:title="@string/options_menu_item_about_user_text"
+        app:showAsAction="always" />
 
-    <item
-        android:id="@+id/aboutFragment"
-        android:icon="@drawable/options_menu_item_about_icon"
-        android:title="@string/options_menu_item_about_text"
-        app:showAsAction="never" />
 
     <item
         android:id="@+id/menuItemExit"
         android:icon="@drawable/options_menu_item_exit_icon"
         android:title="@string/options_menu_item_exit_text"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
 
 </menu>

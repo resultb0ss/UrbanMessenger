@@ -21,6 +21,13 @@
             android:layout_height="?attr/actionBarSize"
             style="@style/Widget.MaterialComponents.Toolbar.Primary">
 
+            <EditText
+                android:id="@+id/toolbarSearchField"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="Поиск"
+                android:visibility="gone"/>
+
         </com.google.android.material.appbar.MaterialToolbar>
 
 
@@ -41,7 +48,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_main"/>
+        app:menu="@menu/menu_main">
+
+    </com.google.android.material.navigation.NavigationView>
+
 
 
 

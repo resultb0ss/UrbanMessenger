@@ -1,7 +1,5 @@
 package com.example.urbanmessenger.chats
 
-import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,17 +9,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.APP_ACTIVITY
 import com.example.urbanmessenger.CONTACT
-import com.example.urbanmessenger.SINGLE_CHAT_ACTIVITY
-import com.example.urbanmessenger.database.DATA_BASE_ROOT
-import com.example.urbanmessenger.database.NODE_MAIN_LIST
-import com.example.urbanmessenger.database.NODE_MESSAGES
-import com.example.urbanmessenger.database.NODE_USERS
-import com.example.urbanmessenger.database.UID
-import com.example.urbanmessenger.database.getUserDataModel
+import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
+import com.example.urbanmessenger.data.network.NODE_MAIN_LIST
+import com.example.urbanmessenger.data.network.NODE_MESSAGES
+import com.example.urbanmessenger.data.network.NODE_USERS
+import com.example.urbanmessenger.data.network.UID
+import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
 import kotlinx.coroutines.launch
+import com.example.urbanmessenger.R
 
 class ChatsListFragment : Fragment() {
 
@@ -44,12 +42,6 @@ class ChatsListFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }
 
     override fun onResume() {
         super.onResume()
@@ -58,9 +50,9 @@ class ChatsListFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = ChatsListAdapter { user -> navigateToSingleChatActivity(user)}
+        mAdapter = ChatsListAdapter { user -> navigateToSingleChatActivity(user) }
 
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             mRefMainList.addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot ->
                 mListItems = dataSnapshot.children.map { it.getUserDataModel() }
                 mListItems.forEach { model ->
@@ -69,12 +61,14 @@ class ChatsListFragment : Fragment() {
                         .addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot1 ->
                             val newModel = dataSnapshot1.getUserDataModel()
 
-                            mRefMessages.child(model.id).limitToLast(1).addListenerForSingleValueEvent(
-                                AppValueEventListener { dataSnapshot2 ->
-                                    val tempList = dataSnapshot2.children.map { it.getUserDataModel() }
-                                    newModel.lastMessage = tempList[0].text
-                                    mAdapter.updateListItems(newModel)
-                                })
+                            mRefMessages.child(model.id).limitToLast(1)
+                                .addListenerForSingleValueEvent(
+                                    AppValueEventListener { dataSnapshot2 ->
+                                        val tempList =
+                                            dataSnapshot2.children.map { it.getUserDataModel() }
+                                        newModel.lastMessage = tempList[0].text
+                                        mAdapter.updateListItems(newModel)
+                                    })
                         })
                 }
             })
@@ -83,9 +77,9 @@ class ChatsListFragment : Fragment() {
         binding.chatsListRecyclerView.adapter = mAdapter
     }
 
-    private fun navigateToSingleChatActivity(user: UserData){
+    private fun navigateToSingleChatActivity(user: UserData) {
         CONTACT = user
-        startActivity(Intent(requireActivity(), SingleChatActivity::class.java))
+        findNavController().navigate(R.id.action_chatsListFragment_to_singleChatFragment)
     }
 
     override fun onDestroyView() {

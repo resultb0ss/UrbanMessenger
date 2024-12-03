@@ -1,60 +1,50 @@
 package com.example.urbanmessenger.menu_fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.urbanmessenger.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.example.urbanmessenger.CONTACT
+import com.example.urbanmessenger.databinding.FragmentAboutUserBinding
+import com.example.urbanmessenger.models.ContactViewModel
+import kotlin.getValue
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AboutUserFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AboutUserFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentAboutUserBinding? = null
+    private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_about_user, container, false)
+    ): View {
+        _binding = FragmentAboutUserBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AboutUserFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AboutUserFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onResume() {
+        super.onResume()
+        initUsersInfoFields()
+
     }
+
+    private fun initUsersInfoFields() {
+        binding.aboutUserFragmentProfileHeaderEmail.text = CONTACT.email
+        binding.aboutUserFragmentProfileHeaderID.text = CONTACT.id
+        binding.aboutUserFragmentNameUserValue.text = CONTACT.firstname
+        binding.aboutUserFragmentLastNameUserValue.text = CONTACT.lastname
+        binding.aboutUserFragmentAgeUserValue.text = CONTACT.age
+        binding.aboutUserFragmentAddressUserValue.text = CONTACT.address
+        binding.aboutUserFragmentPhoneUserValue.text = CONTACT.phone
+        binding.aboutUserFragmentProfessionUserValue.text = CONTACT.profession
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }

@@ -3,82 +3,57 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startFragment">
-
-    <fragment
-        android:id="@+id/chatsFragment"
-        android:name="com.example.urbanmessenger.chats.ChatsFragment"
-        android:label="@string/nav_graph_chats_fragment_label_text"
-        tools:layout="@layout/fragment_chats" />
-    <fragment
-        android:id="@+id/aboutFragment"
-        android:name="com.example.urbanmessenger.menu_fragments.AboutFragment"
-        android:label="@string/nav_graph_about_fragment_label_text"
-        tools:layout="@layout/fragment_about" />
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.example.urbanmessenger.menu_fragments.ProfileFragment"
-        android:label="@string/nav_graph_profile_fragment_label_text"
-        tools:layout="@layout/fragment_profile" />
+    app:startDestination="@id/chatsListFragment">
     <fragment
         android:id="@+id/chatsListFragment"
         android:name="com.example.urbanmessenger.chats.ChatsListFragment"
         android:label="Чаты"
-        tools:layout="@layout/fragment_chats_list" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.example.urbanmessenger.auth.LoginFragment"
-        android:label="Авторизация"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_chats_list">
         <action
-            android:id="@+id/action_loginFragment_to_registrationFragment"
-            app:destination="@id/registrationFragment" />
+            android:id="@+id/action_chatsListFragment_to_singleChatFragment"
+            app:destination="@id/singleChatFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_recoverPasswordFragment"
-            app:destination="@id/recoverPasswordFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_chatsFragment"
-            app:destination="@id/chatsFragment" />
+            android:id="@+id/action_chatsListFragment_to_aboutUserFragment2"
+            app:destination="@id/aboutUserFragment" />
     </fragment>
     <fragment
-        android:id="@+id/registrationFragment"
-        android:name="com.example.urbanmessenger.auth.RegistrationFragment"
-        android:label="Регистрация"
-        tools:layout="@layout/fragment_registration" >
-        <action
-            android:id="@+id/action_registrationFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+        android:id="@+id/aboutFragment"
+        android:name="com.example.urbanmessenger.menu_fragments.AboutFragment"
+        android:label="О приложении"
+        tools:layout="@layout/fragment_about">
+
     </fragment>
     <fragment
-        android:id="@+id/recoverPasswordFragment"
-        android:name="com.example.urbanmessenger.auth.RecoverPasswordFragment"
-        android:label="Восстановить пароль"
-        tools:layout="@layout/fragment_recover_password" >
+        android:id="@+id/profileFragment"
+        android:name="com.example.urbanmessenger.menu_fragments.ProfileFragment"
+        android:label="Профиль"
+        tools:layout="@layout/fragment_profile">
+
         <action
-            android:id="@+id/action_recoverPasswordFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/startFragment"
-        android:name="com.example.urbanmessenger.auth.StartFragment"
-        android:label="fragment_start"
-        tools:layout="@layout/fragment_start" >
-        <action
-            android:id="@+id/action_startFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_profileFragment_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/usersListFragment"
         android:name="com.example.urbanmessenger.chats.UsersListFragment"
-        android:label="fragment_users_list"
-        tools:layout="@layout/fragment_users_list" />
+        android:label="Контакты"
+        tools:layout="@layout/fragment_users_list">
+        <action
+            android:id="@+id/action_usersListFragment_to_singleChatFragment"
+            app:destination="@id/singleChatFragment" />
+        <action
+            android:id="@+id/action_usersListFragment_to_chatsListFragment"
+            app:destination="@id/chatsListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/singleChatFragment"
         android:name="com.example.urbanmessenger.single_chat.SingleChatFragment"
-        android:label="fragment_single_chat"
-        tools:layout="@layout/fragment_single_chat" >
-        <argument
-            android:name="user"
-            app:argType="com.example.urbanmessenger.models.UserData" />
-    </fragment>
+        android:label="Чаты"
+        tools:layout="@layout/fragment_single_chat"/>
+    <fragment
+        android:id="@+id/aboutUserFragment"
+        android:name="com.example.urbanmessenger.menu_fragments.AboutUserFragment"
+        android:label="О пользователе"
+        tools:layout="@layout/fragment_about_user" />
+
 </navigation>

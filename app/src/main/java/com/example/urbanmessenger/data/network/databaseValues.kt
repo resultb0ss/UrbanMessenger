@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.database
+package com.example.urbanmessenger.data.network
 
 import com.example.urbanmessenger.models.UserData
 import com.google.firebase.auth.FirebaseAuth

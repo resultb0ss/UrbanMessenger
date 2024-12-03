@@ -3,7 +3,7 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/myProfileFragment"
+            android:id="@+id/profileFragment"
             android:icon="@drawable/baseline_person_24"
             android:title="@string/drawer_menu_item_my_profile">
 
@@ -14,26 +14,22 @@
     <item android:title="@string/drawer_menu_first_divider">
         <menu>
             <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/newGroupsFragment"
-                    android:icon="@drawable/baseline_people_24"
-                    android:title="@string/drawer_menu_item_new_groups">
 
-                </item>
 
                 <item
-                    android:id="@+id/contactsFragment"
+                    android:id="@+id/usersListFragment"
                     android:icon="@drawable/ic_contacts"
                     android:title="@string/drawer_menu_item_contacts">
 
                 </item>
 
                 <item
-                    android:id="@+id/savedMessagesFragment"
-                    android:icon="@drawable/baseline_save_24"
-                    android:title="@string/drawer_menu_item_saved_messages">
+                    android:id="@+id/chatsListFragment"
+                    android:icon="@drawable/ic_email_24"
+                    android:title="@string/drawer_menu_item_chats">
 
                 </item>
+
 
 
             </group>
@@ -58,6 +54,19 @@
 
                 </item>
             </group>
+        </menu>
+
+    </item>
+
+    <item android:title="">
+        <menu>
+            <item
+
+                android:id="@+id/signOutItem"
+                android:icon="@drawable/ic_exit_24"
+                android:title="Выйти">
+
+            </item>
         </menu>
 
     </item>

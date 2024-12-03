@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.database
+package com.example.urbanmessenger.data.network
 
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
@@ -122,6 +122,15 @@ private fun updateFirstName(newFirstName: String) {
     DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_FIRSTNAME).setValue(newFirstName)
         .addOnSuccessListener {
             USER.firstname = newFirstName
+        }
+        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+}
+
+fun updatePhone(newPhone: String) {
+    DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_PHONE).setValue(newPhone)
+        .addOnSuccessListener {
+            USER.phone = newPhone
+            myToast("Номер успешно добавлен")
         }
         .addOnFailureListener { myToast(it.message?.toString().toString()) }
 }

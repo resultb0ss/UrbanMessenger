@@ -37,4 +37,40 @@
         <item name="android:inputType">number</item>
     </style>
 
+    <style name="about_user_fragment_main_info">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/normalText</item>
+    </style>
+
+    <style name="about_user_fragment_block_info">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginHorizontal">@dimen/horizontalMargin</item>
+    </style>
+
+    <style name="about_user_fragment_block_info_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="about_user_fragment_block_info_value">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:layout_marginStart">5dp</item>
+
+    </style>
+
+    <style name="about_user_fragment_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_marginHorizontal">@dimen/horizontalMargin</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
 </resources>

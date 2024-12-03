@@ -19,7 +19,7 @@
     <string name="recover_fragment_email_field_hint">Введите email</string>
 
     <!-- Option Menu Item Names -->
-    <string name="options_menu_item_profile_text">Профиль</string>
+    <string name="options_menu_item_about_user_text">Профиль</string>
     <string name="options_menu_item_about_text">О приложении</string>
     <string name="options_menu_item_exit_text">Выйти</string>
 
@@ -37,7 +37,7 @@
     <string name="profile_fragment_first_name_field_hint">Имя</string>
     <string name="profile_fragment_last_name_field_hint">Фамилия</string>
     <string name="profile_fragment_profession_field_hint">Род занятий</string>
-    <string name="profile_fragment_adress_field_hint">Адрес</string>
+    <string name="profile_fragment_address_field_hint">Адрес</string>
     <string name="profile_fragment_age_field_hint">Возраст</string>
 
 
@@ -58,12 +58,32 @@
     <string name="default_notification_channel_id">default_notification_channel_id</string>
 
     <string name="drawer_menu_item_my_profile">Мой профиль</string>
-    <string name="drawer_menu_item_new_groups">Создать группу</string>
     <string name="drawer_menu_item_contacts">Контакты</string>
-    <string name="drawer_menu_item_saved_messages">Избранное</string>
     <string name="drawer_menu_item_help">Поддержка</string>
     <string name="drawer_menu_item_settings">Настройки</string>
     <string name="drawer_menu_item_chats">Чаты</string>
-
-    <string name="drawer_menu_first_divider">Группы и контакты</string>
-    <string name="drawer_menu_second_divider">Поддержка и настройки</string></resources>
+    <string name="drawer_menu_first_divider">Контакты и чаты</string>
+    <string name="drawer_menu_second_divider">Поддержка и настройки</string>
+    <string name="about_user_fragment_profile_header_id_title">Идентификатор</string>
+    <string name="about_user_fragment_profile_header_email">****@gmail.com</string>
+    <string name="about_user_fragment_profile_header_username">Username</string>
+    <string name="about_user_fragment_profile_header_title">Профиль пользователя</string>
+    <string name="about_user_fragment_profile_header_id">32JK4H23gjkh23453gj2hlhl</string>
+    <string name="about_user_fragment_block_info_title_name">Имя:</string>
+    <string name="about_user_fragment_block_info_title_last_name">Фамилия:</string>
+    <string name="about_user_fragment_block_info_title_profession">Род занятий:</string>
+    <string name="about_user_fragment_block_info_title_phone">Номер телефона:</string>
+    <string name="about_user_fragment_block_info_title_age">Возраст:</string>
+    <string name="about_user_fragment_block_info_title_address">Адрес:</string>
+    <string name="about_user_fragment_block_info_title_entry_method">Способ входа:</string>
+    <string name="about_user_fragment_block_info_value_entry_method">Email</string>
+    <string name="about_user_fragment_block_info_value_address">Москва</string>
+    <string name="about_user_fragment_block_info_value_age">25</string>
+    <string name="about_user_fragment_block_info_value_phone">+79880193232</string>
+    <string name="about_user_fragment_block_info_value_profession">Программист</string>
+    <string name="about_user_fragment_block_info_value_last_name">Иванов</string>
+    <string name="about_user_fragment_block_info_value_name">Егор</string>
+    <string name="about_user_fragment_call_button_text">Позвонить</string>
+    <string name="about_user_fragment_send_message_button_text">Отправить смс</string>
+    <string name="upback_arrow">UpBack</string>
+</resources>

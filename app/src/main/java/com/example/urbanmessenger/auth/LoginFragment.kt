@@ -1,13 +1,15 @@
 package com.example.urbanmessenger.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.urbanmessenger.database.AUTHFIREBASE
+import com.example.urbanmessenger.MainActivity
 import com.example.urbanmessenger.R
+import com.example.urbanmessenger.data.network.AUTHFIREBASE
 import com.example.urbanmessenger.databinding.FragmentLoginBinding
 import com.example.urbanmessenger.utils.myToast
 
@@ -18,8 +20,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
@@ -54,7 +55,7 @@ class LoginFragment : Fragment() {
                 .addOnCompleteListener(requireActivity()) {
                     if (it.isSuccessful) {
                         myToast("Успешный вход в систему")
-                        findNavController().navigate(R.id.action_loginFragment_to_chatsListFragment)
+                        startActivity(Intent(requireActivity(), MainActivity::class.java))
 
                     } else {
                         myToast("Не удалось войти в систему")

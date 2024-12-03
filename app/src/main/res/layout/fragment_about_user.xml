@@ -1,14 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".menu_fragments.AboutUserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/aboutUserFragmentProfileHeaderTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about_user_fragment_profile_header_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02" />
 
-</FrameLayout>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/aboutUserFragmentHeaderUserImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/man"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aboutUserFragmentProfileHeaderTitle"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <TextView
+        android:id="@+id/aboutUserFragmentProfileHeaderUsername"
+        style="@style/about_user_fragment_main_info"
+        android:text="@string/about_user_fragment_profile_header_username"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aboutUserFragmentHeaderUserImage"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <TextView
+        android:id="@+id/aboutUserFragmentProfileHeaderEmail"
+        style="@style/about_user_fragment_main_info"
+        android:text="@string/about_user_fragment_profile_header_email"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aboutUserFragmentProfileHeaderUsername"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <TextView
+        android:id="@+id/aboutUserFragmentProfileHeaderTitleID"
+        style="@style/about_user_fragment_main_info"
+        android:text="@string/about_user_fragment_profile_header_id_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aboutUserFragmentProfileHeaderEmail"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <TextView
+        android:id="@+id/aboutUserFragmentProfileHeaderID"
+        style="@style/about_user_fragment_main_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_user_fragment_profile_header_id"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aboutUserFragmentProfileHeaderTitleID"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerFirst"
+        style="@style/about_user_fragment_divider"
+        app:dividerColor="@color/main_color_day_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aboutUserFragmentProfileHeaderID"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <LinearLayout
+        android:id="@+id/aboutUserFragmentBlockName"
+        style="@style/about_user_fragment_block_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dividerFirst"
+        app:layout_constraintVertical_bias="0.02">
+
+        <TextView
+            android:id="@+id/aboutUserFragmentNameUserTitle"
+            style="@style/about_user_fragment_block_info_title"
+            android:text="@string/about_user_fragment_block_info_title_name" />
+
+        <TextView
+            android:id="@+id/aboutUserFragmentNameUserValue"
+            style="@style/about_user_fragment_block_info_value"
+            android:text="@string/about_user_fragment_block_info_value_name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aboutUserFragmentBlockLastName"
+        style="@style/about_user_fragment_block_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserFragmentBlockName"
+        app:layout_constraintVertical_bias="0.02">
+
+        <TextView
+            android:id="@+id/aboutUserFragmentLastNameUserTitle"
+            style="@style/about_user_fragment_block_info_title"
+            android:text="@string/about_user_fragment_block_info_title_last_name" />
+
+        <TextView
+            android:id="@+id/aboutUserFragmentLastNameUserValue"
+            style="@style/about_user_fragment_block_info_value"
+            android:text="@string/about_user_fragment_block_info_value_last_name" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aboutUserFragmentBlockProfession"
+        style="@style/about_user_fragment_block_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserFragmentBlockLastName"
+        app:layout_constraintVertical_bias="0.02">
+
+        <TextView
+            android:id="@+id/aboutUserFragmentProfessionUserTitle"
+            style="@style/about_user_fragment_block_info_title"
+            android:text="@string/about_user_fragment_block_info_title_profession" />
+
+        <TextView
+            android:id="@+id/aboutUserFragmentProfessionUserValue"
+            style="@style/about_user_fragment_block_info_value"
+            android:text="@string/about_user_fragment_block_info_value_profession" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aboutUserFragmentBlockPhone"
+        style="@style/about_user_fragment_block_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserFragmentBlockProfession"
+        app:layout_constraintVertical_bias="0.02">
+
+        <TextView
+            android:id="@+id/aboutUserFragmentPhoneUserTitle"
+            style="@style/about_user_fragment_block_info_title"
+            android:text="@string/about_user_fragment_block_info_title_phone" />
+
+        <TextView
+            android:id="@+id/aboutUserFragmentPhoneUserValue"
+            style="@style/about_user_fragment_block_info_value"
+            android:text="@string/about_user_fragment_block_info_value_phone" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aboutUserFragmentBlockAge"
+        style="@style/about_user_fragment_block_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserFragmentBlockPhone"
+        app:layout_constraintVertical_bias="0.02">
+
+        <TextView
+            android:id="@+id/aboutUserFragmentAgeUserTitle"
+            style="@style/about_user_fragment_block_info_title"
+            android:text="@string/about_user_fragment_block_info_title_age" />
+
+        <TextView
+            android:id="@+id/aboutUserFragmentAgeUserValue"
+            style="@style/about_user_fragment_block_info_value"
+            android:text="@string/about_user_fragment_block_info_value_age" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aboutUserFragmentBlockAddress"
+        style="@style/about_user_fragment_block_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserFragmentBlockAge"
+        app:layout_constraintVertical_bias="0.02">
+
+        <TextView
+            android:id="@+id/aboutUserFragmentAddressUserTitle"
+            style="@style/about_user_fragment_block_info_title"
+            android:text="@string/about_user_fragment_block_info_title_address" />
+
+        <TextView
+            android:id="@+id/aboutUserFragmentAddressUserValue"
+            style="@style/about_user_fragment_block_info_value"
+            android:text="@string/about_user_fragment_block_info_value_address" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/aboutUserFragmentBlockEntryMethod"
+        style="@style/about_user_fragment_block_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserFragmentBlockAddress"
+        app:layout_constraintVertical_bias="0.02">
+
+        <TextView
+            android:id="@+id/aboutUserFragmentEntryMethodUserTitle"
+            style="@style/about_user_fragment_block_info_title"
+            android:text="@string/about_user_fragment_block_info_title_entry_method" />
+
+        <TextView
+            android:id="@+id/aboutUserFragmentEntryMethodUserValue"
+            style="@style/about_user_fragment_block_info_value"
+            android:text="@string/about_user_fragment_block_info_value_entry_method" />
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/dividerSecond"
+        style="@style/about_user_fragment_divider"
+        app:dividerColor="@color/main_color_day_light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aboutUserFragmentBlockEntryMethod"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <LinearLayout
+        android:id="@+id/aboutUserFragmentBlockButtons"
+        style="@style/about_user_fragment_block_info"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dividerSecond"
+        app:layout_constraintVertical_bias="0.02">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/about_user_fragment_call_button_text"
+            app:icon="@drawable/profile_fragment_phone_button_icon" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/about_user_fragment_send_message_button_text"
+            app:icon="@drawable/ic_email_white" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
