@@ -34,7 +34,7 @@
             android:src="@drawable/profile_fragment_user_default_image" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/settingsFragmentChangePhotoButtonBTN"
+            android:id="@+id/profileFragmentChangePhotoButtonBTN"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_gravity="bottom|end"

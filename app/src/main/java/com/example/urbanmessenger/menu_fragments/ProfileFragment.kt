@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.USER
 import com.example.urbanmessenger.data.network.initUser
@@ -23,8 +24,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
 
@@ -49,6 +49,7 @@ class ProfileFragment : Fragment() {
 
         binding.profileFragmentSaveInfoButton.setOnClickListener { saveProfileInfo() }
         binding.profileFragmentAddPhoneNumberButton.setOnClickListener { getCustomAlertDialog() }
+        binding.userImageBlock.setOnClickListener { findNavController().navigate(R.id.action_profileFragment_to_changePhotoFragment) }
 
     }
 
@@ -75,10 +76,8 @@ class ProfileFragment : Fragment() {
 
     private fun saveProfileInfo() {
 
-        val newFirstName =
-            binding.profileFragmentChangeFirstNameTextField.editText?.text.toString()
-        val newLastName =
-            binding.profileFragmentChangeLastNameTextField.editText?.text.toString()
+        val newFirstName = binding.profileFragmentChangeFirstNameTextField.editText?.text.toString()
+        val newLastName = binding.profileFragmentChangeLastNameTextField.editText?.text.toString()
         val newProfession =
             binding.profileFragmentChangeProfessionTextField.editText?.text.toString()
         val newAddress = binding.profileFragmentChangeAdressTextField.editText?.text.toString()

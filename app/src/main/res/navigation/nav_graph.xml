@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_profileFragment_to_chatsListFragment"
             app:destination="@id/chatsListFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_changePhotoFragment"
+            app:destination="@id/changePhotoFragment" />
     </fragment>
     <fragment
         android:id="@+id/usersListFragment"
@@ -55,5 +58,10 @@
         android:name="com.example.urbanmessenger.menu_fragments.AboutUserFragment"
         android:label="О пользователе"
         tools:layout="@layout/fragment_about_user" />
+    <fragment
+        android:id="@+id/changePhotoFragment"
+        android:name="com.example.urbanmessenger.menu_fragments.ChangePhotoFragment"
+        android:label="Изменить фото профиля"
+        tools:layout="@layout/fragment_change_photo" />
 
 </navigation>
