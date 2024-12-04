@@ -9,6 +9,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.APP_ACTIVITY
 import com.example.urbanmessenger.CONTACT
+import com.example.urbanmessenger.R
+import com.example.urbanmessenger.ToolbarSearchPanel
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_MAIN_LIST
 import com.example.urbanmessenger.data.network.NODE_MESSAGES
@@ -19,7 +21,6 @@ import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
 import kotlinx.coroutines.launch
-import com.example.urbanmessenger.R
 
 class ChatsListFragment : Fragment() {
 
@@ -31,6 +32,8 @@ class ChatsListFragment : Fragment() {
     private val mRefUser = DATA_BASE_ROOT.child(NODE_USERS)
     private val mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID)
     private var mListItems = listOf<UserData>()
+    private lateinit var toolbarSP: ToolbarSearchPanel
+    private var searchItem = true
 
 
     override fun onCreateView(
@@ -47,7 +50,16 @@ class ChatsListFragment : Fragment() {
         super.onResume()
         APP_ACTIVITY.updateToolbarTitle("Чаты")
         initRecyclerView()
+        toolbarSP = ToolbarSearchPanel(searchItem)
+        toolbarSP.initToolbarSearchIcon()
     }
+
+    override fun onStop() {
+        super.onStop()
+        toolbarSP.searchFieldDisable()
+
+    }
+
 
     private fun initRecyclerView() {
         mAdapter = ChatsListAdapter { user -> navigateToSingleChatActivity(user) }

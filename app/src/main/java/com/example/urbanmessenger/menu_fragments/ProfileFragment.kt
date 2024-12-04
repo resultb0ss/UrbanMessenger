@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
@@ -46,10 +47,12 @@ class ProfileFragment : Fragment() {
         binding.profileFragmentChangeAgeTextField.editText?.setText(USER.age)
         binding.profileFragmentChangeAdressTextField.editText?.setText(USER.address)
         binding.profileFragmentChangeProfessionTextField.editText?.setText(USER.profession)
-
+        binding.profileFragmentUserImage.setImageURI(USER.userPhotoUri.toUri())
         binding.profileFragmentSaveInfoButton.setOnClickListener { saveProfileInfo() }
         binding.profileFragmentAddPhoneNumberButton.setOnClickListener { getCustomAlertDialog() }
-        binding.userImageBlock.setOnClickListener { findNavController().navigate(R.id.action_profileFragment_to_changePhotoFragment) }
+        binding.userImageBlock.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_changePhotoFragment)
+        }
 
     }
 

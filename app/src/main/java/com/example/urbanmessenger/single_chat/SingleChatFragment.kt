@@ -222,7 +222,7 @@ class SingleChatFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setTitle("Что вы хотите выполнить?")
-            setPositiveButton("Удалить"){_,_-> myToast("Сообщение удалено")}
+            setPositiveButton("Удалить"){_,_-> myToast("Сообщение удалено ${message.text}")}
             setNegativeButton("Отмена"){_,_->}
             show()
         }

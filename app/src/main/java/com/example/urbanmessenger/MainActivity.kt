@@ -2,8 +2,6 @@ package com.example.urbanmessenger
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -58,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     private fun initNavigation() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
@@ -70,39 +69,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun searchEnable() {
+        if (!searchItem) {
+            binding.toolbarSearchField.visibility = View.VISIBLE
+            searchItem = true
+        } else {
+            binding.toolbarSearchField.visibility = View.GONE
+            searchItem = false
+        }
+    }
+
     override fun onStop() {
         super.onStop()
         AppStates.updateState(AppStates.OFFLINE, this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_activity_search_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.searchItem -> {
-                if (!searchItem) {
-                    binding.toolbarSearchField.visibility = View.VISIBLE
-                    searchItem = true
-                } else {
-                    binding.toolbarSearchField.visibility = View.GONE
-                    searchItem = false
-                }
-                return true
-            }
-
-            else -> {
-                return super.onOptionsItemSelected(item)
-            }
-        }
-    }
-
-    private fun onNavClick(){
-        binding.navView.setNavigationItemSelectedListener{item ->
+    private fun onNavClick() {
+        binding.navView.setNavigationItemSelectedListener { item ->
             val id = item.itemId
-            if (id == R.id.signOutItem){
+            if (id == R.id.signOutItem) {
                 AUTHFIREBASE.signOut()
                 startActivity(Intent(this, AuthActivity::class.java))
                 this.finish()

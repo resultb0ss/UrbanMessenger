@@ -135,6 +135,15 @@ fun updatePhone(newPhone: String) {
         .addOnFailureListener { myToast(it.message?.toString().toString()) }
 }
 
+fun updatePhotoUri(newUri: String) {
+    DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(CHILD_IMAGE_URI).setValue(newUri)
+        .addOnSuccessListener {
+            USER.userPhotoUri = newUri
+            myToast("Фото успешно обновлено")
+        }
+        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+}
+
 fun initUser() {
     DATA_BASE_ROOT.child(NODE_USERS).child(UID).addListenerForSingleValueEvent(
         AppValueEventListener {

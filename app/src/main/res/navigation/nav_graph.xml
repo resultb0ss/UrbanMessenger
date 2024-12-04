@@ -62,6 +62,11 @@
         android:id="@+id/changePhotoFragment"
         android:name="com.example.urbanmessenger.menu_fragments.ChangePhotoFragment"
         android:label="Изменить фото профиля"
-        tools:layout="@layout/fragment_change_photo" />
+        tools:layout="@layout/fragment_change_photo" >
+        <action
+            android:id="@+id/action_changePhotoFragment_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
 </navigation>
