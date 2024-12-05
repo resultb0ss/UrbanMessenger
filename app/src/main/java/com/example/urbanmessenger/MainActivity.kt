@@ -1,28 +1,60 @@
 package com.example.urbanmessenger
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.urbanmessenger.data.network.AUTHFIREBASE
+import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
+import com.example.urbanmessenger.data.network.NODE_USERS
+import com.example.urbanmessenger.data.network.UID
+import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.data.network.initFirebase
 import com.example.urbanmessenger.data.network.initUser
 import com.example.urbanmessenger.databinding.ActivityMainBinding
+import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppStates
-import kotlinx.coroutines.launch
+import com.example.urbanmessenger.utils.AppValueEventListener
+import com.example.urbanmessenger.utils.myToast
+import com.google.firebase.database.DatabaseReference
 
 class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private var searchItem = false
+
+    private lateinit var headerImage: ImageView
+    private lateinit var headerFullNameOrEmail: TextView
+    private lateinit var headerPhoneOrStatus: TextView
+
+    private lateinit var navView: View
+
+    private lateinit var mListenerHeader: AppValueEventListener
+    private lateinit var mReceivingUser: UserData
+    private lateinit var mRefUser: DatabaseReference
+
+
+    val permissions = arrayOf(
+        Manifest.permission.CAMERA,
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.CALL_PHONE,
+        Manifest.permission.SEND_SMS,
+        Manifest.permission.POST_NOTIFICATIONS
+    )
 
 
     lateinit var navController: NavController
@@ -32,10 +64,56 @@ class MainActivity : AppCompatActivity() {
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         setSupportActionBar(binding.mainActivityToolbar)
+        permissionLauncherMultiple.launch(permissions)
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initNavigation()
+        initFirebase()
+        initUser()
+        setValueEventListener()
+
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mRefUser.removeEventListener(mListenerHeader)
+    }
+
+    private val permissionLauncherMultiple = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { result ->
+        var allAreGranted = true
+        for (isGranted in result.values) {
+            allAreGranted = allAreGranted && isGranted
+        }
+        if (allAreGranted) {
+            myToast("Все разрешения успешно полуены")
+        } else {
+            myToast("Не все разрешения получены")
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun initHeadersFields() {
+        headerImage = findViewById<ImageView>(R.id.headerProfileImage)
+        headerPhoneOrStatus = findViewById<TextView>(R.id.headerNumberPhoneProfile)
+        headerFullNameOrEmail = findViewById<TextView>(R.id.headerFullNameProfile)
+
+        headerImage.setImageURI(mReceivingUser.userPhotoUri.toUri())
+        if (mReceivingUser.phone.isEmpty()) {
+            headerPhoneOrStatus.text = mReceivingUser.state
+        } else {
+            headerPhoneOrStatus.text = mReceivingUser.phone
+        }
+        if (mReceivingUser.firstname.isEmpty() && mReceivingUser.lastname.isEmpty()) {
+            headerFullNameOrEmail.text = mReceivingUser.email
+        } else headerFullNameOrEmail.text = "${mReceivingUser.firstname} ${mReceivingUser.lastname}"
 
     }
 
@@ -47,13 +125,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        initNavigation()
-        lifecycleScope.launch { initFirebase() }
-        lifecycleScope.launch { initUser() }
+    private fun setValueEventListener() {
+        mListenerHeader = AppValueEventListener {
+            mReceivingUser = it.getUserDataModel()
+            initHeadersFields()
+        }
 
-
+        mRefUser = DATA_BASE_ROOT.child(NODE_USERS).child(UID)
+        mRefUser.addValueEventListener(mListenerHeader)
     }
 
 
@@ -69,37 +148,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun searchEnable() {
-        if (!searchItem) {
-            binding.toolbarSearchField.visibility = View.VISIBLE
-            searchItem = true
-        } else {
-            binding.toolbarSearchField.visibility = View.GONE
-            searchItem = false
-        }
-    }
-
     override fun onStop() {
         super.onStop()
         AppStates.updateState(AppStates.OFFLINE, this)
     }
-
-
-    private fun onNavClick() {
-        binding.navView.setNavigationItemSelectedListener { item ->
-            val id = item.itemId
-            if (id == R.id.signOutItem) {
-                AUTHFIREBASE.signOut()
-                startActivity(Intent(this, AuthActivity::class.java))
-                this.finish()
-            }
-
-            binding.drawerLayout.closeDrawer(GravityCompat.START)
-            return@setNavigationItemSelectedListener true
-        }
-
-    }
-
 
     override fun onDestroy() {
         super.onDestroy()

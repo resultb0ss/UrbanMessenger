@@ -16,7 +16,7 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileImage"
+            android:id="@+id/headerProfileImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/man"
@@ -37,7 +37,7 @@
         android:paddingTop="4dp">
 
         <TextView
-            android:id="@+id/firstAndLastNameProfile"
+            android:id="@+id/headerFullNameProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Руслан Иванов"
@@ -47,7 +47,7 @@
             android:paddingTop="4dp"/>
 
         <TextView
-            android:id="@+id/numberPhoneProfile"
+            android:id="@+id/headerNumberPhoneProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="+7 (916) 932 92 23"
