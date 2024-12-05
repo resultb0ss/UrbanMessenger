@@ -1,13 +1,17 @@
 package com.example.urbanmessenger.single_chat
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -118,8 +122,36 @@ class SingleChatFragment : Fragment() {
             }
         }
 
-        binding.singleChatFragmentClipIcon.setOnClickListener { attachFile() }
+        binding.singleChatFragmentClipIcon.setOnClickListener { pickFromGallery() }
 
+    }
+
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            getAlertDialogWithImage(uri)
+        }
+
+    private fun pickFromGallery() {
+        galleryLauncher.launch("image/*")
+    }
+
+    @SuppressLint("MissingInflatedId")
+    private fun getAlertDialogWithImage(imageUri: Uri?) {
+        val layoutInflater = LayoutInflater.from(requireContext())
+        val view = layoutInflater.inflate(R.layout.alert_dialog_attach_file, null)
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setView(view)
+        val imageView = view.findViewById<ImageView>(R.id.singleChatAlertDialogImageView)
+        builder.apply {
+            setTitle("Прикрепить файл?")
+            imageView.setImageURI(imageUri)
+            setCancelable(false)
+            setNegativeButton("Отмена") { _, _ -> }
+            setPositiveButton("Отправить"){_,_->}
+        }
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 
 

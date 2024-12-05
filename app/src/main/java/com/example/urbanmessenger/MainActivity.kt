@@ -34,13 +34,10 @@ class MainActivity : AppCompatActivity() {
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
-    private var searchItem = false
 
     private lateinit var headerImage: ImageView
     private lateinit var headerFullNameOrEmail: TextView
     private lateinit var headerPhoneOrStatus: TextView
-
-    private lateinit var navView: View
 
     private lateinit var mListenerHeader: AppValueEventListener
     private lateinit var mReceivingUser: UserData
@@ -67,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.mainActivityToolbar)
         permissionLauncherMultiple.launch(permissions)
 
-
     }
 
     override fun onResume() {
@@ -76,7 +72,6 @@ class MainActivity : AppCompatActivity() {
         initFirebase()
         initUser()
         setValueEventListener()
-
 
     }
 
