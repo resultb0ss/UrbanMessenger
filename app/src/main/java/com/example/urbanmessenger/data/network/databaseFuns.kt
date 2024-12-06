@@ -1,5 +1,6 @@
 package com.example.urbanmessenger.data.network
 
+import android.net.Uri
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utils.AppValueEventListener
 import com.example.urbanmessenger.utils.myToast
@@ -44,6 +45,37 @@ fun sendMessage(
         .updateChildren(mapDialog)
         .addOnSuccessListener { function() }
 
+
+}
+
+fun sendImageMessage(
+    receivingUserId: String,
+    imageUri: Uri?,
+    function: () -> Unit
+) {
+
+    val refDialogUser = "$NODE_MESSAGES/$UID/$receivingUserId"
+    val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserId/$UID"
+    val messageKey = DATA_BASE_ROOT.child(refDialogUser).push().key
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage[CHILD_FROM] = UID
+    mapMessage[CHILD_TYPE] = TYPE_IMAGE
+    mapMessage[CHILD_TEXT] = "Фотография"
+    mapMessage[CHILD_ID] = messageKey.toString()
+    mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
+    mapMessage[CHILD_IMAGE_URI_SENDER] = imageUri.toString()
+    mapMessage[CHILD_IMAGE_URI_RECEIVER] = "placeholder"
+    mapMessage[CHILD_IMAGE_URI_SENDER] = imageUri.toString()
+
+
+    val mapDialog = hashMapOf<String, Any>()
+    mapDialog["$refDialogUser/$messageKey"] = mapMessage
+    mapDialog["$refDialogReceivingUser/$messageKey"] = mapMessage
+
+    DATA_BASE_ROOT
+        .updateChildren(mapDialog)
+        .addOnSuccessListener { function() }
 
 }
 

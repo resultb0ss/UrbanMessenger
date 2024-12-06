@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             allAreGranted = allAreGranted && isGranted
         }
         if (allAreGranted) {
-            myToast("Все разрешения успешно полуены")
+            myToast("Все разрешения успешно получены")
         } else {
             myToast("Не все разрешения получены")
         }

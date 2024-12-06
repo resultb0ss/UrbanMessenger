@@ -21,21 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
-            <EditText
-                android:id="@+id/toolbarSearchField"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:hint="Поиск"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/mainToolbarSearchIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginHorizontal="@dimen/horizontalMargin"
-                android:src="@drawable/ic_search_24"
-                android:visibility="gone" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 

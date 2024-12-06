@@ -7,6 +7,13 @@
     android:orientation="vertical"
     tools:context=".chats.ChatsListFragment">
 
+    <EditText
+        android:id="@+id/chatsListSearchField"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:hint="Поиск"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatsListRecyclerView"

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -28,6 +27,7 @@ import com.example.urbanmessenger.data.network.TYPE_TEXT
 import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.data.network.saveToMainList
+import com.example.urbanmessenger.data.network.sendImageMessage
 import com.example.urbanmessenger.data.network.sendMessage
 import com.example.urbanmessenger.databinding.FragmentSingleChatBinding
 import com.example.urbanmessenger.models.UserData
@@ -57,7 +57,6 @@ class SingleChatFragment : Fragment() {
     private lateinit var toolbar: MaterialToolbar
 
 
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -75,6 +74,14 @@ class SingleChatFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        initFields()
+        initRecyclerView()
+        initToolbarWithListener()
+
+
+    }
+
+    private fun initToolbarWithListener() {
         toolbar = APP_ACTIVITY.findViewById<MaterialToolbar>(R.id.mainActivityToolbar)
         toolbar.visibility = View.GONE
         APP_ACTIVITY.supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -87,11 +94,6 @@ class SingleChatFragment : Fragment() {
 
         mRefUser = DATA_BASE_ROOT.child(NODE_USERS).child(CONTACT.id)
         mRefUser.addValueEventListener(mListenerInfoToolbar)
-
-        initFields()
-        initRecyclerView()
-
-
     }
 
     private fun initFields() {
@@ -114,7 +116,7 @@ class SingleChatFragment : Fragment() {
             val message = binding.messageInputField.text.toString()
 
             if (message.isEmpty()) {
-                Toast.makeText(requireContext(), "Введите сообщение", Toast.LENGTH_SHORT).show()
+                myToast("Введите текст в поле")
             } else sendMessage(message, CONTACT.id, TYPE_TEXT) {
 
                 saveToMainList(CONTACT.id, TYPE_CHAT)
@@ -148,7 +150,9 @@ class SingleChatFragment : Fragment() {
             imageView.setImageURI(imageUri)
             setCancelable(false)
             setNegativeButton("Отмена") { _, _ -> }
-            setPositiveButton("Отправить"){_,_->}
+            setPositiveButton("Отправить") { _, _ ->
+                sendImageMessage(CONTACT.id, imageUri) { saveToMainList(CONTACT.id, TYPE_CHAT) }
+            }
         }
         val alertDialog = builder.create()
         alertDialog.show()
@@ -156,7 +160,7 @@ class SingleChatFragment : Fragment() {
 
 
     private fun initRecyclerView() {
-        mAdapter = SingleChatAdapter{ message -> getAlertDialog(message)}
+        mAdapter = SingleChatAdapter { message -> getAlertDialog(message) }
         mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(CONTACT.id)
         binding.singleChatFragmentRecyclerView.adapter = mAdapter
         binding.singleChatFragmentRecyclerView.setHasFixedSize(true)
@@ -205,10 +209,6 @@ class SingleChatFragment : Fragment() {
         }
     }
 
-    private fun attachFile() {
-
-    }
-
     private fun updateData() {
         mSmoothScrollToPosition = false
         mIsScrolling = false
@@ -222,9 +222,14 @@ class SingleChatFragment : Fragment() {
         super.onPause()
         mRefMessages.removeEventListener(mMessagesListener)
         mRefUser.removeEventListener(mListenerInfoToolbar)
-        toolbar.visibility = View.VISIBLE
 
     }
+
+    override fun onStop() {
+        super.onStop()
+        toolbar.visibility = View.VISIBLE
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -250,15 +255,14 @@ class SingleChatFragment : Fragment() {
         }
     }
 
-    private fun getAlertDialog(message: UserData){
+    private fun getAlertDialog(message: UserData) {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setTitle("Что вы хотите выполнить?")
-            setPositiveButton("Удалить"){_,_-> myToast("Сообщение удалено ${message.text}")}
-            setNegativeButton("Отмена"){_,_->}
+            setPositiveButton("Удалить") { _, _ -> myToast("Сообщение удалено ${message.text}") }
+            setNegativeButton("Отмена") { _, _ -> }
             show()
         }
-
 
 
     }

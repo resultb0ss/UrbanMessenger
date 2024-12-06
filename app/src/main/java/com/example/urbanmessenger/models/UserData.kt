@@ -24,10 +24,10 @@ data class UserData(
     var text: String = "",
     var type: String = "",
     var from: String = "",
-
     var timestamp: Any = "",
-
-    var lastMessage: String = ""
+    var lastMessage: String = "",
+    var imageUriSender: String = "empty",
+    var imageUriReceiver: String = "empty",
 
 ) : Serializable {
     override fun equals(other: Any?): Boolean {

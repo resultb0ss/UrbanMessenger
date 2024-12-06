@@ -1,10 +1,12 @@
 package com.example.urbanmessenger.single_chat
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.urbanmessenger.data.network.TYPE_IMAGE
+import com.example.urbanmessenger.data.network.TYPE_TEXT
 import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.databinding.ItemSingleMessageBinding
 import com.example.urbanmessenger.models.UserData
@@ -14,7 +16,6 @@ class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
     RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
 
     private var mListMessagesCache = mutableListOf<UserData>()
-    private lateinit var mDiffResult: DiffUtil.DiffResult
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -31,17 +32,44 @@ class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
         position: Int
     ) {
         val message = mListMessagesCache[position]
-        if (message.from == UID) {
-            holder.binding.blockUserMessage.visibility = View.VISIBLE
-            holder.binding.blockReceivedMessage.visibility = View.GONE
-            holder.binding.chatUserMessage.text = message.text
-            holder.binding.chatUserMessageTime.text = message.timestamp.toString().asTime()
-        } else {
-            holder.binding.blockUserMessage.visibility = View.GONE
-            holder.binding.blockReceivedMessage.visibility = View.VISIBLE
-            holder.binding.chatReceiverMessage.text = message.text
-            holder.binding.chatReceivedMessageTime.text = message.timestamp.toString().asTime()
+        when (message.type) {
+            TYPE_TEXT -> {
+                if (message.from == UID) {
+                    holder.binding.blockUserMessage.visibility = View.VISIBLE
+                    holder.binding.blockReceivedMessage.visibility = View.GONE
+                    holder.binding.chatUserMessage.text = message.text
+                    holder.binding.chatUserMessageTime.text = message.timestamp.toString().asTime()
+                } else {
+                    holder.binding.blockUserMessage.visibility = View.GONE
+                    holder.binding.blockReceivedMessage.visibility = View.VISIBLE
+                    holder.binding.chatReceiverMessage.text = message.text
+                    holder.binding.chatReceivedMessageTime.text =
+                        message.timestamp.toString().asTime()
+                }
+            }
+
+            TYPE_IMAGE -> {
+                if (message.from == UID) {
+                    holder.binding.blockUserMessage.visibility = View.VISIBLE
+                    holder.binding.blockReceivedMessage.visibility = View.GONE
+                    holder.binding.chatUserMessage.visibility = View.GONE
+                    holder.binding.chatUserMessageImage.visibility = View.VISIBLE
+                    val imageUri = Uri.parse(message.imageUriSender)
+                    holder.binding.chatUserMessageImage.setImageURI(imageUri)
+                    holder.binding.chatUserMessageTime.text = message.timestamp.toString().asTime()
+                } else {
+                    holder.binding.blockUserMessage.visibility = View.GONE
+                    holder.binding.blockReceivedMessage.visibility = View.VISIBLE
+                    holder.binding.chatReceiverMessage.visibility = View.GONE
+                    holder.binding.chatReceiverMessageImage.visibility = View.VISIBLE
+                    val imageUri = Uri.parse(message.imageUriSender)
+                    holder.binding.chatReceiverMessageImage.setImageURI(imageUri)
+                    holder.binding.chatReceivedMessageTime.text =
+                        message.timestamp.toString().asTime()
+                }
+            }
         }
+
         holder.itemView.setOnClickListener { onClick(message) }
     }
 

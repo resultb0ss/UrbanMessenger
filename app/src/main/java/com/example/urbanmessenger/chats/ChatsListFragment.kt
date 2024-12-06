@@ -1,6 +1,7 @@
 package com.example.urbanmessenger.chats
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +33,7 @@ class ChatsListFragment : Fragment() {
     private val mRefUser = DATA_BASE_ROOT.child(NODE_USERS)
     private val mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID)
     private var mListItems = listOf<UserData>()
-    private lateinit var toolbarSP: ToolbarSearchPanel
-    private var searchItem = true
+
 
 
     override fun onCreateView(
@@ -50,13 +50,13 @@ class ChatsListFragment : Fragment() {
         super.onResume()
         APP_ACTIVITY.updateToolbarTitle("Чаты")
         initRecyclerView()
-        toolbarSP = ToolbarSearchPanel(searchItem)
-        toolbarSP.initToolbarSearchIcon()
+
+
     }
 
     override fun onStop() {
         super.onStop()
-        toolbarSP.searchFieldDisable()
+
 
     }
 
@@ -79,6 +79,7 @@ class ChatsListFragment : Fragment() {
                                         val tempList =
                                             dataSnapshot2.children.map { it.getUserDataModel() }
                                         newModel.lastMessage = tempList[0].text
+
                                         mAdapter.updateListItems(newModel)
                                     })
                         })

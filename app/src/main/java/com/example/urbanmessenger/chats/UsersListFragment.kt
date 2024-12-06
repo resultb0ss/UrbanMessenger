@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.urbanmessenger.CONTACT
 
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.ToolbarSearchPanel
@@ -35,10 +36,6 @@ class UsersListFragment : Fragment() {
     private lateinit var mRefUsers: DatabaseReference
     private lateinit var mRefContactsListener: AppValueEventListener
     private var mapListeners = hashMapOf<DatabaseReference, AppValueEventListener>()
-    private val viewModel: ContactViewModel by viewModels()
-
-    private lateinit var toolbarSP: ToolbarSearchPanel
-    private var searchItem = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,14 +52,12 @@ class UsersListFragment : Fragment() {
         mapListeners.forEach {
             it.key.removeEventListener(it.value)
         }
-        toolbarSP.searchFieldDisable()
     }
 
     override fun onResume() {
         super.onResume()
         initRecyclerView()
-        toolbarSP = ToolbarSearchPanel(searchItem)
-        toolbarSP.initToolbarSearchIcon()
+
     }
 
     private fun initRecyclerView() {
@@ -92,7 +87,7 @@ class UsersListFragment : Fragment() {
                     }
                     holder.binding.itemUsersContactEmailTV.text = user.email
                     holder.itemView.setOnClickListener {
-                        viewModel.CONTACT = user
+                        CONTACT = user
                         findNavController().navigate(R.id.action_usersListFragment_to_singleChatFragment)
                     }
                 }
