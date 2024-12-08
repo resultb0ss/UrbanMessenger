@@ -1,25 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     tools:context=".ui.fragments.chats.ChatsListFragment">
 
-    <EditText
-        android:id="@+id/chatsListSearchField"
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:hint="Поиск"/>
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/chatsListSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Найти пользователя" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatsListRecyclerView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatsListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_chats_list" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/chatsListSearchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_chats_list"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:hint="Найти пользователя"
+        app:hideNavigationIcon="false"
+        app:layout_anchor="@id/chatsListSearchBar"
+        app:useDrawerArrowDrawable="false"
+        app:autoShowKeyboard="true">
 
-</LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filteredChatsListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_chats_list" />
+
+
+    </com.google.android.material.search.SearchView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

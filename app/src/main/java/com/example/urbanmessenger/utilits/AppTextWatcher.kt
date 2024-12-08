@@ -4,7 +4,7 @@ package com.example.urbanmessenger.utilits
 import android.text.Editable
 import android.text.TextWatcher
 
-class AppTextWatcher(val function: () -> Unit): TextWatcher {
+open class AppTextWatcher(val function: () -> Unit): TextWatcher {
     override fun beforeTextChanged(
         p0: CharSequence?,
         p1: Int,

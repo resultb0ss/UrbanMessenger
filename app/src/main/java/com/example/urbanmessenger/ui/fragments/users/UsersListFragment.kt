@@ -1,9 +1,14 @@
 package com.example.urbanmessenger.ui.fragments.users
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,6 +30,7 @@ class UsersListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var mAdapter: UsersListAdapter
+    private lateinit var fAdapter: UsersListAdapter
     private var mRefUsers = DATA_BASE_ROOT.child(NODE_USERS)
     private var mListItems = listOf<UserData>()
     private var filteredList = listOf<UserData>()
@@ -45,6 +51,37 @@ class UsersListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         initRecyclerView()
+
+    }
+
+    private fun initSearchBar() {
+        fAdapter = UsersListAdapter { user -> navigateToSingleChatFragment(user) }
+        binding.filteredUsersListRecyclerView.adapter = fAdapter
+        binding.usersListSearchView.editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                p0: CharSequence?,
+                p1: Int,
+                p2: Int,
+                p3: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                p0: CharSequence?,
+                p1: Int,
+                p2: Int,
+                p3: Int
+            ) {
+                Log.d("@@@","on changed ${p0}")
+//                val listForSearchBar =
+//                    filteredList.filter { it.email.contains(p0!!, ignoreCase = true) }
+//                listForSearchBar.forEach { user -> fAdapter.updateListItems(user) }
+//                Log.d("@@@","${listForSearchBar.forEach { user -> fAdapter.updateListItems(user) }}")
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        })
 
     }
 

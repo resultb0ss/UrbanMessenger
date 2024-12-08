@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.urbanmessenger.utilits.APP_ACTIVITY
-import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_MAIN_LIST
@@ -18,7 +16,9 @@ import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.utilits.APP_ACTIVITY
 import com.example.urbanmessenger.utilits.AppValueEventListener
+import com.example.urbanmessenger.utilits.CONTACT
 import kotlinx.coroutines.launch
 
 class ChatsListFragment : Fragment() {
@@ -31,7 +31,6 @@ class ChatsListFragment : Fragment() {
     private val mRefUser = DATA_BASE_ROOT.child(NODE_USERS)
     private val mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID)
     private var mListItems = listOf<UserData>()
-
 
 
     override fun onCreateView(
@@ -74,11 +73,14 @@ class ChatsListFragment : Fragment() {
                             mRefMessages.child(model.id).limitToLast(1)
                                 .addListenerForSingleValueEvent(
                                     AppValueEventListener { dataSnapshot2 ->
+
                                         val tempList =
                                             dataSnapshot2.children.map { it.getUserDataModel() }
                                         newModel.lastMessage = tempList[0].text
 
-                                        mAdapter.updateListItems(newModel)
+                                        if (!mAdapter.listItems.contains(newModel)) {
+                                            mAdapter.updateListItems(newModel)
+                                        }
                                     })
                         })
                 }

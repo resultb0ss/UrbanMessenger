@@ -1,24 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.users.UsersListFragment">
 
-    <EditText
-        android:id="@+id/chatsListSearchField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:hint="Поиск"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/usersListRecyclerView"
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/usersListSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Найти чат" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/usersListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_users_list" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/usersListSearchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_users_list"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:hint="Найти чат"
+        app:hideNavigationIcon="false"
+        app:layout_anchor="@id/usersListSearchBar"
+        app:useDrawerArrowDrawable="false"
+        app:autoShowKeyboard="true">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filteredUsersListRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_users_list" />
+
+    </com.google.android.material.search.SearchView>
 
 
-</LinearLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
