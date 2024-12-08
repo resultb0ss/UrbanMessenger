@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.auth
+package com.example.urbanmessenger.ui.fragments.auth
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import com.example.urbanmessenger.MainActivity
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.AUTHFIREBASE
 import com.example.urbanmessenger.databinding.FragmentLoginBinding
-import com.example.urbanmessenger.utils.myToast
+import com.example.urbanmessenger.utilits.myToast
 
 
 class LoginFragment : Fragment() {

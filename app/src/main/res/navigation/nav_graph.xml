@@ -6,7 +6,7 @@
     app:startDestination="@id/chatsListFragment">
     <fragment
         android:id="@+id/chatsListFragment"
-        android:name="com.example.urbanmessenger.chats.ChatsListFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.chats.ChatsListFragment"
         android:label="Чаты"
         tools:layout="@layout/fragment_chats_list">
         <action
@@ -18,14 +18,14 @@
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.example.urbanmessenger.menu_fragments.AboutFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.menu_fragments.AboutFragment"
         android:label="О приложении"
         tools:layout="@layout/fragment_about">
 
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.urbanmessenger.menu_fragments.ProfileFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.menu_fragments.ProfileFragment"
         android:label="Профиль"
         tools:layout="@layout/fragment_profile">
 
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/usersListFragment"
-        android:name="com.example.urbanmessenger.chats.UsersListFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.users.UsersListFragment"
         android:label="Контакты"
         tools:layout="@layout/fragment_users_list">
         <action
@@ -50,23 +50,22 @@
     </fragment>
     <fragment
         android:id="@+id/singleChatFragment"
-        android:name="com.example.urbanmessenger.single_chat.SingleChatFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.singlechat.SingleChatFragment"
         android:label="Чаты"
         tools:layout="@layout/fragment_single_chat"/>
     <fragment
         android:id="@+id/aboutUserFragment"
-        android:name="com.example.urbanmessenger.menu_fragments.AboutUserFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.menu_fragments.AboutUserFragment"
         android:label="О пользователе"
         tools:layout="@layout/fragment_about_user" />
     <fragment
         android:id="@+id/changePhotoFragment"
-        android:name="com.example.urbanmessenger.menu_fragments.ChangePhotoFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.menu_fragments.ChangePhotoFragment"
         android:label="Изменить фото профиля"
         tools:layout="@layout/fragment_change_photo" >
         <action
             android:id="@+id/action_changePhotoFragment_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/profileFragment" />
     </fragment>
 
 </navigation>

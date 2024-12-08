@@ -1,5 +1,6 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.utilits
 
+import com.example.urbanmessenger.MainActivity
 import com.example.urbanmessenger.models.UserData
 
 lateinit var APP_ACTIVITY: MainActivity

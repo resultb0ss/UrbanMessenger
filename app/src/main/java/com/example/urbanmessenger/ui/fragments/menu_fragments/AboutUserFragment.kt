@@ -1,11 +1,11 @@
-package com.example.urbanmessenger.menu_fragments
+package com.example.urbanmessenger.ui.fragments.menu_fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.urbanmessenger.CONTACT
+import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.databinding.FragmentAboutUserBinding
 
 class AboutUserFragment : Fragment() {

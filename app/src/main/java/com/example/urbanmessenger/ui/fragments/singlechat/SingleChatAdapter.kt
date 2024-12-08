@@ -1,6 +1,7 @@
-package com.example.urbanmessenger.single_chat
+package com.example.urbanmessenger.ui.fragments.singlechat
 
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.example.urbanmessenger.data.network.TYPE_TEXT
 import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.databinding.ItemSingleMessageBinding
 import com.example.urbanmessenger.models.UserData
-import com.example.urbanmessenger.utils.asTime
+import com.example.urbanmessenger.utilits.asTime
 
 class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
     RecyclerView.Adapter<SingleChatAdapter.SingleChatHolder>() {
@@ -70,7 +71,20 @@ class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
             }
         }
 
-        holder.itemView.setOnClickListener { onClick(message) }
+
+        val index = searchIndex(mListMessagesCache,message)
+
+
+
+    }
+
+    private fun searchIndex(messages: MutableList<UserData>, message: UserData): Int{
+        var result = -1
+        for (i in messages.indices){
+            if (message.text == messages[i].text && message.timestamp == messages[i].timestamp) result = i
+        }
+        return result
+
     }
 
     override fun getItemCount() = mListMessagesCache.size

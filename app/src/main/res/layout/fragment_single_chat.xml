@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".single_chat.SingleChatFragment">
+    tools:context=".ui.fragments.singlechat.SingleChatFragment">
 
 
     <com.google.android.material.appbar.MaterialToolbar

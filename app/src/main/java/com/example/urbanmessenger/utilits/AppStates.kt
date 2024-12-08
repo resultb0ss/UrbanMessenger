@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.utils
+package com.example.urbanmessenger.utilits
 
 import android.content.Context
 import com.example.urbanmessenger.data.network.AUTHFIREBASE

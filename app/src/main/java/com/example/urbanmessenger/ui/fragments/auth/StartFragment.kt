@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.auth
+package com.example.urbanmessenger.ui.fragments.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater

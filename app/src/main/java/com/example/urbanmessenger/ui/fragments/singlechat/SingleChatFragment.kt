@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.single_chat
+package com.example.urbanmessenger.ui.fragments.singlechat
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -16,10 +16,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.urbanmessenger.APP_ACTIVITY
-import com.example.urbanmessenger.CONTACT
+import com.example.urbanmessenger.utilits.APP_ACTIVITY
+import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.R
-import com.example.urbanmessenger.TYPE_CHAT
+import com.example.urbanmessenger.utilits.TYPE_CHAT
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_MESSAGES
 import com.example.urbanmessenger.data.network.NODE_USERS
@@ -31,10 +31,10 @@ import com.example.urbanmessenger.data.network.sendImageMessage
 import com.example.urbanmessenger.data.network.sendMessage
 import com.example.urbanmessenger.databinding.FragmentSingleChatBinding
 import com.example.urbanmessenger.models.UserData
-import com.example.urbanmessenger.utils.AppChildEventListener
-import com.example.urbanmessenger.utils.AppTextWatcher
-import com.example.urbanmessenger.utils.AppValueEventListener
-import com.example.urbanmessenger.utils.myToast
+import com.example.urbanmessenger.utilits.AppChildEventListener
+import com.example.urbanmessenger.utilits.AppTextWatcher
+import com.example.urbanmessenger.utilits.AppValueEventListener
+import com.example.urbanmessenger.utilits.myToast
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.DatabaseReference
 
@@ -130,7 +130,7 @@ class SingleChatFragment : Fragment() {
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            getAlertDialogWithImage(uri)
+            if (uri != null) getAlertDialogWithImage(uri)
         }
 
     private fun pickFromGallery() {

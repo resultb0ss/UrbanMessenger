@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.auth
+package com.example.urbanmessenger.ui.fragments.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,7 @@ import com.example.urbanmessenger.data.network.CHILD_USERNAME
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_USERS
 import com.example.urbanmessenger.databinding.FragmentRegistrationBinding
-import com.example.urbanmessenger.utils.myToast
+import com.example.urbanmessenger.utilits.myToast
 import com.google.firebase.auth.FirebaseAuth
 
 

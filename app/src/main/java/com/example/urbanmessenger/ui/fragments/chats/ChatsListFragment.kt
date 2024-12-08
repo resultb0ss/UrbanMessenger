@@ -1,17 +1,15 @@
-package com.example.urbanmessenger.chats
+package com.example.urbanmessenger.ui.fragments.chats
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.urbanmessenger.APP_ACTIVITY
-import com.example.urbanmessenger.CONTACT
+import com.example.urbanmessenger.utilits.APP_ACTIVITY
+import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.R
-import com.example.urbanmessenger.ToolbarSearchPanel
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_MAIN_LIST
 import com.example.urbanmessenger.data.network.NODE_MESSAGES
@@ -20,7 +18,7 @@ import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.models.UserData
-import com.example.urbanmessenger.utils.AppValueEventListener
+import com.example.urbanmessenger.utilits.AppValueEventListener
 import kotlinx.coroutines.launch
 
 class ChatsListFragment : Fragment() {
@@ -62,7 +60,7 @@ class ChatsListFragment : Fragment() {
 
 
     private fun initRecyclerView() {
-        mAdapter = ChatsListAdapter { user -> navigateToSingleChatActivity(user) }
+        mAdapter = ChatsListAdapter { user -> navigateToSingleChatFragment(user) }
 
         lifecycleScope.launch {
             mRefMainList.addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot ->
@@ -90,7 +88,7 @@ class ChatsListFragment : Fragment() {
         binding.chatsListRecyclerView.adapter = mAdapter
     }
 
-    private fun navigateToSingleChatActivity(user: UserData) {
+    private fun navigateToSingleChatFragment(user: UserData) {
         CONTACT = user
         findNavController().navigate(R.id.action_chatsListFragment_to_singleChatFragment)
     }

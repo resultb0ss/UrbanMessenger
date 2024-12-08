@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.menu_fragments
+package com.example.urbanmessenger.ui.fragments.menu_fragments
 
 import android.app.AlertDialog
 import android.graphics.Bitmap
@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.updatePhotoUri
 import com.example.urbanmessenger.databinding.FragmentChangePhotoBinding
-import com.example.urbanmessenger.utils.myToast
+import com.example.urbanmessenger.utilits.myToast
 import com.google.android.material.button.MaterialButton
 import java.io.ByteArrayOutputStream
 
@@ -38,10 +38,12 @@ class ChangePhotoFragment : Fragment() {
         initButtons()
     }
 
+
     private fun initButtons() {
         binding.changePhotoFragmentChoosePhotoButton.setOnClickListener { getCustomAlertDialog() }
         binding.changePhotoFragmentSavePhotoButton.setOnClickListener { setPhoto() }
     }
+
 
     private fun setPhoto() {
         updatePhotoUri(photoUri.toString())
@@ -51,6 +53,8 @@ class ChangePhotoFragment : Fragment() {
     }
 
     private fun getCustomAlertDialog() {
+
+
         val layoutInflater = LayoutInflater.from(requireContext())
         val view = layoutInflater.inflate(R.layout.alert_dialog_change_photo, null)
 
@@ -69,6 +73,7 @@ class ChangePhotoFragment : Fragment() {
             buttonGallery.setOnClickListener {
                 pickFromGallery()
                 alertDialog.cancel()
+
             }
             buttonCamera.setOnClickListener {
                 pickFromCamera()

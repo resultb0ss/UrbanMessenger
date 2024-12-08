@@ -1,8 +1,9 @@
-package com.example.urbanmessenger.menu_fragments
+package com.example.urbanmessenger.ui.fragments.menu_fragments
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,6 @@ import android.widget.EditText
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.urbanmessenger.CONTACT
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_USERS
@@ -22,8 +22,8 @@ import com.example.urbanmessenger.data.network.updatePhone
 import com.example.urbanmessenger.data.network.updateProfileInfo
 import com.example.urbanmessenger.databinding.FragmentProfileBinding
 import com.example.urbanmessenger.models.UserData
-import com.example.urbanmessenger.utils.AppValueEventListener
-import com.example.urbanmessenger.utils.myToast
+import com.example.urbanmessenger.utilits.AppValueEventListener
+import com.example.urbanmessenger.utilits.myToast
 import com.google.firebase.database.DatabaseReference
 
 
@@ -68,7 +68,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initMainInfoBlock(){
-        binding.profileFragmentUserImage.setImageURI(mReceivingUser.userPhotoUri.toUri())
+        if (mReceivingUser.userPhotoUri != null){
+            binding.profileFragmentUserImage.setImageURI(mReceivingUser.userPhotoUri.toUri())
+        }
     }
 
     private fun initFields() {

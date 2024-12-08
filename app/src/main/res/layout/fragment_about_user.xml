@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menu_fragments.AboutUserFragment">
+    tools:context=".ui.fragments.menu_fragments.AboutUserFragment">
 
     <TextView
         android:id="@+id/aboutUserFragmentProfileHeaderTitle"
@@ -24,7 +24,7 @@
         android:id="@+id/aboutUserFragmentHeaderUserImage"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/man"
+        android:src="@drawable/man_one"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -2,8 +2,8 @@ package com.example.urbanmessenger.data.network
 
 import android.net.Uri
 import com.example.urbanmessenger.models.UserData
-import com.example.urbanmessenger.utils.AppValueEventListener
-import com.example.urbanmessenger.utils.myToast
+import com.example.urbanmessenger.utilits.AppValueEventListener
+import com.example.urbanmessenger.utilits.myToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase

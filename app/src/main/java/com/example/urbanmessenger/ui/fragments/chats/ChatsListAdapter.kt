@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.chats
+package com.example.urbanmessenger.ui.fragments.chats
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

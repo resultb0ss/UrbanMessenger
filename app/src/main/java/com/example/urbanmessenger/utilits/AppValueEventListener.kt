@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.utils
+package com.example.urbanmessenger.utilits
 
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

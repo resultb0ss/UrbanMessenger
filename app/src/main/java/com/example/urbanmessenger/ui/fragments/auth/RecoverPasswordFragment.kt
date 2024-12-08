@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.auth
+package com.example.urbanmessenger.ui.fragments.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.AUTHFIREBASE
 import com.example.urbanmessenger.databinding.FragmentRecoverPasswordBinding
-import com.example.urbanmessenger.utils.myToast
+import com.example.urbanmessenger.utilits.myToast
 
 class RecoverPasswordFragment : Fragment() {
 

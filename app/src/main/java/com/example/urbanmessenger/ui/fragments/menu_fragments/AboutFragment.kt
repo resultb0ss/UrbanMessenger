@@ -1,4 +1,4 @@
-package com.example.urbanmessenger.menu_fragments
+package com.example.urbanmessenger.ui.fragments.menu_fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

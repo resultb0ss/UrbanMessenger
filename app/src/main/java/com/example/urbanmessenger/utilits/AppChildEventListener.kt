@@ -1,9 +1,8 @@
-package com.example.urbanmessenger.utils
+package com.example.urbanmessenger.utilits
 
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 
 class AppChildEventListener (val onSuccess: (DataSnapshot) -> Unit) : ChildEventListener {
 
