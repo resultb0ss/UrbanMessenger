@@ -2,6 +2,7 @@ package com.example.urbanmessenger
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -40,10 +41,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mReceivingUser: UserData
     private lateinit var mRefUser: DatabaseReference
 
-    val permissions = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-    )
+    val permissions = mutableListOf<String>().apply {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            add(Manifest.permission.READ_MEDIA_IMAGES)
+            add(Manifest.permission.READ_MEDIA_VIDEO)
+            add(Manifest.permission.READ_MEDIA_AUDIO)
+        }
+        add(Manifest.permission.CAMERA)
+    }.toTypedArray()
 
 
     lateinit var navController: NavController
@@ -66,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         initFirebase()
         initUser()
         setValueEventListener()
+//        initHeadersFields()
 
     }
 
@@ -77,16 +87,11 @@ class MainActivity : AppCompatActivity() {
     private val permissionLauncherMultiple = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
-        var allAreGranted = true
-        for (isGranted in result.values) {
-            allAreGranted = allAreGranted && isGranted
-            {
-                if (isGranted) {
-                    myToast("Не все разрешения получены не получено")
-                } else {
-                    myToast("Все разрешения получены не получено")
-                }
-            }
+        val notGrantedPermissions = result.filterValues { !it }.keys
+        if (notGrantedPermissions.isEmpty()){
+            myToast("Все разрешения получены")
+        } else {
+            myToast("Не все разрешения получены: ${notGrantedPermissions.joinToString()}")
         }
 
     }

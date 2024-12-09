@@ -1,6 +1,9 @@
 package com.example.urbanmessenger.ui.fragments.chats
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +30,7 @@ class ChatsListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var mAdapter: ChatsListAdapter
+    private lateinit var sAdapter: ChatsListSearchViewAdapter
     private val mRefMainList = DATA_BASE_ROOT.child(NODE_MAIN_LIST).child(UID)
     private val mRefUser = DATA_BASE_ROOT.child(NODE_USERS)
     private val mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID)
@@ -47,6 +51,7 @@ class ChatsListFragment : Fragment() {
         super.onResume()
         APP_ACTIVITY.updateToolbarTitle("Чаты")
         initRecyclerView()
+        initSearchView()
 
 
     }
@@ -57,9 +62,45 @@ class ChatsListFragment : Fragment() {
 
     }
 
+    private fun initSearchView() {
+        binding.chatsListSearchView.editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                p0: CharSequence?, p1: Int, p2: Int, p3: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                p0: CharSequence?, p1: Int, p2: Int, p3: Int
+            ) {
+                val query = p0.toString()
+                filterChats(query)
+                Log.d("@@@","${filterChats(query)}")
+            }
+
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+
+    }
+
+    private fun filterChats(query: String) {
+
+        val filteredList = mAdapter.listItems.filter {
+            it.firstname.contains(query, ignoreCase = true) ||
+                    it.lastname.contains(query, ignoreCase = true) || it.email.contains(
+                query,
+                ignoreCase = true
+            )
+        }
+
+        sAdapter.listItems.clear()
+        sAdapter.listItems.addAll(filteredList)
+        sAdapter.notifyDataSetChanged()
+    }
+
 
     private fun initRecyclerView() {
         mAdapter = ChatsListAdapter { user -> navigateToSingleChatFragment(user) }
+        sAdapter = ChatsListSearchViewAdapter { user -> navigateToSingleChatFragment(user) }
 
         lifecycleScope.launch {
             mRefMainList.addListenerForSingleValueEvent(AppValueEventListener { dataSnapshot ->
@@ -88,6 +129,7 @@ class ChatsListFragment : Fragment() {
         }
 
         binding.chatsListRecyclerView.adapter = mAdapter
+        binding.filteredChatsListRecyclerView.adapter = sAdapter
     }
 
     private fun navigateToSingleChatFragment(user: UserData) {

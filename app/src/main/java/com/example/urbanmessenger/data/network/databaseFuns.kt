@@ -48,6 +48,35 @@ fun sendMessage(
 
 }
 
+fun removeMessage(
+    message: String,
+    receivingUserId: String,
+    typeText: String,
+    function: () -> Unit
+) {
+
+    val refDialogUser = "$NODE_MESSAGES/$UID/$receivingUserId"
+    val refDialogReceivingUser = "$NODE_MESSAGES/$receivingUserId/$UID"
+    val messageKey = DATA_BASE_ROOT.child(refDialogUser).push().key
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage[CHILD_FROM] = UID
+    mapMessage[CHILD_TYPE] = typeText
+    mapMessage[CHILD_TEXT] = message
+    mapMessage[CHILD_ID] = messageKey.toString()
+    mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
+
+    val mapDialog = hashMapOf<String, Any>()
+    mapDialog["$refDialogUser/$messageKey"] = mapMessage
+    mapDialog["$refDialogReceivingUser/$messageKey"] = mapMessage
+
+    DATA_BASE_ROOT
+        .updateChildren(mapDialog)
+        .addOnSuccessListener { function() }
+
+
+}
+
 fun sendImageMessage(
     receivingUserId: String,
     imageUri: Uri?,
