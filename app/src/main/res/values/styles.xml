@@ -73,4 +73,7 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
+    <style name="AppBaseTheme" parent="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+    </style>
+
 </resources>

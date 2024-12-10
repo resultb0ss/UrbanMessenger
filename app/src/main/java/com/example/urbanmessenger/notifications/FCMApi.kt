@@ -1,4 +1,4 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.notifications
 
 import retrofit2.http.Body
 import retrofit2.http.POST

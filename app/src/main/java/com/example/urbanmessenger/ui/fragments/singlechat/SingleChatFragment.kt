@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,7 @@ class SingleChatFragment : Fragment() {
     private lateinit var mListenerInfoToolbar: AppValueEventListener
     private lateinit var mReceivingUser: UserData
     private lateinit var mRefUser: DatabaseReference
+
     private lateinit var toolbar: MaterialToolbar
 
 
@@ -61,6 +63,8 @@ class SingleChatFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+
+        Log.d("@@@","Single Chat CONTACT ID = $CONTACT")
 
         _binding = FragmentSingleChatBinding.inflate(inflater, container, false)
         return binding.root

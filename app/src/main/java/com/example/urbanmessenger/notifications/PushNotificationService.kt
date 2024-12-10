@@ -1,4 +1,4 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.notifications
 
 import android.annotation.SuppressLint
 import com.google.firebase.messaging.FirebaseMessagingService

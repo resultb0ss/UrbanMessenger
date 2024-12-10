@@ -19,6 +19,7 @@ import com.example.urbanmessenger.data.network.USER
 import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.databinding.FragmentUsersListBinding
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.ui.fragments.chats.ChatsListSearchViewAdapter
 import com.example.urbanmessenger.utilits.AppValueEventListener
 import com.example.urbanmessenger.utilits.CONTACT
 import kotlinx.coroutines.launch
@@ -30,7 +31,7 @@ class UsersListFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var mAdapter: UsersListAdapter
-    private lateinit var fAdapter: UsersListAdapter
+    private lateinit var sAdapter: UsersListSearchViewAdapter
     private var mRefUsers = DATA_BASE_ROOT.child(NODE_USERS)
     private var mListItems = listOf<UserData>()
     private var filteredList = listOf<UserData>()
@@ -51,43 +52,50 @@ class UsersListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         initRecyclerView()
-
+        initSearchView()
     }
 
-    private fun initSearchBar() {
-        fAdapter = UsersListAdapter { user -> navigateToSingleChatFragment(user) }
-        binding.filteredUsersListRecyclerView.adapter = fAdapter
+    private fun initSearchView() {
         binding.usersListSearchView.editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
-                p0: CharSequence?,
-                p1: Int,
-                p2: Int,
-                p3: Int
+                p0: CharSequence?, p1: Int, p2: Int, p3: Int
             ) {
             }
 
             override fun onTextChanged(
-                p0: CharSequence?,
-                p1: Int,
-                p2: Int,
-                p3: Int
+                p0: CharSequence?, p1: Int, p2: Int, p3: Int
             ) {
-                Log.d("@@@","on changed ${p0}")
-//                val listForSearchBar =
-//                    filteredList.filter { it.email.contains(p0!!, ignoreCase = true) }
-//                listForSearchBar.forEach { user -> fAdapter.updateListItems(user) }
-//                Log.d("@@@","${listForSearchBar.forEach { user -> fAdapter.updateListItems(user) }}")
+                val query = p0.toString()
+                filterChats(query)
+                Log.d("@@@","${filterChats(query)}")
             }
 
-            override fun afterTextChanged(p0: Editable?) {
-            }
+            override fun afterTextChanged(p0: Editable?) {}
         })
 
     }
 
+    private fun filterChats(query: String) {
+
+        val filteredList = mAdapter.listItems.filter {
+            it.firstname.contains(query, ignoreCase = true) ||
+                    it.lastname.contains(query, ignoreCase = true) || it.email.contains(
+                query,
+                ignoreCase = true
+            )
+        }
+
+        sAdapter.listItems.clear()
+        sAdapter.listItems.addAll(filteredList)
+        sAdapter.notifyDataSetChanged()
+    }
+
+
 
     private fun initRecyclerView() {
         mAdapter = UsersListAdapter { user -> navigateToSingleChatFragment(user) }
+        sAdapter = UsersListSearchViewAdapter { user -> navigateToSingleChatFragment(user) }
+
 
         lifecycleScope.launch {
             mRefUsers.addListenerForSingleValueEvent(AppValueEventListener { snapshot ->
@@ -97,6 +105,7 @@ class UsersListFragment : Fragment() {
             })
         }
 
+        binding.filteredUsersListRecyclerView.adapter = sAdapter
         binding.usersListRecyclerView.adapter = mAdapter
     }
 

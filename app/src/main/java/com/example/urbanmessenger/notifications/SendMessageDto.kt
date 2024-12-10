@@ -1,4 +1,4 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.notifications
 
 data class SendMessageDto(
     val to:String,

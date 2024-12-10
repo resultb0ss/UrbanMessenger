@@ -2,12 +2,14 @@ package com.example.urbanmessenger
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -22,6 +24,7 @@ import com.example.urbanmessenger.data.network.initFirebase
 import com.example.urbanmessenger.data.network.initUser
 import com.example.urbanmessenger.databinding.ActivityMainBinding
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.notifications.initFirebaseCloudMessaging
 import com.example.urbanmessenger.utilits.APP_ACTIVITY
 import com.example.urbanmessenger.utilits.AppStates
 import com.example.urbanmessenger.utilits.AppValueEventListener
@@ -45,13 +48,14 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
             add(Manifest.permission.READ_EXTERNAL_STORAGE)
             add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             add(Manifest.permission.READ_MEDIA_IMAGES)
             add(Manifest.permission.READ_MEDIA_VIDEO)
             add(Manifest.permission.READ_MEDIA_AUDIO)
         }
-        add(Manifest.permission.CAMERA)
+//        add(Manifest.permission.CAMERA)
     }.toTypedArray()
 
 
@@ -63,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainActivityToolbar)
-        permissionLauncherMultiple.launch(permissions)
+        askNotificationsPermission()
 
 
     }
@@ -74,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         initNavigation()
         initFirebase()
         initUser()
+        initFirebaseCloudMessaging()
         setValueEventListener()
 //        initHeadersFields()
 
@@ -84,14 +89,41 @@ class MainActivity : AppCompatActivity() {
         mRefUser.removeEventListener(mListenerHeader)
     }
 
+    private fun askNotificationsPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                //can post notification
+            } else if(shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)){
+                myToast("Оно необходимо для уведомления")
+            } else {
+                permissionLauncherSingle.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
     private val permissionLauncherMultiple = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { result ->
         val notGrantedPermissions = result.filterValues { !it }.keys
-        if (notGrantedPermissions.isEmpty()){
+        if (notGrantedPermissions.isEmpty()) {
             myToast("Все разрешения получены")
         } else {
             myToast("Не все разрешения получены: ${notGrantedPermissions.joinToString()}")
+        }
+
+    }
+
+    private val permissionLauncherSingle = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            myToast("Разрешение на уведомления получено")
+        } else {
+            myToast("Разрешение на уведомления не получено")
         }
 
     }

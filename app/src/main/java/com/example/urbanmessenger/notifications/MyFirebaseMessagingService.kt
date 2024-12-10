@@ -1,4 +1,4 @@
-package com.example.urbanmessenger
+package com.example.urbanmessenger.notifications
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -8,9 +8,12 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import com.example.urbanmessenger.MainActivity
+import com.example.urbanmessenger.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -27,6 +30,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             generateNotification(message.notification!!.title!!, message.notification!!.body!! )
         }
     }
+
+    override fun onNewToken(token: String) {
+        Log.d("@@@", "Refresh token: $token")
+
+        sendRegistrationToServer(token)
+    }
+
+    private fun sendRegistrationToServer(token: String?){
+        //senTokenToAppServer
+        Log.d("@@@","${sendRegistrationToServer(token)}")
+    }
+
 
     @SuppressLint("MissingPermission", "NotificationPermission")
     private fun generateNotification(title: String, message: String) {
