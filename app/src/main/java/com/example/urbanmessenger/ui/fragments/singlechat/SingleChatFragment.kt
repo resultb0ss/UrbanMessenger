@@ -1,11 +1,12 @@
 package com.example.urbanmessenger.ui.fragments.singlechat
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,17 +14,16 @@ import android.widget.AbsListView
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.urbanmessenger.utilits.APP_ACTIVITY
-import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.R
-import com.example.urbanmessenger.utilits.TYPE_CHAT
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_MESSAGES
 import com.example.urbanmessenger.data.network.NODE_USERS
+import com.example.urbanmessenger.data.network.TYPE_IMAGE
 import com.example.urbanmessenger.data.network.TYPE_TEXT
 import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.data.network.getUserDataModel
@@ -33,9 +33,13 @@ import com.example.urbanmessenger.data.network.sendImageMessage
 import com.example.urbanmessenger.data.network.sendMessage
 import com.example.urbanmessenger.databinding.FragmentSingleChatBinding
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.ui.fragments.FullScreenFragment
+import com.example.urbanmessenger.utilits.APP_ACTIVITY
 import com.example.urbanmessenger.utilits.AppChildEventListener
 import com.example.urbanmessenger.utilits.AppTextWatcher
 import com.example.urbanmessenger.utilits.AppValueEventListener
+import com.example.urbanmessenger.utilits.CONTACT
+import com.example.urbanmessenger.utilits.TYPE_CHAT
 import com.example.urbanmessenger.utilits.myToast
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.DatabaseReference
@@ -128,7 +132,9 @@ class SingleChatFragment : Fragment() {
             }
         }
 
-        binding.singleChatFragmentClipIcon.setOnClickListener { pickFromGallery() }
+        binding.singleChatFragmentClipIcon.setOnClickListener {
+            pickFromGallery()
+        }
 
     }
 
@@ -137,8 +143,33 @@ class SingleChatFragment : Fragment() {
             if (uri != null) getAlertDialogWithImage(uri)
         }
 
+    val permissionLauncherSingle =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                myToast("Разрешение дано")
+            } else {
+                myToast("Разрешение не дано")
+            }
+        }
+
     private fun pickFromGallery() {
-        galleryLauncher.launch("image/*")
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            galleryLauncher.launch("image/*")
+        } else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+            myToast("Оно необходимо чтобы отправить фото")
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                permissionLauncherSingle.launch(Manifest.permission.READ_MEDIA_IMAGES)
+            } else {
+                permissionLauncherSingle.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+        }
+
     }
 
     @SuppressLint("MissingInflatedId")
@@ -165,9 +196,11 @@ class SingleChatFragment : Fragment() {
 
     private fun initRecyclerView() {
         mAdapter = SingleChatAdapter { message ->
-            getAlertDialog(message)
-            Log.d("@@@","Был клик на сообщении")
-
+            if (message.type != TYPE_IMAGE){
+                getAlertDialogForTextTypeMessage(message)
+            } else {
+                getAlertDialogForImageTypeMessage(message)
+            }
         }
         mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(CONTACT.id)
         binding.singleChatFragmentRecyclerView.adapter = mAdapter
@@ -263,16 +296,45 @@ class SingleChatFragment : Fragment() {
         }
     }
 
-    private fun getAlertDialog(message: UserData) {
+    private fun getAlertDialogForTextTypeMessage(message: UserData) {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setTitle("Что вы хотите выполнить?")
-            setPositiveButton("Удалить") { _, _ -> removeMessage(message,CONTACT.id) }
+            setPositiveButton("Удалить") { _, _ ->
+                removeMessage(
+                    message,
+                    CONTACT.id
+                ) { mAdapter.removeMessageFromListAdapter(message) }
+            }
             setNegativeButton("Отмена") { _, _ -> }
             create()
         }
         builder.show()
+    }
 
+    private fun getAlertDialogForImageTypeMessage(message: UserData) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.apply {
+            setTitle("Что вы хотите выполнить?")
+            setPositiveButton("Удалить") { _, _ ->
+                removeMessage(
+                    message,
+                    CONTACT.id
+                ) { mAdapter.removeMessageFromListAdapter(message) }
+            }
+            setNeutralButton("Посмотреть") { _, _ ->
+                fullScreenImageDialog(message)
+            }
+            setNegativeButton("Отмена") { _, _ ->{} }
+            create()
+        }
+        builder.show()
+
+    }
+
+    private fun fullScreenImageDialog(message: UserData) {
+        val dialog = FullScreenFragment(message)
+        dialog.show(childFragmentManager,"custom")
 
     }
 

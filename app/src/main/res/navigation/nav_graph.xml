@@ -52,7 +52,11 @@
         android:id="@+id/singleChatFragment"
         android:name="com.example.urbanmessenger.ui.fragments.singlechat.SingleChatFragment"
         android:label="Чаты"
-        tools:layout="@layout/fragment_single_chat"/>
+        tools:layout="@layout/fragment_single_chat">
+        <action
+            android:id="@+id/action_singleChatFragment_to_fullScreenFragment"
+            app:destination="@id/fullScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/aboutUserFragment"
         android:name="com.example.urbanmessenger.ui.fragments.menu_fragments.AboutUserFragment"
@@ -66,6 +70,17 @@
         <action
             android:id="@+id/action_changePhotoFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fullScreenFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.FullScreenFragment"
+        android:label="FullScreenFragment" >
+        <action
+            android:id="@+id/action_fullScreenFragment_to_singleChatFragment"
+            app:destination="@id/singleChatFragment" />
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
     </fragment>
 
 </navigation>

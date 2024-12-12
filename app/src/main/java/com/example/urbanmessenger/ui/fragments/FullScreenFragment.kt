@@ -1,21 +1,32 @@
 package com.example.urbanmessenger.ui.fragments
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.example.urbanmessenger.R
+import androidx.core.net.toUri
+import androidx.fragment.app.DialogFragment
+import com.example.urbanmessenger.databinding.FragmentFullScreenBinding
+import com.example.urbanmessenger.models.UserData
 
-class FullScreenFragment : Fragment() {
+class FullScreenFragment(var message: UserData) : DialogFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val mDialog = Dialog(requireContext(),R.style.AppBaseTheme)
-        mDialog.setContentView(R.layout.fragment_full_screen)
-        mDialog.show()
+    lateinit var binding: FragmentFullScreenBinding
+
+    @SuppressLint("UseGetLayoutInflater")
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+
+        val binding = FragmentFullScreenBinding.inflate(layoutInflater)
+
+        val builder = AlertDialog.Builder(requireActivity())
+        binding.singleChatFullScreenImageView.setImageURI(message.imageUriSender.toUri())
+        builder.setView(binding.root)
+
+        return builder
+            .setTitle("")
+            .setPositiveButton("Ok") { _, _ -> }
+            .create()
+
     }
-
 
 }

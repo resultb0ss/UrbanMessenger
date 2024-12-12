@@ -20,6 +20,9 @@ import com.google.firebase.messaging.RemoteMessage
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
+    private var _token: String? = null
+    private val token get() = _token!!
+
     companion object {
         const val COUNTER_ID = 101
         const val CHANNEL_ID = "channelID"
@@ -27,19 +30,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         if (message.notification != null) {
-            generateNotification(message.notification!!.title!!, message.notification!!.body!! )
+            generateNotification(message.notification!!.title!!, message.notification!!.body!!)
         }
     }
 
-    override fun onNewToken(token: String) {
-        Log.d("@@@", "Refresh token: $token")
 
+    override fun onNewToken(token: String) {
         sendRegistrationToServer(token)
     }
 
-    private fun sendRegistrationToServer(token: String?){
+    private fun sendRegistrationToServer(token: String?) {
         //senTokenToAppServer
-        Log.d("@@@","${sendRegistrationToServer(token)}")
+        Log.d("@@@", "${sendRegistrationToServer(token)}")
     }
 
 

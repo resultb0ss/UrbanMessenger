@@ -5,15 +5,24 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 lateinit var FIREBASEMESSAGING: FirebaseMessaging
 
-fun initFirebaseCloudMessaging(){
+private var _token: String? = null
+private val token get() = _token!!
+
+fun initFirebaseCloudMessaging() {
     FIREBASEMESSAGING = FirebaseMessaging.getInstance()
 
     FIREBASEMESSAGING.token.addOnCompleteListener { task ->
         if (task.isSuccessful) {
-            val token = task.result
-            Log.d("@@@","Token: $token")
+            _token = task.result
+            Log.d("@@@", "Token: $token")
         } else {
-            Log.d("@@@","Failed to get token")
+            Log.d("@@@", "Failed to get token")
         }
     }
+
+
+}
+
+fun getNewToken(): String {
+    return token
 }

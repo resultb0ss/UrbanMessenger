@@ -2,12 +2,15 @@ package com.example.urbanmessenger.ui.fragments.menu_fragments
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -57,7 +60,7 @@ class ProfileFragment : Fragment() {
         mRefUser.removeEventListener(mListenerMainInfoBlock)
     }
 
-    private fun setValueEventListener(){
+    private fun setValueEventListener() {
         mListenerMainInfoBlock = AppValueEventListener {
             mReceivingUser = it.getUserDataModel()
             initMainInfoBlock()
@@ -67,8 +70,8 @@ class ProfileFragment : Fragment() {
         mRefUser.addValueEventListener(mListenerMainInfoBlock)
     }
 
-    private fun initMainInfoBlock(){
-        if (mReceivingUser.userPhotoUri != null){
+    private fun initMainInfoBlock() {
+        if (mReceivingUser.userPhotoUri != null) {
             binding.profileFragmentUserImage.setImageURI(mReceivingUser.userPhotoUri.toUri())
         }
     }
@@ -86,6 +89,7 @@ class ProfileFragment : Fragment() {
         binding.userImageBlock.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_changePhotoFragment)
         }
+
 
     }
 
@@ -124,6 +128,7 @@ class ProfileFragment : Fragment() {
         }
 
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

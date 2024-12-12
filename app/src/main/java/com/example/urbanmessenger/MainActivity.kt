@@ -40,37 +40,34 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var headerImage: ImageView
-    private lateinit var headerFullNameOrEmail: TextView
-    private lateinit var headerPhoneOrStatus: TextView
+    private var headerImage: ImageView? = null
+    private var headerFullNameOrEmail: TextView? = null
+    private var headerPhoneOrStatus: TextView? = null
 
     private lateinit var mListenerHeader: AppValueEventListener
     private lateinit var mReceivingUser: UserData
     private lateinit var mRefUser: DatabaseReference
-
-    val permissions = mutableListOf<String>().apply {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
-            add(Manifest.permission.READ_EXTERNAL_STORAGE)
-            add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            add(Manifest.permission.READ_MEDIA_IMAGES)
-            add(Manifest.permission.READ_MEDIA_VIDEO)
-            add(Manifest.permission.READ_MEDIA_AUDIO)
-        }
-//        add(Manifest.permission.CAMERA)
-    }.toTypedArray()
-
 
     lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainActivityToolbar)
+
+        initHeadersViews()
+        setValueEventListener()
+//        mListenerHeader = AppValueEventListener {
+//            mReceivingUser = it.getUserDataModel()
+//            initHeader()
+//        }
+//
+//        mRefUser = DATA_BASE_ROOT.child(NODE_USERS).child(UID)
+//        mRefUser.addValueEventListener(mListenerHeader)
+
 
 
 
@@ -83,9 +80,8 @@ class MainActivity : AppCompatActivity() {
         initFirebase()
         initUser()
         initFirebaseCloudMessaging()
-//        askNotificationsPermission()
-        setValueEventListener()
-//        initHeadersFields()
+        askNotificationsPermission()
+//        setValueEventListener()
 
     }
 
@@ -101,8 +97,8 @@ class MainActivity : AppCompatActivity() {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-                //can post notification
-            } else if(shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)){
+                myToast("Разрешение на уведомления получено")
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 myToast("Оно необходимо для уведомления")
             } else {
                 permissionLauncherSingle.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -110,17 +106,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val permissionLauncherMultiple = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { result ->
-        val notGrantedPermissions = result.filterValues { !it }.keys
-        if (notGrantedPermissions.isEmpty()) {
-            myToast("Все разрешения получены")
-        } else {
-            myToast("Не все разрешения получены: ${notGrantedPermissions.joinToString()}")
-        }
-
+    private fun initHeadersViews() {
+        headerImage = findViewById<ImageView>(R.id.headerProfileImage)
+        headerPhoneOrStatus = findViewById<TextView>(R.id.headerNumberPhoneProfile)
+        headerFullNameOrEmail = findViewById<TextView>(R.id.headerFullNameProfile)
     }
+
 
     private val permissionLauncherSingle = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -135,25 +126,24 @@ class MainActivity : AppCompatActivity() {
 
 
     @SuppressLint("SetTextI18n")
-    private fun initHeadersFields() {
-        headerImage = findViewById<ImageView>(R.id.headerProfileImage)
-        headerPhoneOrStatus = findViewById<TextView>(R.id.headerNumberPhoneProfile)
-        headerFullNameOrEmail = findViewById<TextView>(R.id.headerFullNameProfile)
+    private fun initHeader() {
+        initHeadersViews()
 
         if (mReceivingUser.userPhotoUri != null) {
-            headerImage.setImageURI(mReceivingUser.userPhotoUri.toUri())
+            headerImage?.setImageURI(mReceivingUser.userPhotoUri.toUri())
         } else {
-            headerImage.setImageResource(R.drawable.man_one)
+            headerImage?.setImageResource(R.drawable.man_one)
         }
 
         if (mReceivingUser.phone.isEmpty()) {
-            headerPhoneOrStatus.text = mReceivingUser.state
+            headerPhoneOrStatus?.text = mReceivingUser.state
         } else {
-            headerPhoneOrStatus.text = mReceivingUser.phone
+            headerPhoneOrStatus?.text = mReceivingUser.phone
         }
         if (mReceivingUser.firstname.isEmpty() && mReceivingUser.lastname.isEmpty()) {
-            headerFullNameOrEmail.text = mReceivingUser.email
-        } else headerFullNameOrEmail.text = "${mReceivingUser.firstname} ${mReceivingUser.lastname}"
+            headerFullNameOrEmail?.text = mReceivingUser.email
+        } else headerFullNameOrEmail?.text =
+            "${mReceivingUser.firstname} ${mReceivingUser.lastname}"
 
     }
 
@@ -168,7 +158,6 @@ class MainActivity : AppCompatActivity() {
     private fun setValueEventListener() {
         mListenerHeader = AppValueEventListener {
             mReceivingUser = it.getUserDataModel()
-//            initHeadersFields()
         }
 
         mRefUser = DATA_BASE_ROOT.child(NODE_USERS).child(UID)
@@ -203,12 +192,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_activity_log_out_menu,menu)
+        menuInflater.inflate(R.menu.main_activity_log_out_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.logOutItem -> {
                 AUTHFIREBASE.signOut()
                 finish()
@@ -217,6 +206,56 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
+//    private fun initNotifications() {
+//        val databaseRef = FirebaseDatabase.getInstance().getReference("messages")
+//
+//        databaseRef.addChildEventListener(object : ChildEventListener {
+//            override fun onChildAdded(
+//                snapshot: DataSnapshot,
+//                previousChildName: String?
+//            ) {
+//                val messageText = snapshot.child("text").getValue(String::class.java) ?: return
+//
+//                val token = getNewToken()
+//                val body = SendMessageDto(
+//                    to = token,
+//                    notification = NotificationBody(
+//                        title = "Новое сообщение",
+//                        body = messageText
+//                    )
+//                )
+//
+//                val sendMessage = object : FCMApi {
+//                    override suspend fun sendMessage(body: SendMessageDto) {}
+//                    override suspend fun broadcast(body: SendMessageDto) {}
+//                }
+//
+//                CoroutineScope(Dispatchers.IO).launch{
+//                    try{
+//                        sendMessage.sendMessage(body)
+//                    } catch (e: Exception){
+//                        Log.d("@@@","Ошибка отправки: ${e.message}")
+//                    }
+//                }
+//            }
+//
+//            override fun onChildChanged(
+//                snapshot: DataSnapshot,
+//                previousChildName: String?
+//            ) {}
+//
+//            override fun onChildRemoved(snapshot: DataSnapshot) {}
+//
+//            override fun onChildMoved(
+//                snapshot: DataSnapshot,
+//                previousChildName: String?
+//            ) {}
+//
+//            override fun onCancelled(error: DatabaseError) {}
+//        })
+//    }
 
 
 }

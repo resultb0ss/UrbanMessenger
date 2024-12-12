@@ -1,10 +1,12 @@
 package com.example.urbanmessenger.ui.fragments.singlechat
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.urbanmessenger.data.network.TYPE_IMAGE
 import com.example.urbanmessenger.data.network.TYPE_TEXT
@@ -55,16 +57,14 @@ class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
                     holder.binding.blockReceivedMessage.visibility = View.GONE
                     holder.binding.chatUserMessage.visibility = View.GONE
                     holder.binding.chatUserMessageImage.visibility = View.VISIBLE
-//                    val imageUri = Uri.parse(message.imageUriSender)
-//                    holder.binding.chatUserMessageImage.setImageURI(imageUri)
+                    holder.binding.chatUserMessageImage.setImageURI(message.imageUriSender.toUri())
                     holder.binding.chatUserMessageTime.text = message.timestamp.toString().asTime()
                 } else {
                     holder.binding.blockUserMessage.visibility = View.GONE
                     holder.binding.blockReceivedMessage.visibility = View.VISIBLE
                     holder.binding.chatReceiverMessage.visibility = View.GONE
                     holder.binding.chatReceiverMessageImage.visibility = View.VISIBLE
-//                    val imageUri = Uri.parse(message.imageUriSender)
-//                    holder.binding.chatReceiverMessageImage.setImageURI(imageUri)
+                    holder.binding.chatReceiverMessageImage.setImageURI(message.imageUriSender.toUri())
                     holder.binding.chatReceivedMessageTime.text =
                         message.timestamp.toString().asTime()
                 }
@@ -73,7 +73,7 @@ class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
         }
         holder.itemView.setOnClickListener{onClick(message)}
 
-        val index = searchIndex(mListMessagesCache,message)
+
 
 
 
@@ -86,6 +86,14 @@ class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
         }
         return result
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun removeMessageFromListAdapter(message: UserData){
+
+        val index = searchIndex(mListMessagesCache,message)
+        mListMessagesCache.removeAt(index)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = mListMessagesCache.size

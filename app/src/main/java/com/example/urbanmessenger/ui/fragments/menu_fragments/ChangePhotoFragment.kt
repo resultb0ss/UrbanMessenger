@@ -1,14 +1,18 @@
 package com.example.urbanmessenger.ui.fragments.menu_fragments
 
+import android.Manifest
 import android.app.AlertDialog
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
@@ -83,6 +87,15 @@ class ChangePhotoFragment : Fragment() {
         alertDialog.show()
     }
 
+    val permissionLauncherSingle =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                myToast("Разрешение дано")
+            } else {
+                myToast("Разрешение не дано")
+            }
+        }
+
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -97,12 +110,36 @@ class ChangePhotoFragment : Fragment() {
         }
 
     private fun pickFromGallery() {
-        galleryLauncher.launch("image/*")
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            galleryLauncher.launch("image/*")
+        } else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+            myToast("Оно необходимо чтобы сделать фото")
+        } else {
+            permissionLauncherSingle.launch(Manifest.permission.CAMERA)
+        }
+
     }
 
     private fun pickFromCamera() {
-        cameraLauncher.launch(null)
+
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            cameraLauncher.launch(null)
+        } else if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+            myToast("Оно необходимо чтобы сделать фото")
+        } else {
+            permissionLauncherSingle.launch(Manifest.permission.CAMERA)
+        }
     }
+
+
 
     private fun getImageUriFromBitmap(bitmap: Bitmap?): Uri {
         val bytes = ByteArrayOutputStream()

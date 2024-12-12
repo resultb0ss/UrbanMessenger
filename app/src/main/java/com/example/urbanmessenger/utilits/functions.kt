@@ -1,5 +1,6 @@
 package com.example.urbanmessenger.utilits
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -70,3 +71,4 @@ fun Fragment.replaceFragment(fragment: Fragment) {
         ?.replace(R.id.nav_host_fragment_container, fragment)
         ?.commit()
 }
+

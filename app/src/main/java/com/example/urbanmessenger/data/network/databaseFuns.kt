@@ -1,6 +1,7 @@
 package com.example.urbanmessenger.data.network
 
 import android.net.Uri
+import android.util.Log
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.utilits.AppValueEventListener
 import com.example.urbanmessenger.utilits.myToast
@@ -51,14 +52,19 @@ fun sendMessage(
 fun removeMessage(
     message: UserData,
     receivingUserId: String,
+    function: () -> Unit
 
     ) {
 
-    DATA_BASE_ROOT.child(NODE_USERS).child(UID).child(receivingUserId).child(message.id)
+    DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(receivingUserId).child(message.id)
         .removeValue().addOnSuccessListener {
-        DATA_BASE_ROOT.child(NODE_USERS).child(receivingUserId).child(UID).child(message.id)
-            .removeValue()
+        DATA_BASE_ROOT.child(NODE_MESSAGES).child(receivingUserId).child(UID).child(message.id)
+            .removeValue().addOnSuccessListener{
+                function()
+                    myToast("Сообщение успешно удалено")
+            }.addOnFailureListener{it.message.toString()}
     }
+
 
 }
 
@@ -138,7 +144,7 @@ private fun updateProfession(newProfession: String) {
         .addOnSuccessListener {
             USER.profession = newProfession
         }
-        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+        .addOnFailureListener { myToast(it.message.toString()) }
 }
 
 private fun updateAddress(newAddress: String) {
@@ -146,7 +152,7 @@ private fun updateAddress(newAddress: String) {
         .addOnSuccessListener {
             USER.address = newAddress
         }
-        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+        .addOnFailureListener { myToast(it.message.toString()) }
 }
 
 private fun updateAge(newAge: String) {
@@ -154,7 +160,7 @@ private fun updateAge(newAge: String) {
         .addOnSuccessListener {
             USER.age = newAge
         }
-        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+        .addOnFailureListener { myToast(it.message.toString()) }
 }
 
 private fun updateLastName(newLastName: String) {
@@ -162,7 +168,7 @@ private fun updateLastName(newLastName: String) {
         .addOnSuccessListener {
             USER.lastname = newLastName
         }
-        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+        .addOnFailureListener { myToast(it.message.toString()) }
 }
 
 private fun updateFirstName(newFirstName: String) {
@@ -170,7 +176,7 @@ private fun updateFirstName(newFirstName: String) {
         .addOnSuccessListener {
             USER.firstname = newFirstName
         }
-        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+        .addOnFailureListener { myToast(it.message.toString()) }
 }
 
 fun updatePhone(newPhone: String) {
@@ -179,7 +185,7 @@ fun updatePhone(newPhone: String) {
             USER.phone = newPhone
             myToast("Номер успешно добавлен")
         }
-        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+        .addOnFailureListener { myToast(it.message.toString()) }
 }
 
 fun updatePhotoUri(newUri: String) {
@@ -188,7 +194,7 @@ fun updatePhotoUri(newUri: String) {
             USER.userPhotoUri = newUri
             myToast("Фото успешно обновлено")
         }
-        .addOnFailureListener { myToast(it.message?.toString().toString()) }
+        .addOnFailureListener { myToast(it.message.toString()) }
 }
 
 fun initUser() {
