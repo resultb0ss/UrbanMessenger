@@ -27,6 +27,7 @@ import com.example.urbanmessenger.data.network.NODE_USERS
 import com.example.urbanmessenger.data.network.TYPE_TEXT
 import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.data.network.getUserDataModel
+import com.example.urbanmessenger.data.network.removeMessage
 import com.example.urbanmessenger.data.network.saveToMainList
 import com.example.urbanmessenger.data.network.sendImageMessage
 import com.example.urbanmessenger.data.network.sendMessage
@@ -64,7 +65,6 @@ class SingleChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
 
-        Log.d("@@@","Single Chat CONTACT ID = $CONTACT")
 
         _binding = FragmentSingleChatBinding.inflate(inflater, container, false)
         return binding.root
@@ -164,7 +164,11 @@ class SingleChatFragment : Fragment() {
 
 
     private fun initRecyclerView() {
-        mAdapter = SingleChatAdapter { message -> getAlertDialog(message) }
+        mAdapter = SingleChatAdapter { message ->
+            getAlertDialog(message)
+            Log.d("@@@","Был клик на сообщении")
+
+        }
         mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(CONTACT.id)
         binding.singleChatFragmentRecyclerView.adapter = mAdapter
         binding.singleChatFragmentRecyclerView.setHasFixedSize(true)
@@ -263,10 +267,11 @@ class SingleChatFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setTitle("Что вы хотите выполнить?")
-            setPositiveButton("Удалить") { _, _ -> myToast("Сообщение удалено ${message.text}") }
+            setPositiveButton("Удалить") { _, _ -> removeMessage(message,CONTACT.id) }
             setNegativeButton("Отмена") { _, _ -> }
-            show()
+            create()
         }
+        builder.show()
 
 
     }

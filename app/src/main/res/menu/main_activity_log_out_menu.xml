@@ -2,11 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
-        android:id="@+id/searchItem"
-        android:icon="@drawable/ic_search_24"
-        android:title="Search"
-        app:showAsAction="always">
+        android:id="@+id/logOutItem"
+        android:icon="@drawable/ic_exit_24"
+        android:title="Выйти"
+        app:showAsAction="never">
 
     </item>
 

@@ -55,22 +55,23 @@ class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
                     holder.binding.blockReceivedMessage.visibility = View.GONE
                     holder.binding.chatUserMessage.visibility = View.GONE
                     holder.binding.chatUserMessageImage.visibility = View.VISIBLE
-                    val imageUri = Uri.parse(message.imageUriSender)
-                    holder.binding.chatUserMessageImage.setImageURI(imageUri)
+//                    val imageUri = Uri.parse(message.imageUriSender)
+//                    holder.binding.chatUserMessageImage.setImageURI(imageUri)
                     holder.binding.chatUserMessageTime.text = message.timestamp.toString().asTime()
                 } else {
                     holder.binding.blockUserMessage.visibility = View.GONE
                     holder.binding.blockReceivedMessage.visibility = View.VISIBLE
                     holder.binding.chatReceiverMessage.visibility = View.GONE
                     holder.binding.chatReceiverMessageImage.visibility = View.VISIBLE
-                    val imageUri = Uri.parse(message.imageUriSender)
-                    holder.binding.chatReceiverMessageImage.setImageURI(imageUri)
+//                    val imageUri = Uri.parse(message.imageUriSender)
+//                    holder.binding.chatReceiverMessageImage.setImageURI(imageUri)
                     holder.binding.chatReceivedMessageTime.text =
                         message.timestamp.toString().asTime()
                 }
             }
-        }
 
+        }
+        holder.itemView.setOnClickListener{onClick(message)}
 
         val index = searchIndex(mListMessagesCache,message)
 

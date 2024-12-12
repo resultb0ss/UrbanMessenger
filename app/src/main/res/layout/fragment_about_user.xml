@@ -251,6 +251,7 @@
         app:layout_constraintVertical_bias="0.02">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/aboutUserFragmentContactCallButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -258,6 +259,7 @@
             app:icon="@drawable/profile_fragment_phone_button_icon" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/aboutUserFragmentContactSendMessageButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

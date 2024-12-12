@@ -2,9 +2,12 @@ package com.example.urbanmessenger
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
+import com.example.urbanmessenger.data.network.AUTHFIREBASE
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_USERS
 import com.example.urbanmessenger.data.network.UID
@@ -67,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainActivityToolbar)
-        askNotificationsPermission()
+
 
 
     }
@@ -79,6 +83,7 @@ class MainActivity : AppCompatActivity() {
         initFirebase()
         initUser()
         initFirebaseCloudMessaging()
+//        askNotificationsPermission()
         setValueEventListener()
 //        initHeadersFields()
 
@@ -195,6 +200,22 @@ class MainActivity : AppCompatActivity() {
 
     fun updateToolbarTitle(newTitle: String) {
         binding.mainActivityToolbar.setTitle(newTitle)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_activity_log_out_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.logOutItem -> {
+                AUTHFIREBASE.signOut()
+                finish()
+                startActivity(Intent(this, AuthActivity::class.java))
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 

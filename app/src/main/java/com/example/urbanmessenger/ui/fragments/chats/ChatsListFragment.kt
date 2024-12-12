@@ -117,7 +117,11 @@ class ChatsListFragment : Fragment() {
 
                                         val tempList =
                                             dataSnapshot2.children.map { it.getUserDataModel() }
-                                        newModel.lastMessage = tempList[0].text
+                                        if (tempList.isEmpty()){
+                                            newModel.lastMessage = ""
+                                        } else {
+                                            newModel.lastMessage = tempList[0].text
+                                        }
 
                                         if (!mAdapter.listItems.contains(newModel)) {
                                             mAdapter.updateListItems(newModel)

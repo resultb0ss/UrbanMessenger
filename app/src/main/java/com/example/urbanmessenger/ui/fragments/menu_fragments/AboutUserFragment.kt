@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
+import com.example.urbanmessenger.data.network.NODE_MESSAGES
+import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.databinding.FragmentAboutUserBinding
 
@@ -37,6 +40,7 @@ class AboutUserFragment : Fragment() {
         binding.aboutUserFragmentAddressUserValue.text = CONTACT.address
         binding.aboutUserFragmentPhoneUserValue.text = CONTACT.phone
         binding.aboutUserFragmentProfessionUserValue.text = CONTACT.profession
+
     }
 
     override fun onDestroyView() {
