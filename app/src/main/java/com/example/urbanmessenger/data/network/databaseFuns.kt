@@ -205,6 +205,33 @@ fun initUser() {
     )
 }
 
+fun sendMessageToSupportInFirebase(
+    message: String,
+    function: () -> Unit
+) {
+
+    val refDialogUser = "$NODE_SUPPORTS_MESSAGES/$UID"
+    val messageKey = DATA_BASE_ROOT.child(refDialogUser).push().key
+
+    val mapMessage = hashMapOf<String, Any>()
+    mapMessage[CHILD_FROM] = UID
+    mapMessage[CHILD_TEXT] = message
+    mapMessage[CHILD_ID] = messageKey.toString()
+    mapMessage[CHILD_TIMESTAMP] = ServerValue.TIMESTAMP
+    mapMessage[CHILD_MAIL] = USER.email
+
+    val mapDialog = hashMapOf<String, Any>()
+    mapDialog["$refDialogUser/$messageKey"] = mapMessage
+
+    DATA_BASE_ROOT
+        .updateChildren(mapDialog)
+        .addOnSuccessListener { function() }
+
+
+}
+
+
+
 
 
 

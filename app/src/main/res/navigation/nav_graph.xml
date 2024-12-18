@@ -82,5 +82,10 @@
             android:name="imageUri"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/supportFragment"
+        android:name="com.example.urbanmessenger.ui.fragments.menu_fragments.SupportFragment"
+        android:label="Поддержка"
+        tools:layout="@layout/fragment_support" />
 
 </navigation>

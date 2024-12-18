@@ -4,19 +4,23 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 
-class AppChildEventListener (val onSuccess: (DataSnapshot) -> Unit) : ChildEventListener {
+class AppChildEventListenerNewMessage(
+    val functionAdded: (DataSnapshot) -> Unit,
+    val functionChanged: (DataSnapshot) -> Unit
+) : ChildEventListener {
 
     override fun onChildAdded(
         snapshot: DataSnapshot,
         previousChildName: String?
     ) {
-        onSuccess(snapshot)
+        functionAdded(snapshot)
     }
 
     override fun onChildChanged(
         snapshot: DataSnapshot,
         previousChildName: String?
     ) {
+        functionChanged(snapshot)
     }
 
     override fun onChildRemoved(snapshot: DataSnapshot) {

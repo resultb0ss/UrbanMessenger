@@ -70,6 +70,8 @@ dependencies {
     // Retrofit
     implementation(libs.retrofit)
     implementation(libs.logging.interceptor)
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
 
     // Gson
     implementation(libs.converter.gson)
@@ -118,5 +120,6 @@ dependencies {
     implementation("com.google.firebase:firebase-bom:33.6.0")
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-storage")
+
 
 }

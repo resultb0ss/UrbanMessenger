@@ -13,6 +13,7 @@ lateinit var UID: String
 const val NODE_USERS = "users"
 const val NODE_USERNAMES = "usernames"
 const val NODE_MESSAGES = "messages"
+const val NODE_SUPPORTS_MESSAGES = "messagesToSupport"
 
 const val TYPE_TEXT = "text"
 const val TYPE_IMAGE = "image"

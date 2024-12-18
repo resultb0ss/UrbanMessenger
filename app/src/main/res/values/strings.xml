@@ -86,4 +86,5 @@
     <string name="about_user_fragment_call_button_text">Позвонить</string>
     <string name="about_user_fragment_send_message_button_text">Отправить смс</string>
     <string name="upback_arrow">UpBack</string>
+
 </resources>

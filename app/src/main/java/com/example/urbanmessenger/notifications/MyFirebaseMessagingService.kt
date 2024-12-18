@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -29,9 +30,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        if (message.notification != null) {
-            generateNotification(message.notification!!.title!!, message.notification!!.body!!)
-        }
+//        if (message.notification != null) {
+//
+//        }
     }
 
 
@@ -46,20 +47,20 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
     @SuppressLint("MissingPermission", "NotificationPermission")
-    private fun generateNotification(title: String, message: String) {
+    fun generateNotification(title: String, message: String, context: Context) {
 
-        val intent = Intent(this, MainActivity::class.java)
-        intent.apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+//        val intent = Intent(this, MainActivity::class.java)
+//        intent.apply {
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//        }
+//
+//        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(CHANNEL_ID, "Уведомления", importance)
             val notificationManager =
-                applicationContext.getSystemService(NotificationManager::class.java)
+                context.getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
             val builder = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.baseline_person_24)
@@ -67,7 +68,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
+//                .setContentIntent(pendingIntent)
 
             with(NotificationManagerCompat.from(applicationContext)) {
                 if (ActivityCompat.checkSelfPermission(
