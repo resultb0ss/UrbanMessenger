@@ -4,30 +4,23 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.example.urbanmessenger.databinding.FragmentAboutUserBinding
+import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.utilits.myToast
 
 
-class AboutUserFragment : Fragment() {
+class AboutUserFragment : BaseFragment<FragmentAboutUserBinding>() {
 
-    private var _binding: FragmentAboutUserBinding? = null
-    private val binding get() = _binding!!
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAboutUserBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentAboutUserBinding {
+        return FragmentAboutUserBinding.inflate(inflater, container, false)
     }
 
     override fun onResume() {
@@ -107,11 +100,6 @@ class AboutUserFragment : Fragment() {
             myToast("Разрешение не получено")
         }
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 }

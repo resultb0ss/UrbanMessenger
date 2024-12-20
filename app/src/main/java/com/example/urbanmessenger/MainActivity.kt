@@ -136,23 +136,24 @@ class MainActivity : AppCompatActivity() {
         }
         //тут скорее всего не тот url указан в логах такая ошибка вылетает
         //Ошибка при отправке: CLEARTEXT communication to 10.0.2.2 not permitted by network security policy
-        val fcmApi: FCMApi = Retrofit.Builder().baseUrl("http://10.0.2.2:8080/").addConverterFactory(
-            MoshiConverterFactory.create()
-        ).build().create()
+        val fcmApi: FCMApi =
+            Retrofit.Builder().baseUrl("http://10.0.2.2:8080/").addConverterFactory(
+                MoshiConverterFactory.create()
+            ).build().create()
         val token = getNewToken()
-        Log.d("@@@","Token ${token}")
+        Log.d("@@@", "Token ${token}")
         val body = SendMessageDto(
             to = token,
             notification = NotificationBody(title = "Новое сообщение", body = newMessage.text)
         )
-        Log.d("@@@","Body ${body}")
+        Log.d("@@@", "Body ${body}")
 
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.IO).launch {
             try {
                 fcmApi.sendMessage(body)
-                Log.d("@@@","FCM API ${fcmApi.sendMessage(body)}")
-            } catch (e: Exception){
-                Log.e("@@@","Ошибка при отправке: ${e.message.toString()}")
+                Log.d("@@@", "FCM API ${fcmApi.sendMessage(body)}")
+            } catch (e: Exception) {
+                Log.e("@@@", "Ошибка при отправке: ${e.message.toString()}")
             }
         }
 //        notification.generateNotification(

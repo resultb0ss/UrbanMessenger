@@ -5,36 +5,31 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.updatePhotoUri
 import com.example.urbanmessenger.databinding.FragmentChangePhotoBinding
+import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.utilits.myToast
 import com.google.android.material.button.MaterialButton
 import java.io.ByteArrayOutputStream
 
 
-class ChangePhotoFragment : Fragment() {
+class ChangePhotoFragment : BaseFragment<FragmentChangePhotoBinding>() {
 
-    private var _binding: FragmentChangePhotoBinding? = null
-    private val binding get() = _binding!!
     var photoUri: Uri? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentChangePhotoBinding.inflate(inflater, container, false)
-        return binding.root
+
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentChangePhotoBinding {
+        return FragmentChangePhotoBinding.inflate(inflater, container, false)
     }
 
     override fun onResume() {
@@ -138,7 +133,6 @@ class ChangePhotoFragment : Fragment() {
             permissionLauncherSingle.launch(Manifest.permission.CAMERA)
         }
     }
-
 
 
     private fun getImageUriFromBitmap(bitmap: Bitmap?): Uri {

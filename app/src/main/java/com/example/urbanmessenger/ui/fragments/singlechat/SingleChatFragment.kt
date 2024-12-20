@@ -6,16 +6,13 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +30,7 @@ import com.example.urbanmessenger.data.network.sendImageMessage
 import com.example.urbanmessenger.data.network.sendMessage
 import com.example.urbanmessenger.databinding.FragmentSingleChatBinding
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.ui.fragments.FullScreenFragment
 import com.example.urbanmessenger.utilits.APP_ACTIVITY
 import com.example.urbanmessenger.utilits.AppChildEventListener
@@ -44,10 +42,7 @@ import com.example.urbanmessenger.utilits.myToast
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.firebase.database.DatabaseReference
 
-class SingleChatFragment : Fragment() {
-
-    private var _binding: FragmentSingleChatBinding? = null
-    private val binding get() = _binding!!
+class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
 
     private lateinit var mRefMessages: DatabaseReference
     private lateinit var mAdapter: SingleChatAdapter
@@ -63,20 +58,11 @@ class SingleChatFragment : Fragment() {
 
     private lateinit var toolbar: MaterialToolbar
 
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-
-
-        _binding = FragmentSingleChatBinding.inflate(inflater, container, false)
-        return binding.root
-
-    }
-
-    override fun onStart() {
-        super.onStart()
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentSingleChatBinding {
+        return FragmentSingleChatBinding.inflate(inflater, container, false)
     }
 
     override fun onResume() {
@@ -85,8 +71,6 @@ class SingleChatFragment : Fragment() {
         initFields()
         initRecyclerView()
         initToolbarWithListener()
-
-
     }
 
     private fun initToolbarWithListener() {
@@ -196,7 +180,7 @@ class SingleChatFragment : Fragment() {
 
     private fun initRecyclerView() {
         mAdapter = SingleChatAdapter { message ->
-            if (message.type != TYPE_IMAGE){
+            if (message.type != TYPE_IMAGE) {
                 getAlertDialogForTextTypeMessage(message)
             } else {
                 getAlertDialogForImageTypeMessage(message)
@@ -271,12 +255,6 @@ class SingleChatFragment : Fragment() {
         toolbar.visibility = View.VISIBLE
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun initInfoToolbar() {
 
         if (mReceivingUser.firstname.isEmpty() && mReceivingUser.lastname.isEmpty()) {
@@ -325,7 +303,7 @@ class SingleChatFragment : Fragment() {
             setNeutralButton("Посмотреть") { _, _ ->
                 fullScreenImageDialog(message)
             }
-            setNegativeButton("Отмена") { _, _ ->{} }
+            setNegativeButton("Отмена") { _, _ -> {} }
             create()
         }
         builder.show()
@@ -334,7 +312,7 @@ class SingleChatFragment : Fragment() {
 
     private fun fullScreenImageDialog(message: UserData) {
         val dialog = FullScreenFragment(message)
-        dialog.show(childFragmentManager,"custom")
+        dialog.show(childFragmentManager, "custom")
 
     }
 

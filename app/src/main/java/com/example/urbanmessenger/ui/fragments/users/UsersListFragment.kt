@@ -19,16 +19,14 @@ import com.example.urbanmessenger.data.network.USER
 import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.databinding.FragmentUsersListBinding
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.ui.fragments.chats.ChatsListSearchViewAdapter
 import com.example.urbanmessenger.utilits.AppValueEventListener
 import com.example.urbanmessenger.utilits.CONTACT
 import kotlinx.coroutines.launch
 
 
-class UsersListFragment : Fragment() {
-
-    private var _binding: FragmentUsersListBinding? = null
-    private val binding get() = _binding!!
+class UsersListFragment : BaseFragment<FragmentUsersListBinding>() {
 
     private lateinit var mAdapter: UsersListAdapter
     private lateinit var sAdapter: UsersListSearchViewAdapter
@@ -36,18 +34,13 @@ class UsersListFragment : Fragment() {
     private var mListItems = listOf<UserData>()
     private var filteredList = listOf<UserData>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentUsersListBinding.inflate(inflater, container, false)
-        return binding.root
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentUsersListBinding {
+        return FragmentUsersListBinding.inflate(inflater,container,false)
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
 
     override fun onResume() {
         super.onResume()
@@ -113,12 +106,5 @@ class UsersListFragment : Fragment() {
         CONTACT = user
         findNavController().navigate(R.id.action_usersListFragment_to_singleChatFragment)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-
-    }
-
 
 }

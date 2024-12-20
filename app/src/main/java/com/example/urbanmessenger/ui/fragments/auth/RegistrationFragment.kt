@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.AUTHFIREBASE
@@ -14,23 +13,19 @@ import com.example.urbanmessenger.data.network.CHILD_USERNAME
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_USERS
 import com.example.urbanmessenger.databinding.FragmentRegistrationBinding
+import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.utilits.myToast
 import com.google.firebase.auth.FirebaseAuth
 
 
-class RegistrationFragment : Fragment() {
+class RegistrationFragment : BaseFragment<FragmentRegistrationBinding>() {
 
-    private var _binding: FragmentRegistrationBinding? = null
-    private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
-
-        return binding.root
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentRegistrationBinding {
+        return FragmentRegistrationBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -92,11 +87,5 @@ class RegistrationFragment : Fragment() {
                 }
             }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 
 }

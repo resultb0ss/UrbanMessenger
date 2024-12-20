@@ -1,29 +1,21 @@
 package com.example.urbanmessenger.ui.fragments.auth
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.AUTHFIREBASE
 import com.example.urbanmessenger.databinding.FragmentRecoverPasswordBinding
+import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.utilits.myToast
 
-class RecoverPasswordFragment : Fragment() {
+class RecoverPasswordFragment : BaseFragment<FragmentRecoverPasswordBinding>() {
 
-    private var _binding: FragmentRecoverPasswordBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        _binding = FragmentRecoverPasswordBinding.inflate(inflater, container, false)
-
-        return binding.root
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentRecoverPasswordBinding {
+        return FragmentRecoverPasswordBinding.inflate(inflater, container, false)
     }
 
     override fun onResume() {
@@ -49,9 +41,5 @@ class RecoverPasswordFragment : Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
 }

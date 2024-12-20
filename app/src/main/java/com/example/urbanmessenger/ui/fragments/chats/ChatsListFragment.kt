@@ -1,13 +1,10 @@
 package com.example.urbanmessenger.ui.fragments.chats
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
@@ -19,15 +16,13 @@ import com.example.urbanmessenger.data.network.UID
 import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.utilits.APP_ACTIVITY
 import com.example.urbanmessenger.utilits.AppValueEventListener
 import com.example.urbanmessenger.utilits.CONTACT
 import kotlinx.coroutines.launch
 
-class ChatsListFragment : Fragment() {
-
-    private var _binding: FragmentChatsListBinding? = null
-    private val binding get() = _binding!!
+class ChatsListFragment : BaseFragment<FragmentChatsListBinding>() {
 
     private lateinit var mAdapter: ChatsListAdapter
     private lateinit var sAdapter: ChatsListSearchViewAdapter
@@ -36,14 +31,11 @@ class ChatsListFragment : Fragment() {
     private val mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID)
     private var mListItems = listOf<UserData>()
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentChatsListBinding.inflate(inflater, container, false)
-
-        return binding.root
+    override fun inflateBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentChatsListBinding {
+        return FragmentChatsListBinding.inflate(inflater, container, false)
     }
 
 
@@ -56,11 +48,6 @@ class ChatsListFragment : Fragment() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
-
-
-    }
 
     private fun initSearchView() {
         binding.chatsListSearchView.editText.addTextChangedListener(object : TextWatcher {
@@ -74,7 +61,7 @@ class ChatsListFragment : Fragment() {
             ) {
                 val query = p0.toString()
                 filterChats(query)
-                Log.d("@@@","${filterChats(query)}")
+                Log.d("@@@", "${filterChats(query)}")
             }
 
             override fun afterTextChanged(p0: Editable?) {}
@@ -117,7 +104,7 @@ class ChatsListFragment : Fragment() {
 
                                         val tempList =
                                             dataSnapshot2.children.map { it.getUserDataModel() }
-                                        if (tempList.isEmpty()){
+                                        if (tempList.isEmpty()) {
                                             newModel.lastMessage = "Чат очищен"
                                         } else {
                                             newModel.lastMessage = tempList[0].text
@@ -140,12 +127,5 @@ class ChatsListFragment : Fragment() {
         CONTACT = user
         findNavController().navigate(R.id.action_chatsListFragment_to_singleChatFragment)
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-
-    }
-
 
 }

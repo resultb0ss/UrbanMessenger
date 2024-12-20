@@ -3,7 +3,6 @@ package com.example.urbanmessenger
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,19 +28,12 @@ class AuthActivity : AppCompatActivity() {
         initFirebase()
         initStoragePermission()
 
-
     }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
-
 
     private fun initStoragePermission() {
 
         var permission = ""
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             permission = Manifest.permission.READ_MEDIA_IMAGES
         } else permission = Manifest.permission.READ_EXTERNAL_STORAGE
 
