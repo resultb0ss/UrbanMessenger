@@ -3,17 +3,20 @@ package com.example.urbanmessenger.data.network
 import com.example.urbanmessenger.models.UserData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.messaging.FirebaseMessaging
 
 lateinit var AUTHFIREBASE: FirebaseAuth
 lateinit var DATA_BASE_ROOT: DatabaseReference
 lateinit var USER: UserData
 lateinit var UID: String
+lateinit var FIREBASEMESSAGING: FirebaseMessaging
 
 //Nodes
 const val NODE_USERS = "users"
 const val NODE_USERNAMES = "usernames"
 const val NODE_MESSAGES = "messages"
 const val NODE_SUPPORTS_MESSAGES = "messagesToSupport"
+const val NODE_TOKEN = "token"
 
 const val TYPE_TEXT = "text"
 const val TYPE_IMAGE = "image"

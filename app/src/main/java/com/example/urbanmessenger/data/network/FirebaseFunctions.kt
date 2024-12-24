@@ -2,23 +2,60 @@ package com.example.urbanmessenger.data.network
 
 import android.net.Uri
 import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import com.example.urbanmessenger.data.network.SupabaseClient.supabaseClient
 import com.example.urbanmessenger.models.UserData
+import com.example.urbanmessenger.notifications.Token
 import com.example.urbanmessenger.utilits.AppValueEventListener
 import com.example.urbanmessenger.utilits.myToast
+import com.example.urbanmessenger.utilits.uriToByteArray
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
+import com.google.firebase.messaging.FirebaseMessaging
+import io.github.jan.supabase.storage.storage
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.minutes
+
 
 fun initFirebase() {
     AUTHFIREBASE = FirebaseAuth.getInstance()
     DATA_BASE_ROOT = FirebaseDatabase.getInstance().reference
     USER = UserData()
     UID = AUTHFIREBASE.currentUser?.uid.toString()
+    FIREBASEMESSAGING = FirebaseMessaging.getInstance()
 }
+
 
 fun DataSnapshot.getUserDataModel(): UserData =
     this.getValue(UserData::class.java) ?: UserData()
+
+fun DataSnapshot.getTokenDataModel(): Token =
+    this.getValue(Token::class.java) ?: Token()
+
+fun updateToken(refreshToken: String) {
+    var token: Token = Token(refreshToken)
+    DATA_BASE_ROOT.child(NODE_TOKEN).child(UID).setValue(token)
+}
+
+fun getNewToken() {
+
+    FIREBASEMESSAGING = FirebaseMessaging.getInstance()
+
+    var token = ""
+    FIREBASEMESSAGING.token.addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            token = task.result
+            updateToken(token.trim())
+            Log.d("@@@", "Token1: ${token}")
+        } else {
+            Log.d("@@@", "Failed to get token")
+        }
+    }
+
+}
 
 fun sendMessage(
     message: String,
@@ -54,16 +91,16 @@ fun removeMessage(
     receivingUserId: String,
     function: () -> Unit
 
-    ) {
+) {
 
     DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(receivingUserId).child(message.id)
         .removeValue().addOnSuccessListener {
-        DATA_BASE_ROOT.child(NODE_MESSAGES).child(receivingUserId).child(UID).child(message.id)
-            .removeValue().addOnSuccessListener{
-                function()
+            DATA_BASE_ROOT.child(NODE_MESSAGES).child(receivingUserId).child(UID).child(message.id)
+                .removeValue().addOnSuccessListener {
+                    function()
                     myToast("Сообщение успешно удалено")
-            }.addOnFailureListener{it.message.toString()}
-    }
+                }.addOnFailureListener { it.message.toString() }
+        }
 
 
 }
@@ -228,6 +265,44 @@ fun sendMessageToSupportInFirebase(
         .addOnSuccessListener { function() }
 
 
+}
+
+fun Fragment.uploadPhotoToSupabaseStorage(
+    uri: Uri?,
+    bucketName: String,
+    function: (photoName: String) -> Unit
+) {
+
+    val imageByteArray = uri?.uriToByteArray(requireContext())
+    val photoName =
+        "${USER.id}/${System.currentTimeMillis()}/${uri.toString().split("/").last()}"
+    lifecycleScope.launch {
+        imageByteArray?.let {
+            val bucket = supabaseClient.storage[bucketName]
+            bucket.upload("$photoName.jpg", it) {
+                upsert = false
+            }
+            readFileFromSupabaseStorage(bucketName, photoName) { url -> function(url) }
+        }
+    }
+
+}
+
+
+fun Fragment.readFileFromSupabaseStorage(
+    bucketName: String,
+    fileName: String,
+    function: (url: String) -> Unit
+) {
+    lifecycleScope.launch {
+        try {
+            val bucket = supabaseClient.storage.from(bucketName)
+            val url = bucket.createSignedUrl("$fileName.jpg", expiresIn = 20.minutes)
+            function(url)
+        } catch (e: Exception) {
+            myToast(e.message.toString())
+        }
+    }
 }
 
 

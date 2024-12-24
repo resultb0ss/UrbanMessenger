@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.net.toUri
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_USERS
@@ -52,17 +53,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     private fun setValueEventListener() {
         mListenerMainInfoBlock = AppValueEventListener {
             mReceivingUser = it.getUserDataModel()
-            initMainInfoBlock()
         }
 
         mRefUser = DATA_BASE_ROOT.child(NODE_USERS).child(UID)
         mRefUser.addValueEventListener(mListenerMainInfoBlock)
-    }
-
-    private fun initMainInfoBlock() {
-        if (mReceivingUser.userPhotoUri != null) {
-            binding.profileFragmentUserImage.setImageURI(mReceivingUser.userPhotoUri.toUri())
-        }
     }
 
     private fun initFields() {
@@ -78,6 +72,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         binding.userImageBlock.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_changePhotoFragment)
         }
+
+        Glide.with(requireContext()).load(USER.userPhotoUri).into(binding.profileFragmentUserImage)
 
 
     }

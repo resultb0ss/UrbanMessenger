@@ -4,9 +4,10 @@ package com.example.urbanmessenger.ui.fragments.users
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.urbanmessenger.R
 import com.example.urbanmessenger.databinding.ItemUsersListBinding
 import com.example.urbanmessenger.models.UserData
-import android.R
 
 class UsersListAdapter(private val onClick: (UserData) -> Unit) :
     RecyclerView.Adapter<UsersListAdapter.UsersListHolder>() {
@@ -37,6 +38,14 @@ class UsersListAdapter(private val onClick: (UserData) -> Unit) :
         holder.binding.itemUsersContactEmailTV.text = user.state
         holder.itemView.setOnClickListener {
             onClick(user)
+        }
+
+        if (user.userPhotoUri.isEmpty()) {
+            holder.binding.itemUsersContactImageIV
+                .setImageResource(R.drawable.baseline_account_circle_24)
+        } else {
+            Glide.with(holder.itemView.context).load(user.userPhotoUri)
+                .into(holder.binding.itemUsersContactImageIV)
         }
     }
 

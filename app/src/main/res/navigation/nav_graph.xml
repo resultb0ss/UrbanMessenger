@@ -12,9 +12,6 @@
         <action
             android:id="@+id/action_chatsListFragment_to_singleChatFragment"
             app:destination="@id/singleChatFragment" />
-        <action
-            android:id="@+id/action_chatsListFragment_to_aboutUserFragment2"
-            app:destination="@id/aboutUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -56,12 +53,22 @@
         <action
             android:id="@+id/action_singleChatFragment_to_fullScreenFragment"
             app:destination="@id/fullScreenFragment" />
+        <argument
+            android:name="user"
+            app:argType="com.example.urbanmessenger.models.UserData" />
+        <action
+            android:id="@+id/action_singleChatFragment_to_aboutUserFragment"
+            app:destination="@id/aboutUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutUserFragment"
         android:name="com.example.urbanmessenger.ui.fragments.menu_fragments.AboutUserFragment"
         android:label="О пользователе"
-        tools:layout="@layout/fragment_about_user" />
+        tools:layout="@layout/fragment_about_user" >
+        <argument
+            android:name="user"
+            app:argType="com.example.urbanmessenger.models.UserData" />
+    </fragment>
     <fragment
         android:id="@+id/changePhotoFragment"
         android:name="com.example.urbanmessenger.ui.fragments.menu_fragments.ChangePhotoFragment"

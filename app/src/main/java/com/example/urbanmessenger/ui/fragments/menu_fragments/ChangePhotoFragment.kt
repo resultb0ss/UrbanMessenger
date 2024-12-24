@@ -6,18 +6,27 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.urbanmessenger.R
+import com.example.urbanmessenger.data.network.SupabaseClient.supabaseClient
+import com.example.urbanmessenger.data.network.USER
 import com.example.urbanmessenger.data.network.updatePhotoUri
+import com.example.urbanmessenger.data.network.uploadPhotoToSupabaseStorage
 import com.example.urbanmessenger.databinding.FragmentChangePhotoBinding
 import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.utilits.myToast
+import com.example.urbanmessenger.utilits.uriToByteArray
 import com.google.android.material.button.MaterialButton
+import io.github.jan.supabase.storage.storage
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import kotlin.time.Duration.Companion.minutes
 
 
 class ChangePhotoFragment : BaseFragment<FragmentChangePhotoBinding>() {
@@ -45,11 +54,55 @@ class ChangePhotoFragment : BaseFragment<FragmentChangePhotoBinding>() {
 
 
     private fun setPhoto() {
-        updatePhotoUri(photoUri.toString())
-        findNavController().navigate(R.id.profileFragment)
-        myToast("Фото успешно обновлено")
+        if (photoUri != null) {
+//            val imageByteArray = photoUri?.uriToByteArray(requireContext())
+//            val photoName =
+//                "${USER.id}/${System.currentTimeMillis()}/${photoUri.toString().split("/").last()}"
+//            lifecycleScope.launch {
+//                imageByteArray?.let {
+//                    uploadFile("main", photoName, it)
+//                }
+//            }
+
+            uploadPhotoToSupabaseStorage(photoUri,"main"){
+                uri -> updatePhotoUri(uri)
+            }
+
+            findNavController().navigate(R.id.profileFragment)
+            myToast("Фото успешно обновлено")
+        } else {
+            myToast("Вы ничего не выбрали")
+        }
+
 
     }
+
+    //НЕ УДАЛЯЙ!!!! ПРОВЕРЬ НА РАЗНЫХ ФОТО
+//    private fun uploadFile(bucketName: String, fileName: String, byteArray: ByteArray) {
+//        lifecycleScope.launch {
+//            val bucket = supabaseClient.storage[bucketName]
+//            bucket.upload("$fileName.jpg", byteArray) {
+//                upsert = false
+//            }
+//            readFile("main", fileName)
+//        }
+//    }
+//
+//
+//    private fun readFile(
+//        bucketName: String,
+//        fileName: String,
+//    ) {
+//        lifecycleScope.launch {
+//            try {
+//                val bucket = supabaseClient.storage.from(bucketName)
+//                val url = bucket.createSignedUrl("$fileName.jpg", expiresIn = 20.minutes)
+//                updatePhotoUri(url)
+//            } catch (e: Exception) {
+//                myToast(e.message.toString())
+//            }
+//        }
+//    }
 
     private fun getCustomAlertDialog() {
 

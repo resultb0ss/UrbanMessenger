@@ -1,16 +1,19 @@
 package com.example.urbanmessenger.utilits
 
-import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.urbanmessenger.R
+import okio.IOException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.jvm.Throws
 
 fun Fragment.myToast(text: String) {
     Toast.makeText(
@@ -27,6 +30,10 @@ fun AppCompatActivity.myToast(text: String) {
         Toast.LENGTH_SHORT
     ).show()
 }
+
+@Throws(IOException::class)
+fun Uri.uriToByteArray(context: Context) =
+    context.contentResolver.openInputStream(this)?.use { it.buffered().readBytes() }
 
 fun myToast(text: String) {
     Toast.makeText(

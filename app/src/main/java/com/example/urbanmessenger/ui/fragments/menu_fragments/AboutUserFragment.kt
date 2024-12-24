@@ -4,23 +4,32 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.urbanmessenger.databinding.FragmentAboutUserBinding
+import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.ui.fragments.BaseFragment
-import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.utilits.myToast
 
 
 class AboutUserFragment : BaseFragment<FragmentAboutUserBinding>() {
+
+    private lateinit var user: UserData
 
     override fun inflateBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentAboutUserBinding {
         return FragmentAboutUserBinding.inflate(inflater, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        user = AboutUserFragmentArgs.Companion.fromBundle(requireArguments()).user
     }
 
     override fun onResume() {
@@ -30,18 +39,18 @@ class AboutUserFragment : BaseFragment<FragmentAboutUserBinding>() {
     }
 
     private fun initUsersInfoFields() {
-        binding.aboutUserFragmentProfileHeaderEmail.text = CONTACT.email
-        binding.aboutUserFragmentProfileHeaderID.text = CONTACT.id
-        binding.aboutUserFragmentNameUserValue.text = CONTACT.firstname
-        binding.aboutUserFragmentLastNameUserValue.text = CONTACT.lastname
-        binding.aboutUserFragmentAgeUserValue.text = CONTACT.age
-        binding.aboutUserFragmentAddressUserValue.text = CONTACT.address
-        binding.aboutUserFragmentPhoneUserValue.text = CONTACT.phone
-        binding.aboutUserFragmentProfessionUserValue.text = CONTACT.profession
-        binding.aboutUserFragmentContactCallButton.setOnClickListener { callToContact(CONTACT.phone) }
+        binding.aboutUserFragmentProfileHeaderEmail.text = user.email
+        binding.aboutUserFragmentProfileHeaderID.text = user.id
+        binding.aboutUserFragmentNameUserValue.text = user.firstname
+        binding.aboutUserFragmentLastNameUserValue.text = user.lastname
+        binding.aboutUserFragmentAgeUserValue.text = user.age
+        binding.aboutUserFragmentAddressUserValue.text = user.address
+        binding.aboutUserFragmentPhoneUserValue.text = user.phone
+        binding.aboutUserFragmentProfessionUserValue.text = user.profession
+        binding.aboutUserFragmentContactCallButton.setOnClickListener { callToContact(user.phone) }
         binding.aboutUserFragmentContactSendMessageButton.setOnClickListener {
             sendSmsToContact(
-                CONTACT.phone
+                user.phone
             )
         }
 

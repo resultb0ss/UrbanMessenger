@@ -1,13 +1,9 @@
 package com.example.urbanmessenger.ui.fragments.chats
 
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_MAIN_LIST
 import com.example.urbanmessenger.data.network.NODE_MESSAGES
@@ -18,8 +14,8 @@ import com.example.urbanmessenger.databinding.FragmentChatsListBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.ui.fragments.BaseFragment
 import com.example.urbanmessenger.utilits.APP_ACTIVITY
+import com.example.urbanmessenger.utilits.AppTextWatcher
 import com.example.urbanmessenger.utilits.AppValueEventListener
-import com.example.urbanmessenger.utilits.CONTACT
 import kotlinx.coroutines.launch
 
 class ChatsListFragment : BaseFragment<FragmentChatsListBinding>() {
@@ -50,21 +46,9 @@ class ChatsListFragment : BaseFragment<FragmentChatsListBinding>() {
 
 
     private fun initSearchView() {
-        binding.chatsListSearchView.editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                p0: CharSequence?, p1: Int, p2: Int, p3: Int
-            ) {
-            }
-
-            override fun onTextChanged(
-                p0: CharSequence?, p1: Int, p2: Int, p3: Int
-            ) {
-                val query = p0.toString()
-                filterChats(query)
-                Log.d("@@@", "${filterChats(query)}")
-            }
-
-            override fun afterTextChanged(p0: Editable?) {}
+        binding.chatsListSearchView.editText.addTextChangedListener(AppTextWatcher { charSequence ->
+            val query = charSequence.toString()
+            filterChats(query)
         })
 
     }
@@ -124,8 +108,9 @@ class ChatsListFragment : BaseFragment<FragmentChatsListBinding>() {
     }
 
     private fun navigateToSingleChatFragment(user: UserData) {
-        CONTACT = user
-        findNavController().navigate(R.id.action_chatsListFragment_to_singleChatFragment)
+        val action =
+            ChatsListFragmentDirections.Companion.actionChatsListFragmentToSingleChatFragment(user)
+        findNavController().navigate(action)
     }
 
 }

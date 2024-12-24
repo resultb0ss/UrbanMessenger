@@ -3,6 +3,8 @@ package com.example.urbanmessenger.ui.fragments.chats
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.urbanmessenger.R
 import com.example.urbanmessenger.databinding.ItemChatsListBinding
 import com.example.urbanmessenger.models.UserData
 
@@ -28,13 +30,24 @@ class ChatsListAdapter(private val onClick: (UserData) -> Unit) :
         val chat = listItems[position]
         if (chat.firstname.isEmpty() && chat.lastname.isEmpty()) {
             holder.binding.itemChatsContactNameTV.text = chat.email
-        } else {"${chat.firstname} ${chat.lastname}"}
+        } else {
+            "${chat.firstname} ${chat.lastname}"
+        }
 
         holder.binding.itemChatsMessageTimeTV.text = chat.timestamp.toString()
         holder.binding.itemChatsContactMessageTV.text = chat.lastMessage
         holder.itemView.setOnClickListener {
             onClick(chat)
         }
+
+        if (chat.userPhotoUri.isEmpty()) {
+            holder.binding.itemChatsContactImageIV
+                .setImageResource(R.drawable.baseline_account_circle_24)
+        } else {
+            Glide.with(holder.itemView.context).load(chat.userPhotoUri)
+                .into(holder.binding.itemChatsContactImageIV)
+        }
+
     }
 
     fun updateListItems(item: UserData) {

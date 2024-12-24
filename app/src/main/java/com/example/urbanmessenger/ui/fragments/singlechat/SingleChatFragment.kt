@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_MESSAGES
@@ -36,7 +38,6 @@ import com.example.urbanmessenger.utilits.APP_ACTIVITY
 import com.example.urbanmessenger.utilits.AppChildEventListener
 import com.example.urbanmessenger.utilits.AppTextWatcher
 import com.example.urbanmessenger.utilits.AppValueEventListener
-import com.example.urbanmessenger.utilits.CONTACT
 import com.example.urbanmessenger.utilits.TYPE_CHAT
 import com.example.urbanmessenger.utilits.myToast
 import com.google.android.material.appbar.MaterialToolbar
@@ -51,6 +52,7 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
     private var mIsScrolling = false
     private var mSmoothScrollToPosition = true
     private lateinit var mLayoutManager: LinearLayoutManager
+    private lateinit var user: UserData
 
     private lateinit var mListenerInfoToolbar: AppValueEventListener
     private lateinit var mReceivingUser: UserData
@@ -63,6 +65,11 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
         container: ViewGroup?
     ): FragmentSingleChatBinding {
         return FragmentSingleChatBinding.inflate(inflater, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        user = SingleChatFragmentArgs.Companion.fromBundle(requireArguments()).user
     }
 
     override fun onResume() {
@@ -84,7 +91,7 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
             initInfoToolbar()
         }
 
-        mRefUser = DATA_BASE_ROOT.child(NODE_USERS).child(CONTACT.id)
+        mRefUser = DATA_BASE_ROOT.child(NODE_USERS).child(user.id)
         mRefUser.addValueEventListener(mListenerInfoToolbar)
     }
 
@@ -109,9 +116,9 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
 
             if (message.isEmpty()) {
                 myToast("Введите текст в поле")
-            } else sendMessage(message, CONTACT.id, TYPE_TEXT) {
+            } else sendMessage(message, user.id, TYPE_TEXT) {
 
-                saveToMainList(CONTACT.id, TYPE_CHAT)
+                saveToMainList(user.id, TYPE_CHAT)
                 binding.messageInputField.text.clear()
             }
         }
@@ -170,7 +177,7 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
             setCancelable(false)
             setNegativeButton("Отмена") { _, _ -> }
             setPositiveButton("Отправить") { _, _ ->
-                sendImageMessage(CONTACT.id, imageUri) { saveToMainList(CONTACT.id, TYPE_CHAT) }
+                sendImageMessage(user.id, imageUri) { saveToMainList(user.id, TYPE_CHAT) }
             }
         }
         val alertDialog = builder.create()
@@ -186,7 +193,7 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
                 getAlertDialogForImageTypeMessage(message)
             }
         }
-        mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(CONTACT.id)
+        mRefMessages = DATA_BASE_ROOT.child(NODE_MESSAGES).child(UID).child(user.id)
         binding.singleChatFragmentRecyclerView.adapter = mAdapter
         binding.singleChatFragmentRecyclerView.setHasFixedSize(true)
         binding.singleChatFragmentRecyclerView.isNestedScrollingEnabled = false
@@ -265,12 +272,19 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
         }
         binding.toolbarUserStatus.text = mReceivingUser.state
 
+        Glide.with(requireContext()).load(mReceivingUser.userPhotoUri)
+            .into(binding.toolbarUserImage)
+
         binding.singleChatToolbarUpBackArrow.setOnClickListener {
             findNavController().navigate(R.id.chatsListFragment)
         }
 
         binding.aboutUserInfoButton.setOnClickListener {
-            findNavController().navigate(R.id.aboutUserFragment)
+            val action =
+                SingleChatFragmentDirections.Companion.actionSingleChatFragmentToAboutUserFragment(
+                    user
+                )
+            findNavController().navigate(action)
         }
     }
 
@@ -281,7 +295,7 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
             setPositiveButton("Удалить") { _, _ ->
                 removeMessage(
                     message,
-                    CONTACT.id
+                    user.id
                 ) { mAdapter.removeMessageFromListAdapter(message) }
             }
             setNegativeButton("Отмена") { _, _ -> }
@@ -297,7 +311,7 @@ class SingleChatFragment : BaseFragment<FragmentSingleChatBinding>() {
             setPositiveButton("Удалить") { _, _ ->
                 removeMessage(
                     message,
-                    CONTACT.id
+                    user.id
                 ) { mAdapter.removeMessageFromListAdapter(message) }
             }
             setNeutralButton("Посмотреть") { _, _ ->

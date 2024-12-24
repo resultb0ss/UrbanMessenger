@@ -1,13 +1,10 @@
 package com.example.urbanmessenger.models
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
 import java.io.Serializable
 
-//@Entity(tableName = "user")
+
 data class UserData(
-//    @PrimaryKey
+
     val id: String = "",
     var username: String = "",
     var phone: String = "",
@@ -29,12 +26,10 @@ data class UserData(
     var imageUriSender: String = "empty",
     var imageUriReceiver: String = "empty",
 
-) : Serializable {
+    ) : Serializable {
     override fun equals(other: Any?): Boolean {
         return (other as UserData).id == id
     }
-
-
 
 
 }

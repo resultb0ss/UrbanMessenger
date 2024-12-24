@@ -1,18 +1,12 @@
 package com.example.urbanmessenger.ui.fragments.users
 
-import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.urbanmessenger.R
 import com.example.urbanmessenger.data.network.DATA_BASE_ROOT
 import com.example.urbanmessenger.data.network.NODE_USERS
 import com.example.urbanmessenger.data.network.USER
@@ -20,9 +14,7 @@ import com.example.urbanmessenger.data.network.getUserDataModel
 import com.example.urbanmessenger.databinding.FragmentUsersListBinding
 import com.example.urbanmessenger.models.UserData
 import com.example.urbanmessenger.ui.fragments.BaseFragment
-import com.example.urbanmessenger.ui.fragments.chats.ChatsListSearchViewAdapter
 import com.example.urbanmessenger.utilits.AppValueEventListener
-import com.example.urbanmessenger.utilits.CONTACT
 import kotlinx.coroutines.launch
 
 
@@ -38,7 +30,7 @@ class UsersListFragment : BaseFragment<FragmentUsersListBinding>() {
         inflater: LayoutInflater,
         container: ViewGroup?
     ): FragmentUsersListBinding {
-        return FragmentUsersListBinding.inflate(inflater,container,false)
+        return FragmentUsersListBinding.inflate(inflater, container, false)
     }
 
 
@@ -60,7 +52,7 @@ class UsersListFragment : BaseFragment<FragmentUsersListBinding>() {
             ) {
                 val query = p0.toString()
                 filterChats(query)
-                Log.d("@@@","${filterChats(query)}")
+                Log.d("@@@", "${filterChats(query)}")
             }
 
             override fun afterTextChanged(p0: Editable?) {}
@@ -84,7 +76,6 @@ class UsersListFragment : BaseFragment<FragmentUsersListBinding>() {
     }
 
 
-
     private fun initRecyclerView() {
         mAdapter = UsersListAdapter { user -> navigateToSingleChatFragment(user) }
         sAdapter = UsersListSearchViewAdapter { user -> navigateToSingleChatFragment(user) }
@@ -103,8 +94,9 @@ class UsersListFragment : BaseFragment<FragmentUsersListBinding>() {
     }
 
     private fun navigateToSingleChatFragment(user: UserData) {
-        CONTACT = user
-        findNavController().navigate(R.id.action_usersListFragment_to_singleChatFragment)
+        val action =
+            UsersListFragmentDirections.Companion.actionUsersListFragmentToSingleChatFragment(user)
+        findNavController().navigate(action)
     }
 
 }

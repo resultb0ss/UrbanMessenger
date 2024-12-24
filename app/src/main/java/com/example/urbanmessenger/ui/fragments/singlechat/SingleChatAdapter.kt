@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.urbanmessenger.data.network.TYPE_IMAGE
 import com.example.urbanmessenger.data.network.TYPE_TEXT
 import com.example.urbanmessenger.data.network.UID
@@ -57,14 +58,20 @@ class SingleChatAdapter(val onClick: (message: UserData) -> Unit) :
                     holder.binding.blockReceivedMessage.visibility = View.GONE
                     holder.binding.chatUserMessage.visibility = View.GONE
                     holder.binding.chatUserMessageImage.visibility = View.VISIBLE
-                    holder.binding.chatUserMessageImage.setImageURI(message.imageUriSender.toUri())
+
+                    Glide.with(holder.itemView.context).load(message.imageUriSender)
+                        .into(holder.binding.chatUserMessageImage)
+
                     holder.binding.chatUserMessageTime.text = message.timestamp.toString().asTime()
                 } else {
                     holder.binding.blockUserMessage.visibility = View.GONE
                     holder.binding.blockReceivedMessage.visibility = View.VISIBLE
                     holder.binding.chatReceiverMessage.visibility = View.GONE
                     holder.binding.chatReceiverMessageImage.visibility = View.VISIBLE
-                    holder.binding.chatReceiverMessageImage.setImageURI(message.imageUriSender.toUri())
+
+                    Glide.with(holder.itemView.context).load(message.imageUriSender)
+                        .into(holder.binding.chatReceiverMessageImage)
+
                     holder.binding.chatReceivedMessageTime.text =
                         message.timestamp.toString().asTime()
                 }
